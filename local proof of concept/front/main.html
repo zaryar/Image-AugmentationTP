@@ -1,18 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles.css">
+    <script src="./webcam.js"></script>
     <title>Document</title>
 </head>
-    <h1>IMAGE-AUGMENTATION</h1>
+
 <body>
+    <header>
+        <h1 style="color: #719fdc;">
+            Image Augmentation
+        </h1>
+        <div class="Header">
+            <a href="#home" ,style=>Home</a>
+            <a href="#team">Our Team</a>
+        </div>
+    </header>
     <form method="POST" action="/upload" enctype="multipart/form-data">
         <input type="file" name="image">
         <input type="submit">
     </form>
 
+    <!-- code for the webcam :) -->
+    <video id="myVidPlayer" controls muted autoplay></video>
+
+    <button onclick="snapshot()">Snapshot</button>
+
+    <div class="mycanvas">
+        <h6>Captured snapshot</h6>
+        <canvas></canvas>
+    </div>
+
 </body>
+
 </html>

@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require('path');
-app.use(express.static('public')); /* tells expressJS where to find css and js files */ 
+app.use(express.static('public'));  /* tells expressJS where to find css and js files */ 
 
 const multer = require('multer');
 const storage = multer.diskStorage({
