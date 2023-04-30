@@ -1,0 +1,27 @@
+body>header {
+    display: flex;
+    overflow: hidden;
+    background-color: #d4b5fd;
+    padding: 10px 10px;
+    justify-content: space-between;
+  }
+/*style the header links*/
+
+.Header a {
+   
+    color: black;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 25px;
+    border-radius: 4px;
+  }
+.Header{
+  margin: 30px 10px 10px 10px;
+}
+
+.Header a:hover {
+    background-color: #f59aff;
+    color: black;
+  }
