@@ -1,11 +1,9 @@
 # Image-AugmentationTP
 
-##Konkrete Feature Zielliste
-
-###Projektbeschreibung in einem Satz
+## Projektbeschreibung in einem Satz
 Wir Fotos, Videos aber auch eine Webcam Live mit globalen Filtern und Facefiltern verzieren.
 
-###Zielliste
+## Konkrete Feature Zielliste
 - Bilder, Videos und Webcam als Source für die Filter benutzen
 - Unterseiten für die verschiedenen Features (Bilder Videos Webcam)
 - Programm soll erkennen, welcher Filter wann benutzt werden soll
