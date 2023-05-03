@@ -1,6 +1,7 @@
 ### in this file functions for the manipulation of non- live videos will be defined
 import numpy as py
 import cv2 as cv
+import basicpicturemanipulation
 
 
 
@@ -11,7 +12,7 @@ path = "C:/Users/Valentin/Documents/Teamprojekt/Image-Augmentation/Image-Augment
 
 
 
-def read_video():
+def show_video():
 
     video = cv.VideoCapture(path)
     while True:
@@ -23,7 +24,7 @@ def read_video():
     video.release()
     cv.destroyAllWindows()
 
-read_video()
+
 
 
 
