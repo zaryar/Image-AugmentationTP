@@ -1,8 +1,10 @@
 #basic functions for the manipulation of pictures are done here
 
 import cv2 as cv
-import numpy as py
+import numpy as np
 import os 
+
+
 test = "Test.jpeg"
 def get_path(folder, image):
     #gets the path to the image and hopefully working on *nix and Windows
@@ -26,8 +28,7 @@ def read_picture():
         #getting the right path for the machine
         path = get_path("input", test)
 
-        # loading the image
-        imgage = np.array(Image.open(path).convert('L'))
+       
 
         img = cv.imread(path)
 
