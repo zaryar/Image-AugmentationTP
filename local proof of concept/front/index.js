@@ -6,11 +6,12 @@ app.use(express.static('public'));  /* tells expressJS where to find css and js 
 const multer = require('multer');
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'Images')
+        cb(null, 'public/images/input')
     },
     filename: (req, file, cb) => {
         console.log(file)
-        cb(null, Date.now() + path.extname(file.originalname))
+        // cb(null, Date.now() + path.extname(file.originalname))
+        cb(null, "test" + path.extname(file.originalname))
     }
 })
 
@@ -21,8 +22,12 @@ app.get("/upload", (req, res) => {
 });
 
 app.post("/upload", upload.single('image'),(req, res) => {
-    res.send("Image Uploader");
-});
+    // res.send("Image Uploader");
+    // res.status(204).send();
+    res.sendFile(__dirname + '/main.html');
+  })
+
+app.use(express.static('public'));
 
 app.listen(3001);
 console.log("3001 is the port");

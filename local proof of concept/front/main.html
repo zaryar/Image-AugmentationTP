@@ -21,10 +21,15 @@
         </div>
     </header>
     <form method="POST" action="/upload" enctype="multipart/form-data">
-        <input type="file" name="image">
+        <input type="file" id="image_input" name="image">
         <input type="submit">
     </form>
 
+    <div id= "display_image"></div>
+    <img src="/images/input/test.png" width="300" alt="">
+
+    <script src="/javaScripts/script.js"></script>
+    
     <!-- code for the webcam :) -->
     <video id="myVidPlayer" controls muted autoplay></video>
 
