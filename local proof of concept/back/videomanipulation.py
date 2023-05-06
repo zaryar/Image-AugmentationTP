@@ -11,7 +11,7 @@ from basicpicturemanipulation import gray_filter
 
 path = "C:/Users/Valentin/Documents/Teamprojekt/Image-Augmentation/Image-AugmentationTP/local proof of concept/data/input/test_vid.mp4"
 filename = 'C:/Users/Valentin/Documents/Teamprojekt/Image-Augmentation/Image-AugmentationTP/local proof of concept/data/output/test_vid.avi'
-
+codec = 'WMV1'
 
 #this is a testing function for us if we are honest 
 def show_video(video_path):
@@ -33,12 +33,12 @@ def show_video(video_path):
     cv.destroyAllWindows()
 
 
-# this function takes a path and a filter and applies it to the video in the path, then saves the video as an .mp4 
+# this function takes a path and a filter and applies it to the video in the path, then saves the video as an .avi / only works for pictures with all color channels availabl
 def filter_video(video_path,apply ):
     source = cv.VideoCapture(video_path)
 
     #Defining codec
-    fourcc = cv.VideoWriter_fourcc(* 'WMV1')
+    fourcc = cv.VideoWriter_fourcc(* codec)
     output = cv.VideoWriter(filename, fourcc, 24.0, (852,  480))
 
     while source.isOpened():
@@ -48,7 +48,7 @@ def filter_video(video_path,apply ):
             print("Can't receive frame ( video has ended?). Exiting..")
             break
         frame = cv.resize(frame, (852,480))
-        #frame = apply(frame)
+        frame = apply(frame)
 
         #actual writing
         output.write(frame)
@@ -66,7 +66,7 @@ def grayscale_video(video_path):
     source = cv.VideoCapture(video_path)
 
     #Defining codec
-    fourcc = cv.VideoWriter_fourcc(* 'WMV1') 
+    fourcc = cv.VideoWriter_fourcc(* codec) ##we might need to change to codec on the linux machine 
     output = cv.VideoWriter(filename, fourcc, 24.0, (852,  480),)
 
     while source.isOpened():
@@ -77,7 +77,7 @@ def grayscale_video(video_path):
             break
         frame = cv.resize(frame, (852,480))
         frame = gray_filter(frame)
-        frame = cv.cvtColor(frame, cv.COLOR_GRAY2BGR)
+        frame = cv.cvtColor(frame, cv.COLOR_GRAY2BGR)  ### this needs to be done because the codec needs 3 color channels
         #actual writing
         output.write(frame)
 
