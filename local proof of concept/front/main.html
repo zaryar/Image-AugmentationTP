@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
-    <script src="/javaScripts/webcam.js"></script>
     <title>Document</title>
 </head>
 
@@ -24,7 +23,7 @@
         <input type="file" id="image_input" name="image">
         <input type="submit">
     </form>
-
+    
     <div id= "display_image"></div>
     <img src="/images/input/test.png" width="300" alt="">
 
@@ -34,11 +33,13 @@
     <video id="myVidPlayer" controls muted autoplay></video>
 
     <button onclick="snapshot()">Snapshot</button>
-
+    
     <div class="mycanvas">
         <h6>Captured snapshot</h6>
         <canvas></canvas>
     </div>
+    
+    <script src="/javaScripts/webcam.js"></script>
 
 </body>
 
