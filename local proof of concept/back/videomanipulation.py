@@ -9,9 +9,9 @@ from basicpicturemanipulation import gray_filter
 
 
 
-path = "C:/Users/Valentin/Documents/Teamprojekt/Image-Augmentation/Image-AugmentationTP/local proof of concept/data/input/test_vid.mp4"
-filename = 'C:/Users/Valentin/Documents/Teamprojekt/Image-Augmentation/Image-AugmentationTP/local proof of concept/data/output/test_vid.avi'
-codec = 'WMV1'
+PATH = "C:/Users/Valentin/Documents/Teamprojekt/Image-Augmentation/Image-AugmentationTP/local proof of concept/data/input/test_vid.mp4"
+FILENAME = 'C:/Users/Valentin/Documents/Teamprojekt/Image-Augmentation/Image-AugmentationTP/local proof of concept/data/output/test_vid.avi'
+CODEC = 'WMV1'
 
 #this is a testing function for us if we are honest 
 def show_video(video_path):
@@ -34,7 +34,7 @@ def show_video(video_path):
 
 
 # this function takes a path and a filter and applies it to the video in the path, then saves the video as an .avi / only works for pictures with all color channels availabl
-def filter_video(video_path,apply ):
+def filter_video(video_path,apply, filename ):
     source = cv.VideoCapture(video_path)
 
     #Defining codec
@@ -62,11 +62,11 @@ cv.destroyAllWindows()
 
 
 
-def grayscale_video(video_path):
+def grayscale_video(video_path, filename):
     source = cv.VideoCapture(video_path)
 
     #Defining codec
-    fourcc = cv.VideoWriter_fourcc(* codec) ##we might need to change to codec on the linux machine 
+    fourcc = cv.VideoWriter_fourcc(* CODEC) ##we might need to change to codec on the linux machine 
     output = cv.VideoWriter(filename, fourcc, 24.0, (852,  480),)
 
     while source.isOpened():
@@ -87,11 +87,6 @@ def grayscale_video(video_path):
     source.release()
     output.release()
 cv.destroyAllWindows()
-
-
-#filter_video(path, gray_filter)
-
-grayscale_video(path)
 
 
     
