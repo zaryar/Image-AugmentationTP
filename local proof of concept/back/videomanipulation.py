@@ -9,8 +9,8 @@ from basicpicturemanipulation import gray_filter
 
 
 
-PATH = "C:/Users/Valentin/Documents/Teamprojekt/Image-Augmentation/Image-AugmentationTP/local proof of concept/data/input/test_vid.mp4"
-FILENAME = 'C:/Users/Valentin/Documents/Teamprojekt/Image-Augmentation/Image-AugmentationTP/local proof of concept/data/output/test_vid.avi'
+PATH = "./local proof of concept/data/input/test_vid.mp4"
+FILENAME = './local proof of concept/data/output/test_vid.avi'
 CODEC = 'WMV1'
 
 #this is a testing function for us if we are honest 
@@ -89,4 +89,4 @@ def grayscale_video(video_path, filename):
 cv.destroyAllWindows()
 
 
-    
+grayscale_video(PATH, FILENAME)
