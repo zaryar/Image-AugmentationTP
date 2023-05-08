@@ -1,9 +1,6 @@
 import cv2 as cv
 import numpy as np
 
-# path to test image
-# test = cv.imread("local proof of concept/data/input/Test.jpeg")
-
 # given img becomes Grayscale
 def filter_gray(img):
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
