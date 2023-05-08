@@ -38,7 +38,7 @@ def filter_video(video_path,apply, filename ):
     source = cv.VideoCapture(video_path)
 
     #Defining codec
-    fourcc = cv.VideoWriter_fourcc(* codec)
+    fourcc = cv.VideoWriter_fourcc(* CODEC )
     output = cv.VideoWriter(filename, fourcc, 24.0, (852,  480))
 
     while source.isOpened():
