@@ -94,17 +94,17 @@ def filter_rotate(img):
     return rotate
 
 # adds a border in dark purple
-def filter_border(img):
+def filter_border(img, blue, green, red):
     borderWidth = 50
-    border = cv.copyMakeBorder(img, borderWidth, borderWidth, borderWidth, borderWidth, borderType=cv.BORDER_CONSTANT, value=(52, 25, 48))
+    border = cv.copyMakeBorder(img, borderWidth, borderWidth, borderWidth, borderWidth, borderType=cv.BORDER_CONSTANT, value=(blue, green, red))
     return border
 
 # adds a reflection top, left
-def filter_rBorder(img):
+def filter_reflect(img):
     gray = filter_gray(img)
     height, width = gray.shape
-    rBorder = cv.copyMakeBorder(img, 0, height, width, 0, borderType=cv.BORDER_REFLECT)
-    return rBorder
+    reflect = cv.copyMakeBorder(img, 0, height, width, 0, borderType=cv.BORDER_REFLECT)
+    return reflect
 
 # repeats image top left
 def filter_wBorder(img):
