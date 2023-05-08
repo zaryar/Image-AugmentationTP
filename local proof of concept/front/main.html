@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <title>Document</title>
 </head>
-    <h1>IMAGE-AUGMENTATION</h1>
+
 <body>
+    <header>
+        <h1 style="color: #719fdc;">
+            Image Augmentation
+        </h1>
+        <div class="Header">
+            <a href="#Foto" ,style=>foto filter</a>
+            <a href="#Video">video filter</a>
+        </div>
+    </header>
     <form method="POST" action="/upload" enctype="multipart/form-data">
         <input type="file" id="image_input" name="image">
         <p>
@@ -27,6 +37,19 @@
     <img src="/images/input/test.png" width="300" alt="">
 
     <script src="/javaScripts/script.js"></script>
-    <script src="/javaScripts/updateGlobalData.js"></script>
+
+    <!-- code for the webcam :) -->
+    <video id="myVidPlayer" controls muted autoplay></video>
+
+    <button onclick="snapshot()">Snapshot</button>
+    
+    <div class="mycanvas">
+        <h6>Captured snapshot</h6>
+        <canvas></canvas>
+    </div>
+    
+    <script src="/javaScripts/webcam.js"></script>
+
 </body>
+
 </html>
