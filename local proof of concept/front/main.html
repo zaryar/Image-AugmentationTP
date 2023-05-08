@@ -11,29 +11,18 @@
 <body>
     <form method="POST" action="/upload" enctype="multipart/form-data">
         <input type="file" id="image_input" name="image">
-
-        <input type="checkbox" id="filter1" name="filter" value="filter1">
-        <label for="filter1">filter1</label><br>
-        <input type="checkbox" id="filter2" name="filter" value="filter2">
-        <label for="filter1">filter2</label><br>
-        <input type="checkbox" id="filter3" name="filter" value="filter3">
-        <label for="filter1">filter3</label><br>
-
+        <p>
+            <input type="checkbox" id="filter1" name="filter" value="filter1">
+            <label for="filter1">filter1</label><br>
+            <input type="checkbox" id="filter2" name="filter" value="filter2">
+            <label for="filter1">filter2</label><br>
+            <input type="checkbox" id="filter3" name="filter" value="filter3">
+            <label for="filter1">filter3</label><br>
+        </p>
         <input type="submit" name = "submit" value="image">
-    </form>
-    <form method="POST" action="/upload" enctype="multipart/form-data"> 
-        <input type="file" id="image_input" name="image">
-
-        <input type="checkbox" id="filter1" name="filter" value="filter1">
-        <label for="filter1">filter1</label><br>
-        <input type="checkbox" id="filter2" name="filter" value="filter2">
-        <label for="filter1">filter2</label><br>
-        <input type="checkbox" id="filter3" name="filter" value="filter3">
-        <label for="filter1">filter3</label><br>
-
         <input type="submit" name = "submit" value="video">
     </form>
-
+    
     <div id= "display_image"></div>
     <img src="/images/input/test.png" width="300" alt="">
 
