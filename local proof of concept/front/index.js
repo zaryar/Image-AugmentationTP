@@ -32,7 +32,7 @@ var updateFilter = ""
 app.post("/upload", upload.single('image') ,(req, res) => {
     // res.send("Image Uploader");
     // res.status(204).send();
-    if(req.body.submit == "image"){
+    if(req.body.submit == "image" || req.body.submit == "snapshot"){
          updateData = "image"
          if(req.body.filter == "filter1")
          {

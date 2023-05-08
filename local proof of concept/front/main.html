@@ -31,6 +31,7 @@
         </p>
         <input type="submit" name = "submit" value="image">
         <input type="submit" name = "submit" value="video">
+        <input type="submit" name = "submit" value="snapshot" onclick="snapshot()">
     </form>
     
     <div id= "display_image"></div>
@@ -41,7 +42,6 @@
     <!-- code for the webcam :) -->
     <video id="myVidPlayer" controls muted autoplay></video>
 
-    <button onclick="snapshot()">Snapshot</button>
     
     <div class="mycanvas">
         <h6>Captured snapshot</h6>
