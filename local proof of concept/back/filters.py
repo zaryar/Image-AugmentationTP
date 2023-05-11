@@ -4,6 +4,7 @@ import numpy as np
 # given img becomes Grayscale
 def filter_gray(img):
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+    gray = cv.cvtColor(gray, cv.COLOR_GRAY2BGR)
     return gray
 
 # given img becomes black and white
