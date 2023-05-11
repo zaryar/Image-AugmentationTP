@@ -92,8 +92,12 @@ def filter_rotate(img):
 
 # adds a border in orange
 def filter_border(img):
-    borderWidth = 50
-    border = cv.copyMakeBorder(img, borderWidth, borderWidth, borderWidth, borderWidth, borderType=cv.BORDER_CONSTANT, value=(0, 165, 255))
+    gray = filter_gray(img)
+    height, width = gray.shape
+    borderWidth = width // 10
+    borderHeight = height // 10
+    border = cv.copyMakeBorder(img, borderHeight, borderHeight, borderWidth, borderWidth, borderType=cv.BORDER_CONSTANT, value=(0, 165, 255))
+    border = cv.resize(border, dsize=(width, height), interpolation=cv.INTER_LINEAR) 
     return border
 
 # adds a reflection top, left
@@ -101,6 +105,7 @@ def filter_reflect(img):
     gray = filter_gray(img)
     height, width = gray.shape
     reflect = cv.copyMakeBorder(img, 0, height, width, 0, borderType=cv.BORDER_REFLECT)
+    reflect = cv.resize(reflect, dsize=(width, height), interpolation=cv.INTER_LINEAR) 
     return reflect
 
 # repeats image top left
@@ -108,6 +113,7 @@ def filter_wBorder(img):
     gray = filter_gray(img)
     height, width = gray.shape
     wBorder = cv.copyMakeBorder(img, 0, height, width, 0, borderType=cv.BORDER_WRAP)
+    wBorder = cv.resize(wBorder, dsize=(width, height), interpolation=cv.INTER_LINEAR) 
     return wBorder
 
 # flips the image
