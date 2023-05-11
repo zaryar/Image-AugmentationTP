@@ -90,10 +90,10 @@ def filter_rotate(img):
     rotate = cv.rotate(img, cv.ROTATE_90_CLOCKWISE)
     return rotate
 
-# adds a border in dark purple
-def filter_border(img, blue, green, red):
+# adds a border in orange
+def filter_border(img):
     borderWidth = 50
-    border = cv.copyMakeBorder(img, borderWidth, borderWidth, borderWidth, borderWidth, borderType=cv.BORDER_CONSTANT, value=(blue, green, red))
+    border = cv.copyMakeBorder(img, borderWidth, borderWidth, borderWidth, borderWidth, borderType=cv.BORDER_CONSTANT, value=(0, 165, 255))
     return border
 
 # adds a reflection top, left
