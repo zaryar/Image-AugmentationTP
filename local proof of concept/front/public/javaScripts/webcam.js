@@ -28,8 +28,8 @@ function base64ToBlob(base64, mime) {
     return new Blob(byteArrays, { type: mime });
 }
 
-
-function snapshot() {
+// GetÇs the current frame of the webcam and sends it together with the form data (filter) to the server
+function snapshot(name) {
     // Canvas creation
     context.fillRect(0, 0, w, h); // Give a proper size to the canvas
     context.drawImage(video, 0, 0, w, h); // Fill the canvas with the current frame
@@ -44,6 +44,8 @@ function snapshot() {
     // This is the form that is going to be received by the server
     var formData = new FormData();
     formData.append('image', blob); // Add the image to the form to send
+
+    
     filterValue = ""
     if(document.querySelector("#filter1").checked){
         filterValue = "filter1"
@@ -55,7 +57,7 @@ function snapshot() {
         filterValue = "filter3"
     }
     formData.append('filter', filterValue);
-    formData.append('submit', "stream"); 
+    formData.append('submit', name); 
 
     // Create a connection and then send the form to the server with the POST method
     var xhr = new XMLHttpRequest();
@@ -67,7 +69,7 @@ function snapshot() {
 var intervalId
 function record(){
     intervalId = window.setInterval(function(){
-        snapshot()
+        snapshot("stream")
       }, 500);
 }
 
