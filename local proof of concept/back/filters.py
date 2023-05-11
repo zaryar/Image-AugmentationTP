@@ -83,7 +83,6 @@ def filter_edge(img):
         [neighbor,neighbor,neighbor]
     ])
     edge = cv.filter2D(gray, ddepth = -1, kernel = edges)
-    #edge = cv.Laplacian(gray, ddepth=-1)  #other way for edges not using filter2D but not as visible
     return edge
 
 # rotates image 90 degrees clockwise 
