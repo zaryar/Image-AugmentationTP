@@ -22,13 +22,13 @@ def filter_sketch(img):
     _, sketch = cv.pencilSketch(img, sigma_s=7, sigma_r=0.8, shade_factor=0.03)
     return sketch
 
-# given img gets different colored overlay
-# blue, green, red decide the overlays color
+# given img gets sepia colored overlay
 # intensity decides intensity of the overlay
-def filter_color_overlay(img, blue, green, red, intensity):
+def filter_sepia(img):
     image = cv.cvtColor(img, cv.COLOR_BGR2BGRA)
     width, height, channels = image.shape
-    newBGRA = (blue, green, red, 1)
+    intensity = 0.5
+    newBGRA = (20, 55, 112, 1)
     overlay = np.full((width, height, channels), newBGRA, dtype='uint8')
     cv.addWeighted(overlay, intensity, image, 1.0, 0, image)
     image = cv.cvtColor(image, cv.COLOR_BGRA2BGR)
