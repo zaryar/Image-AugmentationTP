@@ -4,6 +4,7 @@ import numpy as np
 # given img becomes Grayscale
 def filter_gray(img):
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+    gray = cv.cvtColor(gray, cv.COLOR_GRAY2BGR)
     return gray
 
 # given img becomes black and white
@@ -22,13 +23,13 @@ def filter_sketch(img):
     _, sketch = cv.pencilSketch(img, sigma_s=7, sigma_r=0.8, shade_factor=0.03)
     return sketch
 
-# given img gets different colored overlay
-# blue, green, red decide the overlays color
+# given img gets sepia colored overlay
 # intensity decides intensity of the overlay
-def filter_color_overlay(img, blue, green, red, intensity):
+def filter_sepia(img):
     image = cv.cvtColor(img, cv.COLOR_BGR2BGRA)
     width, height, channels = image.shape
-    newBGRA = (blue, green, red, 1)
+    intensity = 0.5
+    newBGRA = (20, 55, 112, 1)
     overlay = np.full((width, height, channels), newBGRA, dtype='uint8')
     cv.addWeighted(overlay, intensity, image, 1.0, 0, image)
     image = cv.cvtColor(image, cv.COLOR_BGRA2BGR)
@@ -37,8 +38,8 @@ def filter_color_overlay(img, blue, green, red, intensity):
 # given img becomes pixelated
 # pixels are pixelsize x pixelsize large
 def filter_pixel(img):
-    gray = filter_gray(img)
-    height, width = gray.shape
+    height = img.shape[0]
+    width = img.shape[1]
     pixelSize = 10
     newWidth = width // pixelSize
     newHeight = height // pixelSize
@@ -49,8 +50,8 @@ def filter_pixel(img):
 # given img becomes blurry
 # ksize=(x,y) decides how many surrounding pixels get effected on x and y axis (bigger number more blurred)
 def filter_blurred(img):
-    gray = filter_gray(img)
-    height, width = gray.shape
+    height = img.shape[0]
+    width = img.shape[1]
     effect = int((height+width) / 100)
     blurred = cv.blur(img, ksize=(effect,effect))
     return blurred
@@ -82,7 +83,6 @@ def filter_edge(img):
         [neighbor,neighbor,neighbor]
     ])
     edge = cv.filter2D(gray, ddepth = -1, kernel = edges)
-    #edge = cv.Laplacian(gray, ddepth=-1)  #other way for edges not using filter2D but not as visible
     return edge
 
 # rotates image 90 degrees clockwise 
@@ -90,24 +90,30 @@ def filter_rotate(img):
     rotate = cv.rotate(img, cv.ROTATE_90_CLOCKWISE)
     return rotate
 
-# adds a border in dark purple
-def filter_border(img, blue, green, red):
-    borderWidth = 50
-    border = cv.copyMakeBorder(img, borderWidth, borderWidth, borderWidth, borderWidth, borderType=cv.BORDER_CONSTANT, value=(blue, green, red))
+# adds a border in orange
+def filter_border(img):
+    height = img.shape[0]
+    width = img.shape[1]
+    borderWidth = width // 10
+    borderHeight = height // 10
+    border = cv.copyMakeBorder(img, borderHeight, borderHeight, borderWidth, borderWidth, borderType=cv.BORDER_CONSTANT, value=(0, 165, 255))
+    border = cv.resize(border, dsize=(width, height), interpolation=cv.INTER_LINEAR) 
     return border
 
 # adds a reflection top, left
 def filter_reflect(img):
-    gray = filter_gray(img)
-    height, width = gray.shape
+    height = img.shape[0]
+    width = img.shape[1]
     reflect = cv.copyMakeBorder(img, 0, height, width, 0, borderType=cv.BORDER_REFLECT)
+    reflect = cv.resize(reflect, dsize=(width, height), interpolation=cv.INTER_LINEAR) 
     return reflect
 
 # repeats image top left
 def filter_wBorder(img):
-    gray = filter_gray(img)
-    height, width = gray.shape
+    height = img.shape[0]
+    width = img.shape[1]
     wBorder = cv.copyMakeBorder(img, 0, height, width, 0, borderType=cv.BORDER_WRAP)
+    wBorder = cv.resize(wBorder, dsize=(width, height), interpolation=cv.INTER_LINEAR) 
     return wBorder
 
 # flips the image
