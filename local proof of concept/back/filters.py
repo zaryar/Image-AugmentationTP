@@ -38,8 +38,8 @@ def filter_sepia(img):
 # given img becomes pixelated
 # pixels are pixelsize x pixelsize large
 def filter_pixel(img):
-    gray = filter_gray(img)
-    height, width = gray.shape
+    height = img.shape[0]
+    width = img.shape[1]
     pixelSize = 10
     newWidth = width // pixelSize
     newHeight = height // pixelSize
@@ -50,8 +50,8 @@ def filter_pixel(img):
 # given img becomes blurry
 # ksize=(x,y) decides how many surrounding pixels get effected on x and y axis (bigger number more blurred)
 def filter_blurred(img):
-    gray = filter_gray(img)
-    height, width = gray.shape
+    height = img.shape[0]
+    width = img.shape[1]
     effect = int((height+width) / 100)
     blurred = cv.blur(img, ksize=(effect,effect))
     return blurred
@@ -92,8 +92,8 @@ def filter_rotate(img):
 
 # adds a border in orange
 def filter_border(img):
-    gray = filter_gray(img)
-    height, width = gray.shape
+    height = img.shape[0]
+    width = img.shape[1]
     borderWidth = width // 10
     borderHeight = height // 10
     border = cv.copyMakeBorder(img, borderHeight, borderHeight, borderWidth, borderWidth, borderType=cv.BORDER_CONSTANT, value=(0, 165, 255))
@@ -102,16 +102,16 @@ def filter_border(img):
 
 # adds a reflection top, left
 def filter_reflect(img):
-    gray = filter_gray(img)
-    height, width = gray.shape
+    height = img.shape[0]
+    width = img.shape[1]
     reflect = cv.copyMakeBorder(img, 0, height, width, 0, borderType=cv.BORDER_REFLECT)
     reflect = cv.resize(reflect, dsize=(width, height), interpolation=cv.INTER_LINEAR) 
     return reflect
 
 # repeats image top left
 def filter_wBorder(img):
-    gray = filter_gray(img)
-    height, width = gray.shape
+    height = img.shape[0]
+    width = img.shape[1]
     wBorder = cv.copyMakeBorder(img, 0, height, width, 0, borderType=cv.BORDER_WRAP)
     wBorder = cv.resize(wBorder, dsize=(width, height), interpolation=cv.INTER_LINEAR) 
     return wBorder
