@@ -59,34 +59,3 @@ def filter_video(video_path,apply, filename ):
     source.release()
     output.release()
 cv.destroyAllWindows()
-
-
-
-def grayscale_video(video_path, filename):
-    source = cv.VideoCapture(video_path)
-
-    #Defining codec
-    fourcc = cv.VideoWriter_fourcc(* CODEC) ##we might need to change to codec on the linux machine 
-    output = cv.VideoWriter(filename, fourcc, 24.0, (852,  480),)
-
-    while source.isOpened():
-        ret, frame = source.read()
-      
-        if not ret:
-            print("Can't receive frame ( video has ended?). Exiting..")
-            break
-        frame = cv.resize(frame, (852,480))
-        frame = gray_filter(frame)
-        frame = cv.cvtColor(frame, cv.COLOR_GRAY2BGR)  ### this needs to be done because the codec needs 3 color channels
-        #actual writing
-        output.write(frame)
-
-        cv.imshow('frame',frame)
-        if cv.waitKey(1)== ord("d"):
-            break
-    source.release()
-    output.release()
-cv.destroyAllWindows()
-
-
-grayscale_video(PATH, FILENAME)
