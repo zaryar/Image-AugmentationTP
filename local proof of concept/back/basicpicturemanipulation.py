@@ -48,3 +48,8 @@ def show_image(img, gray):
 
 def write_image(gray):
         cv.imwrite(get_path("output",test), gray)
+
+def image_filter(path, apply, filename):
+        img = cv.imread(path)
+        img = apply(img)
+        cv.imwrite(filename, filename)
