@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const path = require('path');
 const fs = require("fs");
+const { convertArrayToCSV } = require('convert-array-to-csv');
 //
 
 app.use(express.static('public'));  /* tells expressJS where to find css and js files */
@@ -53,8 +54,25 @@ app.post("/upload", upload.single('image'), (req, res) => {
             updateFilter = "filter3"
         }else{
             updateFilter = "none"
-        }
+        }    
     }
+    const header = ['format', 'filter'];
+    const dataArrays = [
+        [updateData, updateFilter]
+    ];
+
+    const csvFromArrayOfArrays = convertArrayToCSV(dataArrays, {
+        header,
+        separator: ','
+    });
+    
+    fs.writeFile("public/config.csv", csvFromArrayOfArrays, err => {
+        if (err) {
+            console.err;
+            return;
+        }
+    })
+
     fs.writeFile("public/configData.txt", updateData + " ," + updateFilter, err => {
         if (err) {
             console.err;
