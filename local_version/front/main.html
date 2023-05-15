@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <h1 style="color: #719fdc;">
+            Image Augmentation
+        </h1>
+        <div class="Header">
+            <a href="#Foto" ,style=>foto filter</a>
+            <a href="#Video">video filter</a>
+        </div>
+    </header>
+    <form method="POST" action="/upload" enctype="multipart/form-data">
+        <input type="file" id="image_input" name="image">
+        <p>
+            <input type="checkbox" id="filter1" name="filter" value="filter1">
+            <label for="filter1">filter1</label><br>
+            <input type="checkbox" id="filter2" name="filter" value="filter2">
+            <label for="filter1">filter2</label><br>
+            <input type="checkbox" id="filter3" name="filter" value="filter3">
+            <label for="filter1">filter3</label><br>
+        </p>
+        <input type="submit" name = "submit" value="image">
+        <input type="submit" name = "submit" value="video">
+    </form>
+
+    <button onclick="snapshot('snapshot')"> snapshot</button>
+    
+    <!-- new button stop and start the video recording -->
+    
+    <button onclick="record()"> start video stream</button>
+    <button onclick="stop_record()"> stop video stream</button>
+
+    
+    <div id= "display_image"></div>
+    <img src="/images/input/image.png" width="300" alt="">
+
+    <script src="/javaScripts/script.js"></script>
+
+    <!-- code for the webcam :) -->
+    <video id="myVidPlayer" controls muted autoplay></video>
+
+    
+    <div class="mycanvas">
+        <h6>Captured snapshot</h6>
+        <canvas></canvas>
+    </div>
+    
+    <script src="/javaScripts/webcam.js"></script>
+
+</body>
+
+</html>
