@@ -85,11 +85,6 @@ def filter_edge(img):
     edge = cv.filter2D(gray, ddepth = -1, kernel = edges)
     return edge
 
-# rotates image 90 degrees clockwise 
-def filter_rotate(img):
-    rotate = cv.rotate(img, cv.ROTATE_90_CLOCKWISE)
-    return rotate
-
 # adds a border in orange
 def filter_border(img):
     height = img.shape[0]
