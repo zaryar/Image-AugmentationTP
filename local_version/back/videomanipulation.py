@@ -9,10 +9,10 @@ import cv2 as cv
 
 
 
-PATH = "./local proof of concept/data/input/test_vid.mp4"
-FILENAME = './local proof of concept/data/output/test_vid.avi'
+PATH = "./local_version/data/input/test_vid.mp4"
+FILENAME = './local_version/data/output/test_vid.avi'
 CODEC = 'WMV1'
-ASPECTPATH = "./local proof of concept/data/input/aspect_test.mp4" #we can use that to show that the format think works
+ASPECTPATH = "./local_version/data/input/aspect_test.mp4" #we can use that to show that the format think works
 
 #this is a testing function for us if we are honest 
 def show_video(video_path):

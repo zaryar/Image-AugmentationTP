@@ -54,4 +54,4 @@ def image_filter(path, apply, filename):
         img = apply(img)
         cv.imwrite(filename, img)
 
-image_filter("local proof of concept/data/input/test.jpg", filter_bw, "local proof of concept/data/output/test.jpg")
+image_filter("local_version/data/input/test.jpg", filter_bw, "local_version/data/output/test.jpg")
