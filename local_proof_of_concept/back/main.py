@@ -18,5 +18,6 @@ while True:
         format = f.readline()
         filter = f.readline()
         os.remove("./local_proof_of_concept/front/public/configData.txt")
-        filter_video(PATH, dict["filter1"], FILENAME)
+        print(dict[filter])
+        filter_video(PATH, dict[filter], FILENAME)
 
