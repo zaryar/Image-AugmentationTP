@@ -18,10 +18,14 @@ const storage = multer.diskStorage({
         console.log(file)
         // cb(null, Date.now() + path.extname(file.originalname))
         if (path.extname(file.originalname).length > 0) {
-            cb(null, "test" + path.extname(file.originalname))
+            cb(null, "image" + path.extname(file.originalname))
         } else {
-            cb(null, "test" + i + ".png")
-            i = i + 1;
+            cb(null, "frame" + i + ".png")
+            i++;
+            if(i > 25){
+                i = 0
+            }
+
         }
     }
 })
@@ -37,26 +41,18 @@ app.get("/upload", (req, res) => {
 var updateData = ""
 var updateFilter = ""
 app.post("/upload", upload.single('image'), (req, res) => {
-    // res.send("Image Uploader");
     // res.status(204).send();
-    if (req.body.submit == "image" || req.body.submit == "snapshot" || req.body.submit == "stream") {
+    //update configData
+    if (req.body.submit == "image" || req.body.submit == "snapshot" || req.body.submit == "stream" || req.body.submit == "video") {
         updateData = req.body.submit
         if (req.body.filter == "filter1") {
             updateFilter = "filter1"
         } else if (req.body.filter == "filter2") {
             updateFilter = "filter2"
-        } else {
+        } else if (req.body.filter == "filter3"){
             updateFilter = "filter3"
-        }
-    }
-    if (req.body.submit == "video") {
-        updateData = "video"
-        if (req.body.filter == "filter1") {
-            updateFilter = "filter1"
-        } else if (req.body.filter == "filter2") {
-            updateFilter = "filter2"
-        } else {
-            updateFilter = "filter3"
+        }else{
+            updateFilter = "none"
         }
     }
     fs.writeFile("public/configData.txt", updateData + " ," + updateFilter, err => {
@@ -72,7 +68,6 @@ app.post("/upload", upload.single('image'), (req, res) => {
         res.send(null)
     }
 })
-
 
 app.use(express.static('public'));
 

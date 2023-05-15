@@ -70,14 +70,13 @@ var intervalId
 function record(){
     intervalId = window.setInterval(function(){
         snapshot("stream")
-      }, 500);
+      }, 50);
 }
 
 // function to stop the video record
 function stop_record(){
     clearInterval(intervalId)
 }
-
 
 window.navigator.mediaDevices.getUserMedia({ video: true, audio: true })
     .then(stream => {
