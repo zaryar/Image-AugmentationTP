@@ -27,6 +27,6 @@ def filter_numbers(img):
     counter = 0
     for landmark in landmarks:
         for x,y in landmark[0]:
-            counter = counter + 1
             cv.putText(img, str(counter), (int(x),int(y)), cv.FONT_HERSHEY_PLAIN, 0.5, (0, 255, 0), 1, cv.LINE_AA)
+            counter = counter + 1
     return img
