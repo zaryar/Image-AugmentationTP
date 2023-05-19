@@ -20,11 +20,7 @@ const storage = multer.diskStorage({
         if (path.extname(file.originalname).length > 0) {
             cb(null, "image" + path.extname(file.originalname))
         } else {
-            cb(null, "frame" + i + ".png")
-            i++;
-            if(i > 25){
-                i = 0
-            }
+            cb(null, "frame" + ".png")
 
         }
     }
