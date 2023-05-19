@@ -1,14 +1,14 @@
-//library
+//libraries
 const express = require("express");
 const app = express();
 const path = require('path');
 const fs = require("fs");
+const { convertArrayToCSV } = require('convert-array-to-csv');
 //
 
 app.use(express.static('public'));  /* tells expressJS where to find css and js files */
 
 // function that gives the name to the new files added to input
-var i = 0;
 const multer = require('multer');
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -51,12 +51,24 @@ app.post("/upload", upload.single('image'), (req, res) => {
             updateFilter = "none"
         }
     }
-    fs.writeFile("public/configData.txt", updateData + " ," + updateFilter, err => {
+    
+    const header = ['format', 'filter'];
+    const dataArrays = [
+        [updateData, updateFilter]
+    ];
+
+    const csvFromArrayOfArrays = convertArrayToCSV(dataArrays, {
+        header,
+        separator: ','
+    });
+    
+    fs.writeFile("public/config.csv", csvFromArrayOfArrays, err => {
         if (err) {
             console.err;
             return;
         }
     })
+
     if (updateData != "stream") {
         res.sendFile(__dirname + '/main.html');
     } else {
