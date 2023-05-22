@@ -1,5 +1,4 @@
 import cv2 as cv
-from PIL import Image
 from filters import filter_gray
 
 # loading and creating needed detectors and landmarks
