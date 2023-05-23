@@ -1,9 +1,24 @@
 //libraries
-const express = require("express");
-const app = express();
 const path = require('path');
 const fs = require("fs");
 const { convertArrayToCSV } = require('convert-array-to-csv');
+
+// create express server
+const express = require('express');
+const app = express();
+const http = require('http');
+const server = http.createServer(app);
+
+// create socket.io
+const { Server } = require("socket.io");
+const io = new Server(server);
+
+// function to tell the socket what to do if a user connects 
+io.on('connection', (socket) => {
+    console.log('a user connected');
+    sendLatestFile();
+  });
+
 //
 
 app.use(express.static('public'));  /* tells expressJS where to find css and js files */
@@ -70,14 +85,29 @@ app.post("/upload", upload.single('image'), (req, res) => {
     })
 
     if (updateData != "stream") {
-        res.sendFile(__dirname + '/main.html');
+
+        setTimeout(function (){
+            res.sendFile(__dirname + '/main.html');          
+          }, 1000); 
     } else {
         // In case of a stream, we donÇt want the website to reload
         res.send(null)
     }
 })
 
+// upload images in livetime
+let filePath = __dirname + '/public/images/input/frame.png';
+
+fs.watchFile(filePath, sendLatestFile);
+
+function sendLatestFile () {
+	fs.readFile(filePath, function(err, buf){
+		let imgData = buf.toString('base64');
+		io.emit('update', {image: imgData});
+	});
+}
+
 app.use(express.static('public'));
 
-app.listen(3001);
+server.listen(3001);
 console.log("3001 is the port");
