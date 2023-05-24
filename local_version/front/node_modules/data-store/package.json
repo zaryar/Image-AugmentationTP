@@ -1,0 +1,87 @@
+{
+  "name": "data-store",
+  "description": "Easily persist and load config data. No dependencies.",
+  "version": "4.0.3",
+  "homepage": "https://github.com/jonschlinkert/data-store",
+  "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
+  "contributors": [
+    "Brian Woodward (https://twitter.com/doowb)",
+    "Jamen Marz (jamenmarz.com)",
+    "Jon Schlinkert (http://twitter.com/jonschlinkert)",
+    "Olsten Larck (https://i.am.charlike.online)"
+  ],
+  "repository": "jonschlinkert/data-store",
+  "bugs": {
+    "url": "https://github.com/jonschlinkert/data-store/issues"
+  },
+  "license": "MIT",
+  "files": [
+    "index.js",
+    "utils.js"
+  ],
+  "main": "index.js",
+  "engines": {
+    "node": ">=8"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "get-value": "^3.0.1",
+    "set-value": "^3.0.1"
+  },
+  "devDependencies": {
+    "delete": "^1.1.0",
+    "gulp-format-md": "^2.0.0",
+    "mocha": "^6.2.0"
+  },
+  "keywords": [
+    "app",
+    "cache",
+    "config",
+    "config-store",
+    "configstore",
+    "data",
+    "defaults",
+    "get",
+    "has",
+    "has-own",
+    "hash",
+    "json",
+    "kv",
+    "key-value",
+    "local",
+    "object",
+    "options",
+    "own",
+    "persist",
+    "save",
+    "set",
+    "storage",
+    "store",
+    "union",
+    "write"
+  ],
+  "verb": {
+    "run": true,
+    "toc": true,
+    "layout": "default",
+    "tasks": [
+      "readme"
+    ],
+    "plugins": [
+      "gulp-format-md"
+    ],
+    "related": {
+      "list": [
+        "get-value",
+        "has-value",
+        "set-value",
+        "write"
+      ]
+    },
+    "lint": {
+      "reflinks": true
+    }
+  }
+}

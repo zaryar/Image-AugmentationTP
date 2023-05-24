@@ -42,7 +42,7 @@
 
     
     <div id= "display_image"></div>
-    <img src="/images/input/image.png" width="300" alt="">
+    <img src="/images/output/image.png" width="300" alt="">
 
     <script src="/javaScripts/script.js"></script>
 
@@ -56,6 +56,20 @@
     </div>
     
     <script src="/javaScripts/webcam.js"></script>
+
+    <!-- code for socket.io and live images -->
+    <script src="/socket.io/socket.io.js"></script>
+
+    <div id="streamImages" class="streamImages"></div>
+    
+    <script>
+        var socket = io();
+		
+		socket.on('update', function(data) {
+			console.log('update',data);
+            document.getElementById("streamImages").style.backgroundImage = 'url(data:image/jpeg;base64,' + data.image + ')';	
+		});
+    </script>
 
 </body>
 
