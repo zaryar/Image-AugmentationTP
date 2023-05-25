@@ -25,6 +25,7 @@ app.use(express.static('public'));  /* tells expressJS where to find css and js 
 
 // function that gives the name to the new files added to input
 const multer = require('multer');
+var i = 0;
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'public/images/input')
@@ -37,7 +38,7 @@ const storage = multer.diskStorage({
         } else {
             cb(null, "frame" + i + ".png")
             i++;
-            if(i > 25){
+            if(i > 24){
                 i = 0
             }
 
