@@ -64,7 +64,7 @@ while True:
 
         print(config)
         format = "stream"
-        filter = "filter2"
+        filter = "filter3"
         print (dict[filter])
         print(format == "stream")
         print(type(format))
