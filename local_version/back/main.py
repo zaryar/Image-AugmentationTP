@@ -10,8 +10,10 @@ import pandas as pd
 PATH = "./local_version/front/public/images/input/"
 FILENAME = './local_version/front/public/images/output/'
 CONFIG = "./local_version/front/public/config.csv"
+STOPP = "./local_version/front/public/stop.txt"
 
-IMAGE = "frame.png"
+FRAME = "frame.png"
+IMAGE = "image.png"
 VIDEO = "test_vid.mp4"
 
 
@@ -20,32 +22,33 @@ VIDEO = "test_vid.mp4"
 dict = {"filter1": filter_blurred , "filter2" : filter_flip, "filter3" : filter_pixel }
 
 def stream25(PATH, filter,FILENAME):
-    frame_available = True
-    while frame_available:
+    stream_active = True
+    while stream_active:
         for frame in range(25):
             path = PATH + "frame" + str(frame) + ".png"
-            print(PATH)
             filename = FILENAME + "frame" + str(frame) + ".png"
-            if os.path.exists(path):            
+            if os.path.exists(path):
                 image_filter(path, filter, filename)
-                os.remove(path)
-            else: 
+            else:
                 time.sleep(0.05)
-                if False == os.path.exists(PATH):
-                    frame_available = False
-                    break
+                if os.path.exists(path):
+                    image_filter(path, filter, filename)
+            stream_active = os.path.exists(STOPP) == False
+             
+
 
 def stream(PATH, filter, FILENAME):
     frame_available = True
     while frame_available:
-        path = PATH + IMAGE
+        path = PATH + FRAME
         filename = FILENAME + IMAGE
         print(path, filename)
         if os.path.exists(path):            
                 image_filter(path, filter, filename)
-                #os.remove(path)
+                time.sleep(1)
+                # os.remove(path)
         else: 
-            time.sleep(0.05)
+            time.sleep(4)
             if os.path.exists(path):            
                 image_filter(path, filter, filename)
                 #os.remove(path)
@@ -55,24 +58,25 @@ def stream(PATH, filter, FILENAME):
             
 
 print(os.path.exists(CONFIG))
+print(os.path.exists('./front/public/config.csv'))
 
 #READ CONFIG FILE
 while True:
     file_exists = os.path.exists(CONFIG)
     if file_exists:
         config = pd.read_csv(CONFIG)
-
-        print(config)
+        config = config.to_string()
+        
         format = "stream"
-        filter = "filter2"
+        filter = "filter3"
         print (dict[filter])
         print(format == "stream")
         print(type(format))
 
         os.remove(CONFIG)
         if format == "stream":
-            print(PATH, dict[filter] , FILENAME)
-            stream(PATH, dict[filter], FILENAME)
+            print(PATH, dict[filter], FILENAME)
+            stream25(PATH, dict[filter], FILENAME)
         elif format == "video":
             
             filter_video(PATH + VIDEO, dict[filter], FILENAME + VIDEO)
@@ -81,4 +85,3 @@ while True:
 
         print(dict[filter])
         
-
