@@ -50,8 +50,11 @@ def write_image(gray):
         cv.imwrite(get_path("output",test), gray)
 
 def image_filter(path, apply, filename):
-        img = cv.imread(path)
-        img = apply(img)
-        cv.imwrite(filename, img)
+        try:
+                img = cv.imread(path)
+                img = apply(img)
+                cv.imwrite(filename, img)
+        except:
+               print("zu schnell")
 
 image_filter("local_version/data/input/test.jpg", filter_bw, "local_version/data/output/test.jpg")

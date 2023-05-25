@@ -35,7 +35,7 @@ def stream25(PATH, filter,FILENAME):
                 if os.path.exists(path):
                     image_filter(path, filter, filename)
             stream_active = os.path.exists(STOPP) == False
-            time.sleep(1)
+            time.sleep(0.04)
              
 
 

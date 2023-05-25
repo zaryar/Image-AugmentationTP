@@ -70,7 +70,7 @@ var intervalId
 function record(){
     intervalId = window.setInterval(function(){
         snapshot("stream")
-      }, 50);
+      }, 40);
 }
 
 // function to stop the video record
