@@ -7,11 +7,12 @@ import os
 import pandas as pd
 
 
-PATH = "./local_version/front/public/images/input/"
-FILENAME = './local_version/front/public/images/output/'
-CONFIG = "./local_version/front/public/config.csv"
+PATH = "./front/public/images/input/"
+FILENAME = './front/public/images/output/'
+CONFIG = "./front/public/config.csv"
 
-IMAGE = "frame.png"
+FRAME = "frame.png"
+IMAGE = "image.png"
 VIDEO = "test_vid.mp4"
 
 
@@ -30,7 +31,7 @@ def stream25(PATH, filter,FILENAME):
                 image_filter(path, filter, filename)
                 os.remove(path)
             else: 
-                time.sleep(0.05)
+                time.sleep(4)
                 if False == os.path.exists(PATH):
                     frame_available = False
                     break
@@ -38,14 +39,15 @@ def stream25(PATH, filter,FILENAME):
 def stream(PATH, filter, FILENAME):
     frame_available = True
     while frame_available:
-        path = PATH + IMAGE
+        path = PATH + FRAME
         filename = FILENAME + IMAGE
         print(path, filename)
         if os.path.exists(path):            
                 image_filter(path, filter, filename)
-                #os.remove(path)
+                time.sleep(1)
+                os.remove(path)
         else: 
-            time.sleep(0.05)
+            time.sleep(4)
             if os.path.exists(path):            
                 image_filter(path, filter, filename)
                 #os.remove(path)
@@ -55,14 +57,15 @@ def stream(PATH, filter, FILENAME):
             
 
 print(os.path.exists(CONFIG))
+print(os.path.exists('./front/public/config.csv'))
 
 #READ CONFIG FILE
 while True:
     file_exists = os.path.exists(CONFIG)
     if file_exists:
-        config = pd.read_csv(CONFIG)
+        #config = pd.read_csv(CONFIG)
 
-        print(config)
+        #print(config)
         format = "stream"
         filter = "filter3"
         print (dict[filter])
