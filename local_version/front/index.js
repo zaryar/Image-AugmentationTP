@@ -114,7 +114,8 @@ app.post("/upload", upload.single('image'), (req, res) => {
 // upload images in livetime
 let filePath = __dirname + '/public/images/output/frame.png';
 
-fs.watchFile(filePath, sendLatestFile);
+fs.watchFile(filePath, {interval: 40}, sendLatestFile);
+
 
 function sendLatestFile () {
 	fs.readFile(filePath, function(err, buf){
