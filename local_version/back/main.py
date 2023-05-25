@@ -26,7 +26,8 @@ def stream25(PATH, filter,FILENAME):
     while stream_active:
         for frame in range(25):
             path = PATH + "frame" + str(frame) + ".png"
-            filename = FILENAME + "frame" + str(frame) + ".png"
+            filename = FILENAME + FRAME
+            print(path, filename)
             if os.path.exists(path):
                 image_filter(path, filter, filename)
             else:
@@ -34,6 +35,7 @@ def stream25(PATH, filter,FILENAME):
                 if os.path.exists(path):
                     image_filter(path, filter, filename)
             stream_active = os.path.exists(STOPP) == False
+            time.sleep(1)
              
 
 

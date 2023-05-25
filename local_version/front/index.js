@@ -112,7 +112,7 @@ app.post("/upload", upload.single('image'), (req, res) => {
 })
 
 // upload images in livetime
-let filePath = __dirname + '/public/images/input/frame.png';
+let filePath = __dirname + '/public/images/output/frame.png';
 
 fs.watchFile(filePath, sendLatestFile);
 
