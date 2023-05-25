@@ -72,9 +72,9 @@ app.post("/upload", upload.single('image'), (req, res) => {
         }
     }
     
-    const header = ['format', 'filter'];
+    const header = [updateData];
     const dataArrays = [
-        [updateData, updateFilter]
+        [updateFilter]
     ];
 
     const csvFromArrayOfArrays = convertArrayToCSV(dataArrays, {
