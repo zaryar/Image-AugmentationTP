@@ -5,7 +5,7 @@ import numpy as np
 import os 
 from filters import filter_bw
 
-test = "Test.jpeg"
+test = "test.jpeg"
 def get_path(folder, image):
     #gets the path to the image and hopefully working on *nix and Windows
     #folder is the name of the folder in data the image is saved in
@@ -54,4 +54,4 @@ def image_filter(path, apply, filename):
         img = apply(img)
         cv.imwrite(filename, img)
 
-image_filter("local_version/data/input/test.jpg", filter_bw, "local_version/data/output/test.jpg")
+# image_filter("./local_version/data/input/test.jpg", filter_bw, "./local_version/data/output/test.jpg")
