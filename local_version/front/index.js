@@ -82,6 +82,17 @@ app.post("/upload", upload.single('image'), (req, res) => {
         separator: ','
     });
     
+    //create stopStream.txt file
+    if(req.body.submit == "stopStream")
+    {
+        fs.writeFile("public/stopStream.txt",",", err => {
+            if(err){
+                console.err;
+                return;
+            }
+        })
+    }
+
     fs.writeFile("public/config.csv", csvFromArrayOfArrays, err => {
         if (err) {
             console.err;

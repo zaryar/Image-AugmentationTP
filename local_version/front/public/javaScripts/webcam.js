@@ -76,6 +76,12 @@ function record(){
 // function to stop the video record
 function stop_record(){
     clearInterval(intervalId)
+    //the button was pushed -> send message to server 
+    var formData = new FormData();
+    formData.append('submit', "stopStream"); 
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST','/upload', false); //creates a conection to the URL
+    xhr.send(formData);
 }
 
 window.navigator.mediaDevices.getUserMedia({ video: true, audio: true })
