@@ -39,3 +39,87 @@ margin: 30px 10px 10px 10px;
     background-position: center;
     background-size: cover;
   }
+
+  form {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  form>div{
+    background-color: aquamarine;
+    
+  }
+  .boxen{
+    width: 200px;
+   align-content: center;
+  }
+
+  /* Dropdown Button */
+.dropbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px;
+  font-size: 20px;
+  border: none;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		"Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: relative;
+  background-color: #454857;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  padding: 4px;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown-content input {
+	width: auto;
+	height: 100%;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	outline: none;
+	cursor: pointer;
+	padding: 4px 8px;
+	background: #454857;
+  transition: all 100ms linear;
+
+}
+.dropdown-content label {
+  color: white;
+  font-size: 14px;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		"Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	
+}
+
+.dropdown-content input:checked {
+	background-color: #04AA6D;
+	color: #fff;
+	box-shadow: 0 1px 1px #0000002e;
+	text-shadow: 0 1px 0px #79485f7a;
+}
+
+.radio input:before {
+	content: attr(label);
+	display: inline-block;
+	text-align: center;
+	width: 100%;
+}
