@@ -14,21 +14,21 @@
         <h1 style="color: #719fdc;">
             Image Augmentation
         </h1>
-        <div class="Header">
-            <a href="#Foto" ,style=>foto filter</a>
-            <a href="#Video">video filter</a>
-        </div>
+
     </header>
     <form method="POST" action="/upload" enctype="multipart/form-data">
         <input type="file" id="image_input" name="image">
-        <p>
-            <input type="checkbox" id="filter1" name="filter" value="filter1">
-            <label for="filter1">filter1</label><br>
-            <input type="checkbox" id="filter2" name="filter" value="filter2">
-            <label for="filter1">filter2</label><br>
-            <input type="checkbox" id="filter3" name="filter" value="filter3">
-            <label for="filter1">filter3</label><br>
-        </p>
+        <div class="dropdown">
+            <button class="dropbtn">Dropdown</button>
+            <div class="dropdown-content">
+                <input type="radio" id="filter1" name="filter" value="filter1">
+                <label for="filter1">filter1</label><br>
+                <input type="radio" id="filter2" name="filter" value="filter2">
+                <label for="filter1">filter2</label><br>
+                <input type="radio" id="filter3" name="filter" value="filter3">
+                <label for="filter1">filter3</label><br>
+            </div>
+        </div>
         <input type="submit" name = "submit" value="image">
         <input type="submit" name = "submit" value="video">
     </form>
