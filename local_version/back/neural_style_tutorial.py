@@ -111,7 +111,7 @@ def image_loader(image_name):
 
 
 style_img = image_loader("local_version/back/neural_style/picasso.jpg")
-content_img = image_loader("local_version/back/neural_style/dancing.jpg")
+content_img = image_loader("local_version/back/neural_style/Cat03.jpg")
 
 assert style_img.size() == content_img.size(), \
     "we need to import style and content images of the same size"
@@ -482,6 +482,7 @@ output = run_style_transfer(cnn, cnn_normalization_mean, cnn_normalization_std,
 
 plt.figure()
 imshow(output, title='Output Image')
+plt.savefig("local_version/back/neural_style/output.jpg")
 
 # sphinx_gallery_thumbnail_number = 4
 plt.ioff()
