@@ -17,9 +17,9 @@ const io = new Server(server);
 io.on('connection', (socket) => {
     console.log('a user connected');
     sendLatestFile();
-  });
+});
 
-//
+
 
 app.use(express.static('public'));  /* tells expressJS where to find css and js files */
 
@@ -31,17 +31,21 @@ const storage = multer.diskStorage({
         cb(null, 'public/images/input')
     },
     filename: (req, file, cb) => {
-        console.log(file)
-        // cb(null, Date.now() + path.extname(file.originalname))
         if (path.extname(file.originalname).length > 0) {
             cb(null, "image" + path.extname(file.originalname))
+            console.log("saved img");
         } else {
-            cb(null, "frame" + i + ".png")
-            i++;
-            if(i > 24){
-                i = 0
+            if (!fs.existsSync('public/images/input/frame.png')) {
+                console.log(file)
+                console.log("frame created")
+                cb(null, "frame.png")
             }
+            else {
+                console.log("frame allready there" + i)
+                i++
+                cb(null, ".ignore")
 
+            }
         }
     }
 })
@@ -65,13 +69,13 @@ app.post("/upload", upload.single('image'), (req, res) => {
             updateFilter = "filter1"
         } else if (req.body.filter == "filter2") {
             updateFilter = "filter2"
-        } else if (req.body.filter == "filter3"){
+        } else if (req.body.filter == "filter3") {
             updateFilter = "filter3"
-        }else{
+        } else {
             updateFilter = "none"
         }
     }
-    
+
     const header = [updateData];
     const dataArrays = [
         [updateFilter]
@@ -81,12 +85,11 @@ app.post("/upload", upload.single('image'), (req, res) => {
         header,
         separator: ','
     });
-    
+
     //create stopStream.txt file
-    if(req.body.submit == "stopStream")
-    {
-        fs.writeFile("public/stopStream.txt",",", err => {
-            if(err){
+    if (req.body.submit == "stopStream") {
+        fs.writeFile("public/stopStream.txt", ",", err => {
+            if (err) {
                 console.err;
                 return;
             }
@@ -102,9 +105,9 @@ app.post("/upload", upload.single('image'), (req, res) => {
 
     if (updateData != "stream") {
 
-        setTimeout(function (){
-            res.sendFile(__dirname + '/main.html');          
-          }, 1000); 
+        setTimeout(function () {
+            res.sendFile(__dirname + '/main.html');
+        }, 1000);
     } else {
         // In case of a stream, we donÇt want the website to reload
         res.send(null)
