@@ -16,7 +16,8 @@ const io = new Server(server);
 // function to tell the socket what to do if a user connects 
 io.on('connection', (socket) => {
     console.log('a user connected');
-    sendLatestFile();
+
+    setInterval(sendLatestFile, 40);
 });
 
 
@@ -117,14 +118,23 @@ app.post("/upload", upload.single('image'), (req, res) => {
 // upload images in livetime
 let filePath = __dirname + '/public/images/output/frame.png';
 
-fs.watchFile(filePath, {interval: 40}, sendLatestFile);
+//fs.watchFile(filePath, { interval: 70 }, sendLatestFile);
 
 
-function sendLatestFile () {
-	fs.readFile(filePath, function(err, buf){
-		let imgData = buf.toString('base64');
-		io.emit('update', {image: imgData});
-	});
+function sendLatestFile() {
+    fs.readFile(filePath, function (err, buf) {
+        if (fs.existsSync("public/images/output/frame.png")) {
+            //console.log("512313");
+            try {
+                let imgData = buf.toString('base64');
+                io.emit('update', { image: imgData });
+                fs.unlinkSync("public/images/output/frame.png");
+            } catch (error) {
+                console.error(error);
+            }
+
+        }
+    });
 }
 
 app.use(express.static('public'));

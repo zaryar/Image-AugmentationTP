@@ -12,6 +12,7 @@ FILENAME = './local_version/front/public/images/output/frame.png'
 CONFIG = "./local_version/front/public/config.csv"
 STOPP = "./local_version/front/public/stop.txt"
 
+
 FRAME = "frame.png"
 IMAGE = "image.png"
 VIDEO = "test_vid.mp4"
@@ -25,13 +26,13 @@ def stream25(PATH, filter,FILENAME):
     stream_active = True
     while stream_active:
         path = PATH + "frame.png"
-        if os.path.exists(path):
+        if os.path.exists(path) and not os.path.exists(FILENAME):
             print(path, FILENAME, filter)
             image_filter(path, filter, FILENAME)
             file = 'frame.png'
-            os.remove(os.path.join(PATH, file))      
+            os.remove(os.path.join(PATH, file))
         stream_active = os.path.exists(STOPP) == False
-        time.sleep(0.04)
+        time.sleep(0.01)
              
 
 
@@ -73,7 +74,7 @@ while True:
 
         os.remove(CONFIG)
         if format == "stream":
-            print(PATH, dict[filter], FILENAME)
+            #print(PATH, dict[filter], FILENAME)
             stream25(PATH, dict[filter], FILENAME)
         elif format == "video":
             
