@@ -8,9 +8,10 @@ import pandas as pd
 
 
 PATH = "./local_version/front/public/images/input/"
+OUTPUTPATH = "./local_version/front/public/images/output/"
 FILENAME = './local_version/front/public/images/output/frame.png'
 CONFIG = "./local_version/front/public/config.csv"
-STOPP = "./local_version/front/public/stop.txt"
+STOPP = "./local_version/front/public/stopStream.txt"
 
 
 FRAME = "frame.png"
@@ -33,8 +34,11 @@ def stream25(PATH, filter,FILENAME):
             os.remove(os.path.join(PATH, file))
         stream_active = os.path.exists(STOPP) == False
         time.sleep(0.04)
+        if os.path.exists(STOPP):
+            os.remove(CONFIG)
+            os.remove(STOPP)
+            return
              
-
 
 def stream(PATH, filter, FILENAME):
     frame_available = True
@@ -66,8 +70,16 @@ while True:
         config = pd.read_csv(CONFIG)
         config = config.to_string()
         
-        format = "stream"
-        filter = "filter3"
+        counter = 0
+        with open(CONFIG, "r") as csvFile:
+            csvReader = csv.reader(csvFile)
+            for row in csvReader:
+                if(counter == 0 ):
+                    format = row[0]
+                    counter+=1
+                    continue
+                filter = row[0]
+
         print (dict[filter])
         print(format == "stream")
         print(type(format))
@@ -78,9 +90,9 @@ while True:
             stream25(PATH, dict[filter], FILENAME)
         elif format == "video":
             
-            filter_video(PATH + VIDEO, dict[filter], FILENAME + VIDEO)
-        elif format == "picture":
-            image_filter(PATH + IMAGE, dict[filter], FILENAME + IMAGE)
+            filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
+        elif format == "image":
+            image_filter(PATH + IMAGE, dict[filter], OUTPUTPATH + IMAGE)
 
         print(dict[filter])
         
