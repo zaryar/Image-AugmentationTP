@@ -32,7 +32,7 @@ def stream25(PATH, filter,FILENAME):
             file = 'frame.png'
             os.remove(os.path.join(PATH, file))
         stream_active = os.path.exists(STOPP) == False
-        time.sleep(0.01)
+        time.sleep(0.04)
              
 
 
