@@ -63,35 +63,22 @@ app.get("/upload", (req, res) => {
 var updateData = ""
 var updateFilter = ""
 app.post("/upload", upload.single('image'), (req, res) => {
-    var additionalFilter = ""
     if (req.body.submit == "image" || req.body.submit == "snapshot" || req.body.submit == "stream" || req.body.submit == "video") {
         updateData = req.body.submit
         filterNumber = req.body.filter
         
-        if (typeof filterNumber[0] === 'string' && typeof filterNumber[1] === 'string' && filterNumber.length == 2) {
-            updateFilter = "filter" + filterNumber[0]
-            additionalFilter = "filter" + filterNumber[1]
-        }
-        else if (typeof filterNumber === 'string') {
+        if (typeof filterNumber === 'string') {
             updateFilter = "filter" + filterNumber
         }else{
-
             updateFilter = "none"
         }
     }
 
     const header = [updateData];
-    var dataArrays = []
-    if(additionalFilter != ""){
-        dataArrays = [
-            [updateFilter],[additionalFilter]
-        ];
-    }else{
-        dataArrays = [
-            [updateFilter]
-        ];
-    }
-
+    var dataArrays = [
+        [updateFilter]
+    ];
+    
     const csvFromArrayOfArrays = convertArrayToCSV(dataArrays, {
         header,
         separator: ','
