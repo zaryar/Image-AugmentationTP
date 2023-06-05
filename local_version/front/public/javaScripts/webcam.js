@@ -47,14 +47,44 @@ function snapshot(name) {
 
     
     filterValue = ""
-    if(document.querySelector("#filter1").checked){
-        filterValue = "filter1"
+    if(document.getElementById("1").checked){
+        filterValue = "1"
     }
-    else if(document.querySelector("#filter2").checked){
-        filterValue = "filter2"
+    else if(document.getElementById("2").checked){
+        filterValue = "2"
     }
-    else if(document.querySelector("#filter3").checked){
-        filterValue = "filter3"
+    else if(document.getElementById("3").checked){
+        filterValue = "3"
+    }
+    else if(document.getElementById("4").checked){
+        filterValue = "4"
+    }
+    else if(document.getElementById("5").checked){
+        filterValue = "5"
+    }
+    else if(document.getElementById("6").checked){
+        filterValue = "6"
+    }
+    else if(document.getElementById("7").checked){
+        filterValue = "7"
+    }
+    else if(document.getElementById("8").checked){
+        filterValue = "8"
+    }
+    else if(document.getElementById("9").checked){
+        filterValue = "9"
+    }
+    else if(document.getElementById("10").checked){
+        filterValue = "10"
+    }
+    else if(document.getElementById("11").checked){
+        filterValue = "11"
+    }
+    else if(document.getElementById("12").checked){
+        filterValue = "12"
+    }
+    else if(document.getElementById("13").checked){
+        filterValue = "13"
     }
     formData.append('filter', filterValue);
     formData.append('submit', name); 

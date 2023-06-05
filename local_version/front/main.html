@@ -21,13 +21,26 @@
     </header>
     <form method="POST" action="/upload" enctype="multipart/form-data">
         <input type="file" id="image_input" name="image">
+        <!-- dropdown menu -->
         <p>
-            <input type="checkbox" id="filter1" name="filter" value="filter1">
-            <label for="filter1">filter1</label><br>
-            <input type="checkbox" id="filter2" name="filter" value="filter2">
-            <label for="filter1">filter2</label><br>
-            <input type="checkbox" id="filter3" name="filter" value="filter3">
-            <label for="filter1">filter3</label><br>
+            <div id="list1" class="dropdown-check-list" tabindex="100">
+                <span class="anchor">Select filter</span>
+                <ul class="items">
+                  <li><input type="checkbox" id="1" name="filter" value="1" />Filter 1 </li>
+                  <li><input type="checkbox" id="2" name="filter" value="2" />Filter 2</li>
+                  <li><input type="checkbox" id="3" name="filter" value="3"/>Filter 3 </li>
+                  <li><input type="checkbox" id="4" name="filter" value="4"/>Filter 4 </li>
+                  <li><input type="checkbox" id="5" name="filter" value="5"/>Filter 5 </li>
+                  <li><input type="checkbox" id="6" name="filter" value="6"/>Filter 6 </li>
+                  <li><input type="checkbox" id="7" name="filter" value="7"/>Filter 7</li>
+                  <li><input type="checkbox" id="8" name="filter" value="8"/>Filter 8</li>
+                  <li><input type="checkbox" id="9" name="filter" value="9"/>Filter 9</li>
+                  <li><input type="checkbox" id="10" name="filter" value="10"/>Filter 10</li>
+                  <li><input type="checkbox" id="11" name="filter" value="11"/>Filter 11</li>
+                  <li><input type="checkbox" id="12" name="filter" value="12"/>Filter 12</li>
+                  <li><input type="checkbox" id="13" name="filter" value="13"/>Filter 13</li>
+                </ul>
+              </div>
         </p>
         <input type="submit" name = "submit" value="image">
         <input type="submit" name = "submit" value="video">
@@ -38,7 +51,7 @@
     <button onclick="record()"> start video stream</button>
     <button onclick="stop_record()"> stop video stream</button>
 
-    
+
     <div id= "display_image"></div>
     <img src="/images/output/image.png" width="300" alt="">
 

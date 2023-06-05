@@ -26,6 +26,8 @@ app.use(express.static('public'));  /* tells expressJS where to find css and js 
 
 // function that gives the name to the new files added to input
 const multer = require('multer');
+const { Console } = require('console');
+const { type } = require('os');
 var i = 0;
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -62,26 +64,22 @@ app.get("/upload", (req, res) => {
 var updateData = ""
 var updateFilter = ""
 app.post("/upload", upload.single('image'), (req, res) => {
-    // res.status(204).send();
-    //update configData
     if (req.body.submit == "image" || req.body.submit == "snapshot" || req.body.submit == "stream" || req.body.submit == "video") {
         updateData = req.body.submit
-        if (req.body.filter == "filter1") {
-            updateFilter = "filter1"
-        } else if (req.body.filter == "filter2") {
-            updateFilter = "filter2"
-        } else if (req.body.filter == "filter3") {
-            updateFilter = "filter3"
-        } else {
+        filterNumber = req.body.filter
+        
+        if (typeof filterNumber === 'string') {
+            updateFilter = "filter" + filterNumber
+        }else{
             updateFilter = "none"
         }
     }
 
     const header = [updateData];
-    const dataArrays = [
+    var dataArrays = [
         [updateFilter]
     ];
-
+    
     const csvFromArrayOfArrays = convertArrayToCSV(dataArrays, {
         header,
         separator: ','
@@ -96,7 +94,7 @@ app.post("/upload", upload.single('image'), (req, res) => {
             }
         })
     }
-
+    
     fs.writeFile("public/config.csv", csvFromArrayOfArrays, err => {
         if (err) {
             console.err;
