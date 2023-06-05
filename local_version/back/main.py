@@ -8,7 +8,7 @@ import pandas as pd
 
 
 PATH = "./local_version/front/public/images/input/"
-FILENAME = './local_version/front/public/images/output/'
+FILENAME = './local_version/front/public/images/output/frame.png'
 CONFIG = "./local_version/front/public/config.csv"
 STOPP = "./local_version/front/public/stop.txt"
 
@@ -24,18 +24,14 @@ dict = {"filter1": filter_blurred , "filter2" : filter_flip, "filter3" : filter_
 def stream25(PATH, filter,FILENAME):
     stream_active = True
     while stream_active:
-        for frame in range(25):
-            path = PATH + "frame" + str(frame) + ".png"
-            filename = FILENAME + FRAME
-            print(path, filename)
-            if os.path.exists(path):
-                image_filter(path, filter, filename)
-            else:
-                time.sleep(0.05)
-                if os.path.exists(path):
-                    image_filter(path, filter, filename)
-            stream_active = os.path.exists(STOPP) == False
-            time.sleep(0.04)
+        path = PATH + "frame.png"
+        if os.path.exists(path):
+            print(path, FILENAME, filter)
+            image_filter(path, filter, FILENAME)
+            file = 'frame.png'
+            os.remove(os.path.join(PATH, file))      
+        stream_active = os.path.exists(STOPP) == False
+        time.sleep(0.04)
              
 
 
