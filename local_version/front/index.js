@@ -16,32 +16,39 @@ const io = new Server(server);
 // function to tell the socket what to do if a user connects 
 io.on('connection', (socket) => {
     console.log('a user connected');
-    sendLatestFile();
-  });
 
-//
+    setInterval(sendLatestFile, 40);
+});
+
+
 
 app.use(express.static('public'));  /* tells expressJS where to find css and js files */
 
 // function that gives the name to the new files added to input
 const multer = require('multer');
+const { Console } = require('console');
+const { type } = require('os');
 var i = 0;
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'public/images/input')
     },
     filename: (req, file, cb) => {
-        console.log(file)
-        // cb(null, Date.now() + path.extname(file.originalname))
         if (path.extname(file.originalname).length > 0) {
             cb(null, "image" + path.extname(file.originalname))
+            console.log("saved img");
         } else {
-            cb(null, "frame" + i + ".png")
-            i++;
-            if(i > 24){
-                i = 0
+            if (!fs.existsSync('public/images/input/frame.png')) {
+                console.log(file)
+                console.log("frame created")
+                cb(null, "frame.png")
             }
+            else {
+                console.log("frame allready there" + i)
+                i++
+                cb(null, ".ignore")
 
+            }
         }
     }
 })
@@ -60,39 +67,37 @@ app.post("/upload", upload.single('image'), (req, res) => {
     // res.status(204).send();
     //update configData
     if (req.body.submit == "image" || req.body.submit == "stream" || req.body.submit == "video") {
+      
         updateData = req.body.submit
-        if (req.body.filter == "filter1") {
-            updateFilter = "filter1"
-        } else if (req.body.filter == "filter2") {
-            updateFilter = "filter2"
-        } else if (req.body.filter == "filter3"){
-            updateFilter = "filter3"
+        filterNumber = req.body.filter
+        
+        if (typeof filterNumber === 'string') {
+            updateFilter = "filter" + filterNumber
         }else{
             updateFilter = "none"
         }
     }
-    
+
     const header = [updateData];
-    const dataArrays = [
+    var dataArrays = [
         [updateFilter]
     ];
-
+    
     const csvFromArrayOfArrays = convertArrayToCSV(dataArrays, {
         header,
         separator: ','
     });
-    
+
     //create stopStream.txt file
-    if(req.body.submit == "stopStream")
-    {
-        fs.writeFile("public/stopStream.txt",",", err => {
-            if(err){
+    if (req.body.submit == "stopStream") {
+        fs.writeFile("public/stopStream.txt", ",", err => {
+            if (err) {
                 console.err;
                 return;
             }
         })
     }
-
+    
     fs.writeFile("public/config.csv", csvFromArrayOfArrays, err => {
         if (err) {
             console.err;
@@ -102,9 +107,9 @@ app.post("/upload", upload.single('image'), (req, res) => {
 
     if (updateData != "stream") {
 
-        setTimeout(function (){
-            res.sendFile(__dirname + '/main.html');          
-          }, 1000); 
+        setTimeout(function () {
+            res.sendFile(__dirname + '/main.html');
+        }, 1000);
     } else {
         // In case of a stream, we donÇt want the website to reload
         res.send(null)
@@ -114,14 +119,23 @@ app.post("/upload", upload.single('image'), (req, res) => {
 // upload images in livetime
 let filePath = __dirname + '/public/images/output/frame.png';
 
-fs.watchFile(filePath, {interval: 40}, sendLatestFile);
+//fs.watchFile(filePath, { interval: 70 }, sendLatestFile);
 
 
-function sendLatestFile () {
-	fs.readFile(filePath, function(err, buf){
-		let imgData = buf.toString('base64');
-		io.emit('update', {image: imgData});
-	});
+function sendLatestFile() {
+    fs.readFile(filePath, function (err, buf) {
+        if (fs.existsSync("public/images/output/frame.png")) {
+            //console.log("512313");
+            try {
+                let imgData = buf.toString('base64');
+                io.emit('update', { image: imgData });
+                fs.unlinkSync("public/images/output/frame.png");
+            } catch (error) {
+                console.error(error);
+            }
+
+        }
+    });
 }
 
 app.use(express.static('public'));

@@ -8,9 +8,11 @@ import pandas as pd
 
 
 PATH = "./local_version/front/public/images/input/"
-FILENAME = './local_version/front/public/images/output/'
+OUTPUTPATH = "./local_version/front/public/images/output/"
+FILENAME = './local_version/front/public/images/output/frame.png'
 CONFIG = "./local_version/front/public/config.csv"
-STOPP = "./local_version/front/public/stop.txt"
+STOPP = "./local_version/front/public/stopStream.txt"
+
 
 FRAME = "frame.png"
 IMAGE = "image.png"
@@ -24,20 +26,19 @@ dict = {"filter1": filter_blurred , "filter2" : filter_flip, "filter3" : filter_
 def stream25(PATH, filter,FILENAME):
     stream_active = True
     while stream_active:
-        for frame in range(25):
-            path = PATH + "frame" + str(frame) + ".png"
-            filename = FILENAME + FRAME
-            print(path, filename)
-            if os.path.exists(path):
-                image_filter(path, filter, filename)
-            else:
-                time.sleep(0.05)
-                if os.path.exists(path):
-                    image_filter(path, filter, filename)
-            stream_active = os.path.exists(STOPP) == False
-            time.sleep(0.04)
+        path = PATH + "frame.png"
+        if os.path.exists(path) and not os.path.exists(FILENAME):
+            print(path, FILENAME, filter)
+            image_filter(path, filter, FILENAME)
+            file = 'frame.png'
+            os.remove(os.path.join(PATH, file))
+        stream_active = os.path.exists(STOPP) == False
+        time.sleep(0.04)
+        if os.path.exists(STOPP):
+            os.remove(CONFIG)
+            os.remove(STOPP)
+            return
              
-
 
 def stream(PATH, filter, FILENAME):
     frame_available = True
@@ -69,21 +70,29 @@ while True:
         config = pd.read_csv(CONFIG)
         config = config.to_string()
         
-        format = "stream"
-        filter = "filter3"
+        counter = 0
+        with open(CONFIG, "r") as csvFile:
+            csvReader = csv.reader(csvFile)
+            for row in csvReader:
+                if(counter == 0 ):
+                    format = row[0]
+                    counter+=1
+                    continue
+                filter = row[0]
+
         print (dict[filter])
         print(format == "stream")
         print(type(format))
 
         os.remove(CONFIG)
         if format == "stream":
-            print(PATH, dict[filter], FILENAME)
+            #print(PATH, dict[filter], FILENAME)
             stream25(PATH, dict[filter], FILENAME)
         elif format == "video":
             
-            filter_video(PATH + VIDEO, dict[filter], FILENAME + VIDEO)
-        elif format == "picture":
-            image_filter(PATH + IMAGE, dict[filter], FILENAME + IMAGE)
+            filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
+        elif format == "image":
+            image_filter(PATH + IMAGE, dict[filter], OUTPUTPATH + IMAGE)
 
         print(dict[filter])
         

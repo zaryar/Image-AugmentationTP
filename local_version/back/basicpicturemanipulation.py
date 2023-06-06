@@ -55,6 +55,10 @@ def image_filter(path, apply, filename):
                 img = apply(img)
                 cv.imwrite(filename, img)
         except:
-               print("zu schnell")
+               print("Something went wrong")
+        
+
+        
+        
 
 image_filter("local_version/data/input/test.jpg", filter_bw, "local_version/data/output/test.jpg")
