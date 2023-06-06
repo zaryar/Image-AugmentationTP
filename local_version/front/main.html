@@ -11,12 +11,16 @@
 
 <body>
     <header>
-        <h1>
+        <h1 style="color: #719fdc;">
             Image Augmentation
         </h1>
-
+        <div class="Header">
+            <a href="#Foto" ,style=>foto filter</a>
+            <a href="#Video">video filter</a>
+        </div>
     </header>
     <form method="POST" action="/upload" enctype="multipart/form-data">
+
 
         <div class="boxen">
             <input type="file" id="image_input" name="image">
@@ -96,11 +100,9 @@
         </div>
         
 
+
     </form>
     
-    <script src="/javaScripts/script.js"></script>
-
-        
     <!-- new button stop and start the video recording -->
     
     <button onclick="record()"> start video stream</button>
@@ -111,7 +113,6 @@
     <img src="/images/output/image.png" width="300" alt="">
 
     <script src="/javaScripts/script.js"></script>
-
 
     <!-- code for the webcam :) -->
     <video id="myVidPlayer" controls muted autoplay></video>
