@@ -64,7 +64,10 @@ app.get("/upload", (req, res) => {
 var updateData = ""
 var updateFilter = ""
 app.post("/upload", upload.single('image'), (req, res) => {
-    if (req.body.submit == "image" || req.body.submit == "snapshot" || req.body.submit == "stream" || req.body.submit == "video") {
+    // res.status(204).send();
+    //update configData
+    if (req.body.submit == "image" || req.body.submit == "stream" || req.body.submit == "video") {
+      
         updateData = req.body.submit
         filterNumber = req.body.filter
         
