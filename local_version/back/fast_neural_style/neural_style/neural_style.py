@@ -243,8 +243,8 @@ def main():
     if args.cuda and not torch.cuda.is_available():
         print("ERROR: cuda is not available, try running on CPU")
         sys.exit(1)
-    if not args.mps and torch.backends.mps.is_available():
-        print("WARNING: mps is available, run with --mps to enable macOS GPU")
+    #if not args.mps and torch.backends.mps.is_available():
+    #   print("WARNING: mps is available, run with --mps to enable macOS GPU")
 
     if args.subcommand == "train":
         check_paths(args)
