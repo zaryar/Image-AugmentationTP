@@ -34,7 +34,11 @@ const storage = multer.diskStorage({
         cb(null, 'public/images/input')
     },
     filename: (req, file, cb) => {
-        if (path.extname(file.originalname).length > 0) {
+        if (path.extname(file.originalname) == ".mp4"){
+            cb(null, "video" + path.extname(file.originalname))
+            console.log("saved video");
+        }
+        else if (path.extname(file.originalname).length > 0) {
             cb(null, "image" + path.extname(file.originalname))
             console.log("saved img");
         } else {
