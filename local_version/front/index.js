@@ -69,7 +69,7 @@ app.post("/upload", upload.single('image'), (req, res) => {
         filterNumber = req.body.filter
         
         if (typeof filterNumber === 'string') {
-            updateFilter = filterNumber
+            updateFilter = "filter" + filterNumber 
         }else{
             updateFilter = "none"
         }
