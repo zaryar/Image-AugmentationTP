@@ -110,8 +110,7 @@ def image_loader(image_name):
     return image.to(device, torch.float)
 
 
-style_img = image_loader("local_version/back/neural_style/picasso.jpg")
-content_img = image_loader("local_version/back/neural_style/Cat03.jpg")
+
 
 assert style_img.size() == content_img.size(), \
     "we need to import style and content images of the same size"
@@ -137,11 +136,7 @@ def imshow(tensor, title=None):
     plt.pause(0.001) # pause a bit so that plots are updated
 
 
-plt.figure()
-imshow(style_img, title='Style Image')
 
-plt.figure()
-imshow(content_img, title='Content Image')
 
 ######################################################################
 # Loss Functions
@@ -370,7 +365,7 @@ def get_style_model_and_losses(cnn, normalization_mean, normalization_std,
 # or white noise.
 # 
 
-input_img = content_img.clone()
+
 # if you want to use white noise by using the following code:
 #
 # ::
@@ -378,8 +373,7 @@ input_img = content_img.clone()
 #    input_img = torch.randn(content_img.data.size(), device=device)
 
 # add the original input image to the figure:
-plt.figure()
-imshow(input_img, title='Input Image')
+
 
 
 ######################################################################
@@ -477,9 +471,23 @@ def run_style_transfer(cnn, normalization_mean, normalization_std,
 # Finally, we can run the algorithm.
 # 
 
-output = run_style_transfer(cnn, cnn_normalization_mean, cnn_normalization_std,
-                            content_img, style_img, input_img)
 
+def image_style_transfer(stylepath, contentpath, outputpath):
+    style_img = image_loader(stylepath)
+    content_img = image_loader(contentpath)
+    assert style_img.size() == content_img.size(), \
+    "we need to import style and content images of the same size"
+    input_img = content_img.clone()
+    output = run_style_transfer(cnn, cnn_normalization_mean, cnn_normalization_std,
+                            content_img, style_img, input_img)
+    image = tensor.cpu().clone()  # we clone the tensor to not do changes on it
+    image = image.squeeze(0)      # remove the fake batch dimension
+    image = unloader(image)
+    image.save(outputpath)
+
+
+
+    
 plt.figure()
 imshow(output, title='Output Image')
 plt.savefig("local_version/back/neural_style/output.jpg")
