@@ -15,6 +15,7 @@ OUTPUTPATH = "./local_version/front/public/images/output/"
 FILENAME = './local_version/front/public/images/output/frame.png'
 CONFIG = "./local_version/front/public/config.csv"
 STOPP = "./local_version/front/public/stopStream.txt"
+LOCK = './local_version/front/public/images/output/lock'
 
 
 FRAME = "frame.png"
@@ -34,31 +35,35 @@ def stream25(PATH, filter,FILENAME):
     stream_active = True
     while stream_active:
         path = PATH + "frame.png"
-        if os.path.exists(path) and not os.path.exists(FILENAME):
+        if os.path.exists(path) and not os.path.exists(LOCK):
             print(path, FILENAME, filter)
             
  
-            try:
-                img = cv2.imread("./local_version/front/public/images/input/frame.png", cv2.IMREAD_UNCHANGED)
-                print('Original Dimensions : ',img.shape)
-                scale_percent = 5 # percent of original size
-                width = int(img.shape[1] * scale_percent / 100)
-                height = int(img.shape[0] * scale_percent / 100)
-                dim = (width, height)
-                resized = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
-                cv.imwrite("./local_version/front/public/images/input/frame.png", img)
-            except:
-                print("did not resize")
+            #try:
+            #    img = cv2.imread("./local_version/front/public/images/input/frame.png", cv2.IMREAD_UNCHANGED)
+            #    print('Original Dimensions : ',img.shape)
+            #    scale_percent = 5 # percent of original size
+            #    width = int(img.shape[1] * scale_percent / 100)
+            #    height = int(img.shape[0] * scale_percent / 100)
+            #    dim = (width, height)
+            #    resized = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
+            #    cv.imwrite("./local_version/front/public/images/input/frame.png", img)
+            #except:
+            #    print("did not resize")
             
 
             image_filter(path, filter, FILENAME)
+            open(LOCK, "x")
             file = 'frame.png'
             os.remove(os.path.join(PATH, file))
+        else:
+            print("file allready there")
         stream_active = os.path.exists(STOPP) == False
         if os.path.exists(STOPP):
             #os.remove(CONFIG)
             os.remove(STOPP)
             return
+        time.sleep(0.05)
              
 
 def stream(PATH, filter, FILENAME):
@@ -86,6 +91,8 @@ def stream(PATH, filter, FILENAME):
 
 #READ CONFIG FILE
 while True:
+    time.sleep(1)
+    print("STATUS:")
     file_exists = os.path.exists(CONFIG)
     if file_exists:
         config = pd.read_csv(CONFIG)
@@ -123,7 +130,7 @@ while True:
         
         
         os.remove(CONFIG)
-        time.sleep(0.4)
+        time.sleep(1)
     else:
         print("no config file")
         time.sleep(1)
