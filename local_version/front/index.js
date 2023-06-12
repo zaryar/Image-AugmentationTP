@@ -33,7 +33,11 @@ const storage = multer.diskStorage({
         cb(null, 'public/images/input')
     },
     filename: (req, file, cb) => {
-        if (path.extname(file.originalname).length > 0) {
+        if (path.extname(file.originalname) == ".mp4"){
+            cb(null, "video" + path.extname(file.originalname))
+            console.log("saved video");
+        }
+        else if (path.extname(file.originalname).length > 0) {
             cb(null, "image" + path.extname(file.originalname))
             console.log("saved img");
         } else {
@@ -64,7 +68,7 @@ app.get("/upload", (req, res) => {
 var updateData = ""
 var updateFilter = ""
 app.post("/upload", upload.single('image'), (req, res) => {
-    if (req.body.submit == "image" || req.body.submit == "snapshot" || req.body.submit == "stream" || req.body.submit == "video") {
+    if (req.body.submit == "normal_image" || req.body.submit == "stream" || req.body.submit == "video") {
         updateData = req.body.submit
         filterNumber = req.body.filter
         
