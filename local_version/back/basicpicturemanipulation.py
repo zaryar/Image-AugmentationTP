@@ -55,7 +55,7 @@ def image_filter(path, apply, filename):
                 img = apply(img)
                 cv.imwrite(filename, img)
         except:
-               print("Something went wrong")
+               print("Something went wrong appling the filter")
         
 
         

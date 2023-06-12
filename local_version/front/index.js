@@ -16,7 +16,6 @@ const io = new Server(server);
 // function to tell the socket what to do if a user connects 
 io.on('connection', (socket) => {
     console.log('a user connected');
-
     setInterval(sendLatestFile, 40);
 });
 
@@ -44,8 +43,9 @@ const storage = multer.diskStorage({
         } else {
             if (!fs.existsSync('public/images/input/frame.png')) {
                 console.log(file)
-                console.log("frame created")
+                
                 cb(null, "frame.png")
+                console.log("frame created")
             }
             else {
                 console.log("frame allready there" + i)
@@ -73,7 +73,7 @@ app.post("/upload", upload.single('image'), (req, res) => {
         filterNumber = req.body.filter
         
         if (typeof filterNumber === 'string') {
-            updateFilter = filterNumber
+            updateFilter = "filter" + filterNumber 
         }else{
             updateFilter = "none"
         }
@@ -118,19 +118,18 @@ app.post("/upload", upload.single('image'), (req, res) => {
 })
 
 // upload images in livetime
-let filePath = __dirname + '/public/images/output/frame.png';
+
 
 //fs.watchFile(filePath, { interval: 70 }, sendLatestFile);
 
 
 function sendLatestFile() {
-    fs.readFile(filePath, function (err, buf) {
-        if (fs.existsSync("public/images/output/frame.png")) {
-            //console.log("512313");
+    fs.readFile("public/images/output/frame.png", function (err, buf) {
+        if (fs.existsSync("public/images/output/LOCK")) { 
             try {
                 let imgData = buf.toString('base64');
                 io.emit('update', { image: imgData });
-                fs.unlinkSync("public/images/output/frame.png");
+                fs.unlinkSync("public/images/output/LOCK");
             } catch (error) {
                 console.error(error);
             }
