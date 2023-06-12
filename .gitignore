@@ -159,3 +159,4 @@ cython_debug/
 
 # Ignore the test images on git
 local proof of concept/front/public/images/input/
+local_version/back/fast_neural_style/training_data
