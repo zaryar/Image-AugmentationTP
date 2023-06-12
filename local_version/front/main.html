@@ -19,72 +19,75 @@
 
 
         <div class="boxen">
+            
+            <input type="file" id="image_input" name="image" value="Upload Image">
+            <div class="dropdown">
+                <p class="dropbtn">∇ Choose filter</p>
+                <div class="dropdown-content">
+                    <input type="radio" id="1" name="filter" value="filter1" checked>
+                    <label for="filter1">filter_blurred</label><br>
+                    <input type="radio" id="2" name="filter" value="filter2">
+                    <label for="filter2">filter_flip</label><br>
+                    <input type="radio" id="3" name="filter" value="filter3">
+                    <label for="filter3">filter_pixel</label><br>
+                    <input type="radio" id="4" name="filter" value="filter4">
+                    <label for="filter4">filter_gray</label><br>
+                    <input type="radio" id="5" name="filter" value="filter5">
+                    <label for="filter5">filter_bw</label><br>
+                    <input type="radio" id="6" name="filter" value="filter6">
+                    <label for="filter6">filter_invert</label><br>
+                    <input type="radio" id="7" name="filter" value="filter7">
+                    <label for="filter7">filter_sketch</label><br>
+                    <input type="radio" id="8" name="filter" value="filter8">
+                    <label for="filter8">filter_sepia</label><br>
+                    <input type="radio" id="9" name="filter" value="filter9">
+                    <label for="filter9">filter_sharp</label><br>
+                    <input type="radio" id="10" name="filter" value="filter10">
+                    <label for="filter10">filter_edge</label><br>
+                    <input type="radio" id="11" name="filter" value="filter11">
+                    <label for="filter11">filter_border</label><br>
+                    <input type="radio" id="12" name="filter" value="filter12">
+                    <label for="filter12">filter_reflect</label><br>
+                    <input type="radio" id="13" name="filter" value="filter13">
+                    <label for="filter13">filter_wBorder</label><br>
+                </div>
+            </div>
+
+            <input type="submit" name = "submit" value="normal_image">
+            <label for="submit">send</label>
+        </div>
+        <div class="boxen">
+            
             <input type="file" id="image_input" name="image">
             <div class="dropdown">
                 <p class="dropbtn">∇ Choose filter</p>
                 <div class="dropdown-content">
                     <input type="radio" id="1" name="filter" value="filter1" checked>
-                    <label for="filter1">filter 1</label><br>
+                    <label for="filter1">filter_blurred</label><br>
                     <input type="radio" id="2" name="filter" value="filter2">
-                    <label for="filter2">filter 2</label><br>
+                    <label for="filter2">filter_flip</label><br>
                     <input type="radio" id="3" name="filter" value="filter3">
-                    <label for="filter3">filter 3</label><br>
+                    <label for="filter3">filter_pixel</label><br>
                     <input type="radio" id="4" name="filter" value="filter4">
-                    <label for="filter4">filter 4</label><br>
+                    <label for="filter4">filter_gray</label><br>
                     <input type="radio" id="5" name="filter" value="filter5">
-                    <label for="filter5">filter 5</label><br>
+                    <label for="filter5">filter_bw</label><br>
                     <input type="radio" id="6" name="filter" value="filter6">
-                    <label for="filter6">filter 6</label><br>
+                    <label for="filter6">filter_invert</label><br>
                     <input type="radio" id="7" name="filter" value="filter7">
-                    <label for="filter7">filter 7</label><br>
+                    <label for="filter7">filter_sketch</label><br>
                     <input type="radio" id="8" name="filter" value="filter8">
-                    <label for="filter8">filter 8</label><br>
+                    <label for="filter8">filter_sepia</label><br>
                     <input type="radio" id="9" name="filter" value="filter9">
-                    <label for="filter9">filter 9</label><br>
+                    <label for="filter9">filter_sharp</label><br>
                     <input type="radio" id="10" name="filter" value="filter10">
-                    <label for="filter10">filter 10</label><br>
+                    <label for="filter10">filter_edge</label><br>
                     <input type="radio" id="11" name="filter" value="filter11">
-                    <label for="filter11">filter 11</label><br>
+                    <label for="filter11">filter_border</label><br>
                     <input type="radio" id="12" name="filter" value="filter12">
-                    <label for="filter12">filter 12</label><br>
+                    <label for="filter12">filter_reflect</label><br>
                     <input type="radio" id="13" name="filter" value="filter13">
-                    <label for="filter13">filter 13</label><br>
-                </div>
-            </div>
-            
-            <input type="submit" name = "submit" value="image">
-        </div>
-        <div class="boxen">
-            <input type="file" id="image_input" name="image">
-            <div class="dropdown">
-                <p class="dropbtn">∇ Choose filter</p>
-                <div class="dropdown-content">
-                    <input type="radio" id="1" name="filter" value="filter1">
-                    <label for="filter1">filter 1</label><br>
-                    <input type="radio" id="2" name="filter" value="filter2">
-                    <label for="filter2">filter 2</label><br>
-                    <input type="radio" id="3" name="filter" value="filter3">
-                    <label for="filter3">filter 3</label><br>
-                    <input type="radio" id="4" name="filter" value="filter4">
-                    <label for="filter4">filter 4</label><br>
-                    <input type="radio" id="5" name="filter" value="filter5">
-                    <label for="filter5">filter 5</label><br>
-                    <input type="radio" id="6" name="filter" value="filter6">
-                    <label for="filter6">filter 6</label><br>
-                    <input type="radio" id="7" name="filter" value="filter7">
-                    <label for="filter7">filter 7</label><br>
-                    <input type="radio" id="8" name="filter" value="filter8">
-                    <label for="filter8">filter 8</label><br>
-                    <input type="radio" id="9" name="filter" value="filter9">
-                    <label for="filter9">filter 9</label><br>
-                    <input type="radio" id="10" name="filter" value="filter10">
-                    <label for="filter10">filter 10</label><br>
-                    <input type="radio" id="11" name="filter" value="filter11">
-                    <label for="filter11">filter 11</label><br>
-                    <input type="radio" id="12" name="filter" value="filter12">
-                    <label for="filter12">filter 12</label><br>
-                    <input type="radio" id="13" name="filter" value="filter13">
-                    <label for="filter13">filter 13</label><br>
+                    <label for="filter13">filter_wBorder</label><br>
                 </div>
             </div>
             
