@@ -257,4 +257,5 @@ if __name__ == "__main__":
     main()
 
 
-    
+ def stylize2(): #this funtion is a copy of stylize() but it takes regular arguments and not parser arguments. We need this to use the function in the python script
+
