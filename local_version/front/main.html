@@ -19,8 +19,8 @@
 
 
         <div class="boxen">
-            
-            <input type="file" id="image_input" name="image" value="Upload Image">
+            <label for="image_input" class="custom-upload-button">Upload Image</label>
+            <input type="file" id="image_input" name="image" style="display: none;">
             <div class="dropdown">
                 <p class="dropbtn">∇ Choose filter</p>
                 <div class="dropdown-content">
@@ -53,12 +53,11 @@
                 </div>
             </div>
 
-            <input type="submit" name = "submit" value="normal_image">
-            <label for="submit">send</label>
+            <input type="submit" name = "submit" value="image">
         </div>
         <div class="boxen">
-            
-            <input type="file" id="image_input" name="image">
+            <label for="image_input" class="custom-upload-button">Upload Video</label>
+            <input type="file" id="image_input" name="image" style="display: none;">
             <div class="dropdown">
                 <p class="dropbtn">∇ Choose filter</p>
                 <div class="dropdown-content">
@@ -93,10 +92,7 @@
             
             <input type="submit" name = "submit" value="video">
         </div>
-        <div>
-            <div id= "display_image"></div>
-            <img src="/images/output/image.png" width="300" alt="">
-        </div>
+
     </form>
     
     <!-- button to download the output video, the Video has to have the Name video.mp4 -->
