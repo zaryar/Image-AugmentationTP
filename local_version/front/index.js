@@ -3,6 +3,11 @@ const path = require('path');
 const fs = require("fs");
 const { convertArrayToCSV } = require('convert-array-to-csv');
 
+const INPUTFRAME = 'public/images/input/frame.png';
+const OUTPUTFRAME = 'public/images/output/frame.png';
+const LOCKOUT = 'public/images/output/lockOut';
+const LOCKIN = 'public/images/input/lockIn';
+
 // create express server
 const express = require('express');
 const app = express();
@@ -33,7 +38,7 @@ const storage = multer.diskStorage({
         cb(null, 'public/images/input')
     },
     filename: (req, file, cb) => {
-        if (path.extname(file.originalname) == ".mp4"){
+        if (path.extname(file.originalname) == ".mp4") {
             cb(null, "video" + path.extname(file.originalname))
             console.log("saved video");
         }
@@ -41,11 +46,17 @@ const storage = multer.diskStorage({
             cb(null, "image" + path.extname(file.originalname))
             console.log("saved img");
         } else {
-            if (!fs.existsSync('public/images/input/frame.png')) {
+            if (!fs.existsSync(INPUTFRAME)) {
                 console.log(file)
-                
+
                 cb(null, "frame.png")
                 console.log("frame created")
+
+                //lock in erstellen
+                fs.open(LOCKIN, 'w', function (err, file) {
+                    if (err) throw err;
+                    console.log('Saved!');
+                });
             }
             else {
                 console.log("frame allready there" + i)
@@ -71,10 +82,10 @@ app.post("/upload", upload.single('image'), (req, res) => {
     if (req.body.submit == "normal_image" || req.body.submit == "stream" || req.body.submit == "video") {
         updateData = req.body.submit
         filterNumber = req.body.filter
-        
+
         if (typeof filterNumber === 'string') {
-            updateFilter = "filter" + filterNumber 
-        }else{
+            updateFilter = "filter" + filterNumber
+        } else {
             updateFilter = "none"
         }
     }
@@ -83,7 +94,7 @@ app.post("/upload", upload.single('image'), (req, res) => {
     var dataArrays = [
         [updateFilter]
     ];
-    
+
     const csvFromArrayOfArrays = convertArrayToCSV(dataArrays, {
         header,
         separator: ','
@@ -98,7 +109,7 @@ app.post("/upload", upload.single('image'), (req, res) => {
             }
         })
     }
-    
+
     fs.writeFile("public/config.csv", csvFromArrayOfArrays, err => {
         if (err) {
             console.err;
@@ -124,12 +135,12 @@ app.post("/upload", upload.single('image'), (req, res) => {
 
 
 function sendLatestFile() {
-    fs.readFile("public/images/output/frame.png", function (err, buf) {
-        if (fs.existsSync("public/images/output/LOCK")) { 
+    fs.readFile(OUTPUTFRAME, function (err, buf) {
+        if (fs.existsSync(LOCKOUT)) {
             try {
                 let imgData = buf.toString('base64');
                 io.emit('update', { image: imgData });
-                fs.unlinkSync("public/images/output/LOCK");
+                fs.unlinkSync(LOCKOUT);
             } catch (error) {
                 console.error(error);
             }

@@ -15,7 +15,8 @@ OUTPUTPATH = "./local_version/front/public/images/output/"
 FILENAME = './local_version/front/public/images/output/frame.png'
 CONFIG = "./local_version/front/public/config.csv"
 STOPP = "./local_version/front/public/stopStream.txt"
-LOCK = './local_version/front/public/images/output/lock'
+LOCKOUT = './local_version/front/public/images/output/lockOut'
+LOCKIN = './local_version/front/public/images/input/lockIn'
 
 
 FRAME = "frame.png"
@@ -35,29 +36,19 @@ def stream25(PATH, filter,FILENAME):
     stream_active = True
     while stream_active:
         path = PATH + "frame.png"
-        if os.path.exists(path) and not os.path.exists(LOCK):
-            print(path, FILENAME, filter)
-            
- 
-            #try:
-            #    img = cv2.imread("./local_version/front/public/images/input/frame.png", cv2.IMREAD_UNCHANGED)
-            #    print('Original Dimensions : ',img.shape)
-            #    scale_percent = 5 # percent of original size
-            #    width = int(img.shape[1] * scale_percent / 100)
-            #    height = int(img.shape[0] * scale_percent / 100)
-            #    dim = (width, height)
-            #    resized = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
-            #    cv.imwrite("./local_version/front/public/images/input/frame.png", img)
-            #except:
-            #    print("did not resize")
-            
+        if os.path.exists(LOCKIN): #is file ready?
+            if not os.path.exists(LOCKOUT): #did we allready displayed the last image?
+                print(path, FILENAME, filter)         
 
-            image_filter(path, filter, FILENAME)
-            open(LOCK, "x")
-            file = 'frame.png'
-            os.remove(os.path.join(PATH, file))
+                image_filter(path, filter, FILENAME)
+                open(LOCKOUT, "x")
+                file = 'frame.png'
+                os.remove(os.path.join(PATH, file))
+                os.remove(LOCKIN) #remove the ability to work with file
+            else:
+                print("lockOut already there | not worked with on canvis")
         else:
-            print("file allready there")
+            print("input file cant be found")
         stream_active = os.path.exists(STOPP) == False
         if os.path.exists(STOPP):
             #os.remove(CONFIG)
@@ -92,7 +83,7 @@ def stream(PATH, filter, FILENAME):
 #READ CONFIG FILE
 while True:
     time.sleep(1)
-    print("STATUS:")
+    print("Try to read: ", CONFIG)
     file_exists = os.path.exists(CONFIG)
     if file_exists:
         config = pd.read_csv(CONFIG)
@@ -108,7 +99,7 @@ while True:
                     continue
                 filter = row[0]        
 
-        if "filter" in filter and ("stream" in format or "image" in format or "video" in format): 
+        if any(char.isdigit() for char in filter) and ("stream" in format or "image" in format or "video" in format): 
             print (dict[filter])
             print(format)
             #print(type(format))
