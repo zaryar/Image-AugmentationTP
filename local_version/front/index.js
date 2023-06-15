@@ -30,32 +30,30 @@ const { type } = require('os');
 var i = 0;
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'public/images/input')
+        cb(null, 'public/images/input');
     },
     filename: (req, file, cb) => {
-        if (path.extname(file.originalname) == ".mp4"){
-            cb(null, "video" + path.extname(file.originalname))
-            console.log("saved video");
-        }
-        else if (path.extname(file.originalname).length > 0) {
-            cb(null, "image" + path.extname(file.originalname))
-            console.log("saved img");
+        if (path.extname(file.originalname).length > 0) {
+            const extension = path.extname(file.originalname).substring(1).toLowerCase();
+            if (['mp4', 'mov', 'avi', 'mkv'].includes(extension)) {
+                cb(null, 'video' + path.extname(file.originalname));
+                console.log('Saved video');
+            } else {
+                cb(null, 'image' + path.extname(file.originalname));
+                console.log('Saved image');
+            }
         } else {
             if (!fs.existsSync('public/images/input/frame.png')) {
-                console.log(file)
-                
-                cb(null, "frame.png")
-                console.log("frame created")
-            }
-            else {
-                console.log("frame allready there" + i)
-                i++
-                cb(null, ".ignore")
-
+                cb(null, 'frame.png');
+                console.log('Frame created');
+            } else {
+                console.log('Frame already exists');
+                i++;
+                cb(null, '.ignore');
             }
         }
     }
-})
+});
 
 const upload = multer({ storage: storage }) //function to save the image sent
 
