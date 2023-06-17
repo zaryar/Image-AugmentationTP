@@ -258,8 +258,8 @@ if __name__ == "__main__":
 
 
 def stylize2(content_image,model,output_path): #this funtion is a copy of stylize() but it takes regular arguments and not parser arguments. We need this to use the function in the python script
-
-    device = torch.device("cuda")
+    
+    device = torch.device("cuda" if torch.cuda.is_available  else "cpu")
     content_image = utils.load_image(content_image)
     content_transform = transforms.Compose([
         transforms.ToTensor(),
