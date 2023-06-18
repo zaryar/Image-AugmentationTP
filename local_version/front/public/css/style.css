@@ -19,6 +19,30 @@ body>header {
   border: 1px solid black;
 }
 
+/* style the Upload Button */
+.custom-upload-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #454857;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		"Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.custom-upload-button:hover {
+  background-color: #7d7d7d;
+}
+
+.custom-upload-button:active {
+  background-color: #5d5d5d;
+}
+/* end of the styling of the upload button */
+
 /* This is the dropdown menu */
 
 .dropdown-check-list {
@@ -101,7 +125,8 @@ body>header {
    align-content: center;
   }
 
-  /* Dropdown Button */
+ 
+
 .dropbtn {
   background-color: #454857;
   color: white;
@@ -111,57 +136,54 @@ body>header {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
 		"Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
 		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    margin-bottom: 0px;
   
 }
 
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
-  position: relative;
-  display: inline-block;
-  margin-bottom: 5px;
+/* Show the dropdown menu on hover */
+.dropdown:hover > .dropdown-content {
+  display: block;
 }
 
-/* Dropdown Content (Hidden by Default) */
+/* Hide the dropdown menu when the mouse is not directly on the button */
 .dropdown-content {
   display: none;
-  position: relative;
+  position: absolute;
   background-color: #454857;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
 
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {display: block;}
-
 .dropdown-content input {
-	width: auto;
-	height: auto;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-	outline: none;
-	cursor: pointer;
-	padding: 4px 8px;
-	background: #454857;
+  width: auto;
+  height: auto;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  background: #454857;
   transition: all 100ms linear;
-
 }
+
 .dropdown-content label {
   color: white;
   font-size: 14px;
-	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-		"Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 .dropdown-content input:checked {
-	background-color: #719fdc;
-	color: #fff;
-	box-shadow: 0 1px 1px #0000002e;
-	text-shadow: 0 1px 0px #79485f7a;
+  background-color: #719fdc;
+  color: #fff;
+  box-shadow: 0 1px 1px #0000002e;
+  text-shadow: 0 1px 0px #79485f7a;
 }
+
+
 
 .radio input:before {
 	content: attr(label);
