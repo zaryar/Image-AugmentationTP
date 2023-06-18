@@ -14,6 +14,7 @@
         <h1 style="color: #454857;">
             Image Augmentation
         </h1>
+        <a href="/FotoFilter">Foto filter</a>
     </header>
     <form method="POST" action="/upload" enctype="multipart/form-data">
 
@@ -24,6 +25,7 @@
             <div class="dropdown">
                 <p class="dropbtn">∇ Choose filter</p>
                 <div class="dropdown-content">
+                    
                     <input type="radio" id="1" name="filter" value="1" checked>
                     <label for="filter1">filter_blurred</label><br>
                     <input type="radio" id="2" name="filter" value="2">
@@ -57,10 +59,11 @@
         </div>
         <div class="boxen">
             <label for="image_input" class="custom-upload-button">Upload Video</label>
-            <input type="file" id="image_input" name="image" style="display: none;">
+            <input type="file" id="video_input" name="video" style="display: none;">
             <div class="dropdown">
                 <p class="dropbtn">∇ Choose filter</p>
                 <div class="dropdown-content">
+                    <label><strong>     normal filter</strong></label><br>
                     <input type="radio" id="1" name="filter" value="1" checked>
                     <label for="filter1">filter_blurred</label><br>
                     <input type="radio" id="2" name="filter" value="2">
@@ -87,6 +90,12 @@
                     <label for="filter12">filter_reflect</label><br>
                     <input type="radio" id="13" name="filter" value="13">
                     <label for="filter13">filter_wBorder</label><br>
+                    <label><strong>Style transfer</strong></label><br>
+                    <input type="radio" id="14" name="filter" value="14">
+                    <label for="filter14">ST filter</label><br>
+                    <label><strong>Face recognition</strong></label><br>
+                    <input type="radio" id="15" name="filter" value="15">
+                    <label for="filter15">FR filter</label><br>
                 </div>
             </div>
             

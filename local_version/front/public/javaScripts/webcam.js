@@ -86,6 +86,12 @@ function snapshot(name) {
     else if(document.getElementById("13").checked){
         filterValue = "13"
     }
+    else if(document.getElementById("14").checked){
+        filterValue = "14"
+    }
+    else if(document.getElementById("15").checked){
+        filterValue = "15"
+    }
     formData.append('filter', filterValue);
     formData.append('submit', name); 
 

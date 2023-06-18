@@ -65,6 +65,7 @@ app.get("/upload", (req, res) => {
 
 var updateData = ""
 var updateFilter = ""
+var filterCategory =""
 app.post("/upload", upload.single('image'), (req, res) => {
     if (req.body.submit == "normal_image" || req.body.submit == "stream" || req.body.submit == "video") {
         updateData = req.body.submit
@@ -75,11 +76,21 @@ app.post("/upload", upload.single('image'), (req, res) => {
         }else{
             updateFilter = "none"
         }
+
+        if(parseInt(filterNumber) <= 13 ){
+            filterCategory = "NormalFilter"
+        }
+        else if(parseInt(filterNumber) == 14){
+            filterCategory = "StyleTransfer"
+        }
+        else {
+            filterCategory = "FaceRecognition"
+        }
     }
 
     const header = [updateData];
     var dataArrays = [
-        [updateFilter]
+        [filterCategory, updateFilter]
     ];
     
     const csvFromArrayOfArrays = convertArrayToCSV(dataArrays, {

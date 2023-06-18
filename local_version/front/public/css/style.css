@@ -125,11 +125,7 @@ body>header {
    align-content: center;
   }
 
-  /* Dropdown Button */
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
+ 
 
 .dropbtn {
   background-color: #454857;
@@ -140,6 +136,7 @@ body>header {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
 		"Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
 		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    margin-bottom: 0px;
   
 }
 
