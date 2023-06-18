@@ -3,6 +3,11 @@ const path = require('path');
 const fs = require("fs");
 const { convertArrayToCSV } = require('convert-array-to-csv');
 
+const INPUTFRAME = 'public/images/input/frame.png';
+const OUTPUTFRAME = 'public/images/output/frame.png';
+const LOCKOUT = 'public/images/output/lockOut';
+const LOCKIN = 'public/images/input/lockIn';
+
 // create express server
 const express = require('express');
 const app = express();
@@ -33,23 +38,33 @@ const storage = multer.diskStorage({
         cb(null, 'public/images/input');
     },
     filename: (req, file, cb) => {
-        if (path.extname(file.originalname).length > 0) {
-            const extension = path.extname(file.originalname).substring(1).toLowerCase();
-            if (['mp4', 'mov', 'avi', 'mkv'].includes(extension)) {
-                cb(null, 'video' + path.extname(file.originalname));
-                console.log('Saved video');
-            } else {
-                cb(null, 'image' + path.extname(file.originalname));
-                console.log('Saved image');
+if (path.extname(file.originalname).length > 0) {
+    const extension = path.extname(file.originalname).substring(1).toLowerCase();
+    if (['mp4', 'mov', 'avi', 'mkv'].includes(extension)) {
+        cb(null, 'video' + path.extname(file.originalname));
+        console.log('Saved video');
+    } else {
+        cb(null, 'image' + path.extname(file.originalname));
+        console.log('Saved image');
+    }
+}  else {
+            if (!fs.existsSync(INPUTFRAME)) {
+                console.log(file)
+
+                cb(null, "frame.png")
+                console.log("frame created")
+
+                //lock in erstellen
+                fs.open(LOCKIN, 'w', function (err, file) {
+                    if (err) throw err;
+                    console.log('Saved!');
+                });
             }
-        } else {
-            if (!fs.existsSync('public/images/input/frame.png')) {
-                cb(null, 'frame.png');
-                console.log('Frame created');
-            } else {
-                console.log('Frame already exists');
-                i++;
-                cb(null, '.ignore');
+            else {
+                console.log("frame allready there" + i)
+                i++
+                cb(null, ".ignore")
+
             }
         }
     }
@@ -70,10 +85,10 @@ app.post("/upload", upload.single('image'), (req, res) => {
     if (req.body.submit == "normal_image" || req.body.submit == "stream" || req.body.submit == "video") {
         updateData = req.body.submit
         filterNumber = req.body.filter
-        
+
         if (typeof filterNumber === 'string') {
-            updateFilter = "filter" + filterNumber 
-        }else{
+            updateFilter = "filter" + filterNumber
+        } else {
             updateFilter = "none"
         }
 
@@ -92,7 +107,7 @@ app.post("/upload", upload.single('image'), (req, res) => {
     var dataArrays = [
         [filterCategory, updateFilter]
     ];
-    
+
     const csvFromArrayOfArrays = convertArrayToCSV(dataArrays, {
         header,
         separator: ','
@@ -107,7 +122,7 @@ app.post("/upload", upload.single('image'), (req, res) => {
             }
         })
     }
-    
+
     fs.writeFile("public/config.csv", csvFromArrayOfArrays, err => {
         if (err) {
             console.err;
@@ -133,12 +148,12 @@ app.post("/upload", upload.single('image'), (req, res) => {
 
 
 function sendLatestFile() {
-    fs.readFile("public/images/output/frame.png", function (err, buf) {
-        if (fs.existsSync("public/images/output/LOCK")) { 
+    fs.readFile(OUTPUTFRAME, function (err, buf) {
+        if (fs.existsSync(LOCKOUT)) {
             try {
                 let imgData = buf.toString('base64');
                 io.emit('update', { image: imgData });
-                fs.unlinkSync("public/images/output/LOCK");
+                fs.unlinkSync(LOCKOUT);
             } catch (error) {
                 console.error(error);
             }
