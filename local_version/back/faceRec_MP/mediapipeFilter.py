@@ -292,21 +292,9 @@ def filter_on_video (video, overlay) :
 
 def filter_on_image (frame, overlay) :
 
-    # Some variables
-    sigma = 50
-
     filters, multi_filter_runtime = load_filter(overlay)
 
     points2 = getLandmarks(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-
-    # Final landmark points are a weighted average of detected landmarks and tracked landmarks
-    for k in range(0, len(points2)):
-        d = cv2.norm(np.array(points2[k]))
-        alpha = math.exp(-d * d / sigma)
-        points2[k] = (1 - alpha) * np.array(points2[k])
-        points2[k] = fbc.constrainPoint(points2[k], frame.shape[1], frame.shape[0])
-        points2[k] = (int(points2[k][0]), int(points2[k][1]))
-    ################ End of Optical Flow and Stabilization Code ###############
 
     for idx, filter in enumerate(filters) :
         filter_runtime = multi_filter_runtime[idx]
@@ -392,5 +380,5 @@ test_video_low = cv2.VideoCapture("local_version/data/input/video_lowQual.mp4")
 mtest = cv2.imread("local_version/data/input/MaleTest.png")
 ftest = cv2.imread("local_version/data/input/FemaleTest.png")
 
-#filter_clown(ftest)
+filter_clown(ftest)
 
