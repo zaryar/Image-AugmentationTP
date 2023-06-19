@@ -174,8 +174,6 @@ def filter_on_video (video, overlay) :
     # The main loop
     while True:
 
-        start = time.time()
-
         ret, frame = cap.read()
         if not ret:
             break
@@ -288,16 +286,13 @@ def filter_on_video (video, overlay) :
 
             cv2.imshow("Face Filter", output)
 
-            end = time.time()
-            total_time = end - start
-            fps = 1 / total_time
-            print("fps:", fps)
-
             keypressed = cv2.waitKey(1) & 0xFF
             if keypressed == 27:
                 break
 
 def filter_on_image (frame, overlay) :
+
+    start = time.time()
 
     # Some variables
     isFirstFrame = True
@@ -392,10 +387,23 @@ def filter_on_image (frame, overlay) :
             output = temp1 + temp2
 
         frame = output = np.uint8(output)
+        end = time.time()
+        total_time = end - start
+        fps = 1 / total_time
+        print("fps:", fps)
 
     cv2.imshow("Face Filter", output)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+
+def filter_clown(img):
+    start = time.time()
+    image = filter_on_image(img, "clown")
+    end = time.time()
+    total_time = end - start
+    fps = 1 / total_time
+    print("fps:", fps)
+    return image
 
 
 test_video = cv2.VideoCapture("local_version/data/input/face_video.mp4")
@@ -403,6 +411,5 @@ test_video_low = cv2.VideoCapture("local_version/data/input/video_lowQual.mp4")
 mtest = cv2.imread("local_version/data/input/MaleTest.png")
 ftest = cv2.imread("local_version/data/input/FemaleTest.png")
 
-#filter_on_image(mtest, "red")
-#filter_on_video(test_video, "clown")
+#filter_clown(ftest)
 
