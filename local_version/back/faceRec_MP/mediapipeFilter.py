@@ -292,21 +292,12 @@ def filter_on_video (video, overlay) :
 
 def filter_on_image (frame, overlay) :
 
-    start = time.time()
-
     # Some variables
-    isFirstFrame = True
     sigma = 50
 
     filters, multi_filter_runtime = load_filter(overlay)
 
     points2 = getLandmarks(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-
-    ################ Optical Flow and Stabilization Code #####################
-    img2Gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-    lk_params = dict(winSize=(101, 101), maxLevel=15,
-                            criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 20, 0.001))
 
     # Final landmark points are a weighted average of detected landmarks and tracked landmarks
     for k in range(0, len(points2)):
@@ -316,12 +307,6 @@ def filter_on_image (frame, overlay) :
         points2[k] = fbc.constrainPoint(points2[k], frame.shape[1], frame.shape[0])
         points2[k] = (int(points2[k][0]), int(points2[k][1]))
     ################ End of Optical Flow and Stabilization Code ###############
-
-    if VISUALIZE_FACE_POINTS:
-        for idx, point in enumerate(points2):
-            cv2.circle(frame, point, 2, (255, 0, 0), -1)
-            cv2.putText(frame, str(idx), point, cv2.FONT_HERSHEY_SIMPLEX, .3, (255, 255, 255), 1)
-        cv2.imshow("landmarks", frame)
 
     for idx, filter in enumerate(filters) :
         filter_runtime = multi_filter_runtime[idx]
@@ -361,7 +346,6 @@ def filter_on_image (frame, overlay) :
 
             # Blur the mask before blending
             mask1 = cv2.GaussianBlur(mask1, (3, 3), 10)
-
             mask2 = (255.0, 255.0, 255.0) - mask1
 
             # Perform alpha blending of the two images
@@ -387,14 +371,7 @@ def filter_on_image (frame, overlay) :
             output = temp1 + temp2
 
         frame = output = np.uint8(output)
-        end = time.time()
-        total_time = end - start
-        fps = 1 / total_time
-        print("fps:", fps)
-
-    cv2.imshow("Face Filter", output)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    return output
 
 def filter_clown(img):
     start = time.time()
@@ -403,6 +380,10 @@ def filter_clown(img):
     total_time = end - start
     fps = 1 / total_time
     print("fps:", fps)
+    cv2.imshow("Face Filter", image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
     return image
 
 
