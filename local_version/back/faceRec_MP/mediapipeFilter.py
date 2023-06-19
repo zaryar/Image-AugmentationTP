@@ -362,37 +362,9 @@ def filter_on_image (frame, overlay) :
     return output
 
 def filter_clown(img):
-    start = time.time()
     image = filter_on_image(img, "clown")
-    end = time.time()
-    total_time = end - start
-    fps = 1 / total_time
-    print("fps:", fps)
-    cv2.imshow("Face Filter", image)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
     return image
 
 def filter_dog(img):
-    start = time.time()
     image = filter_on_image(img, "dog")
-    end = time.time()
-    total_time = end - start
-    fps = 1 / total_time
-    print("fps:", fps)
-    cv2.imshow("Face Filter", image)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
     return image
-
-
-test_video = cv2.VideoCapture("local_version/data/input/face_video.mp4")
-test_video_low = cv2.VideoCapture("local_version/data/input/video_lowQual.mp4")
-mtest = cv2.imread("local_version/data/input/MaleTest.png")
-ftest = cv2.imread("local_version/data/input/FemaleTest.png")
-
-#filter_clown(ftest)
-#filter_dog(ftest)
-
