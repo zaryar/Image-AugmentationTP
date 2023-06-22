@@ -24,6 +24,10 @@ io.on('connection', (socket) => {
     setInterval(sendLatestFile, 40);
 });
 
+function Sleep(milliseconds) {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
+
 
 
 app.use(express.static('public'));  /* tells expressJS where to find css and js files */
@@ -37,22 +41,24 @@ const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'public/images/input');
     },
-    filename: (req, file, cb) => {
-if (path.extname(file.originalname).length > 0) {
-    const extension = path.extname(file.originalname).substring(1).toLowerCase();
-    if (['mp4', 'mov', 'avi', 'mkv'].includes(extension)) {
-        cb(null, 'video' + path.extname(file.originalname));
-        console.log('Saved video');
-    } else {
-        cb(null, 'image' + path.extname(file.originalname));
-        console.log('Saved image');
-    }
-}  else {
+    filename: async (req, file, cb) => {
+        if (path.extname(file.originalname).length > 0) {
+            const extension = path.extname(file.originalname).substring(1).toLowerCase();
+            if (['mp4', 'mov', 'avi', 'mkv'].includes(extension)) {
+                cb(null, 'video' + path.extname(file.originalname));
+                console.log('Saved video');
+            } else {
+                cb(null, 'image' + path.extname(file.originalname));
+                console.log('Saved image');
+            }
+        } else {
             if (!fs.existsSync(INPUTFRAME)) {
                 console.log(file)
 
                 cb(null, "frame.png")
-                console.log("frame created")
+
+                //await Sleep(500);
+                console.log("frame ")
 
                 //lock in erstellen
                 fs.open(LOCKIN, 'w', function (err, file) {
@@ -80,7 +86,7 @@ app.get("/upload", (req, res) => {
 
 var updateData = ""
 var updateFilter = ""
-var filterCategory =""
+var filterCategory = ""
 app.post("/upload", upload.single('image'), (req, res) => {
     if (req.body.submit == "normal_image" || req.body.submit == "stream" || req.body.submit == "video") {
         updateData = req.body.submit
@@ -92,20 +98,21 @@ app.post("/upload", upload.single('image'), (req, res) => {
             updateFilter = "none"
         }
 
-        // if(parseInt(filterNumber) <= 13 ){
-        //     filterCategory = "NormalFilter"
-        // }
-        // else if(parseInt(filterNumber) == 14){
-        //     filterCategory = "StyleTransfer"
-        // }
-        // else {
-        //     filterCategory = "FaceRecognition"
-        // }
+        if (parseInt(filterNumber) <= 13) {
+            filterCategory = "NormalFilter"
+        }
+        else if (parseInt(filterNumber) == 14) {
+            filterCategory = "StyleTransfer"
+        }
+        else {
+            filterCategory = "FaceRecognition"
+        }
     }
 
     const header = [updateData];
     var dataArrays = [
-        [updateFilter]
+        [updateFilter],
+        [filterCategory]
         // [filterCategory, updateFilter]
     ];
 
