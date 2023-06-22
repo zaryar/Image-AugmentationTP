@@ -40,6 +40,7 @@ def stream25(PATH, filter,FILENAME):
             if not os.path.exists(LOCKOUT): #did we allready displayed the last image?
                 print(path, FILENAME, filter)         
 
+
                 image_filter(path, filter, FILENAME)
                 open(LOCKOUT, "x")
                 file = 'frame.png'
@@ -54,7 +55,7 @@ def stream25(PATH, filter,FILENAME):
             #os.remove(CONFIG)
             os.remove(STOPP)
             return
-        time.sleep(0.05)
+        time.sleep(0.3)
              
 
 def stream(PATH, filter, FILENAME):
@@ -97,7 +98,14 @@ while True:
                     format = row[0]
                     counter+=1
                     continue
-                filter = row[0]        
+                if(counter == 1):
+                    filter = row[0]  
+                    counter+=1
+                    continue
+                if(counter == 2):
+                    typ = row[0]  
+                    counter+=1
+                    continue
 
         if any(char.isdigit() for char in filter) and ("stream" in format or "image" in format or "video" in format): 
             print (dict[filter])
@@ -110,7 +118,12 @@ while True:
                 stream25(PATH, dict[filter], FILENAME)
 
             elif format == "video":
-                filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
+                if typ == "NormalFilter":
+                    filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
+                elif typ == "StyleTransfer":
+                    filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
+                else:
+                    print("anders")
 
             elif format == "image":
                 image_filter(PATH + IMAGE, dict[filter], OUTPUTPATH + IMAGE)
