@@ -4,6 +4,7 @@ import cv2 as cv
 import numpy as np
 import os 
 from filters import filter_bw
+from  fast_neural_style.neural_style.neural_style import filter_candy,filter_monet,filter_starry_night
 
 test = "Test.jpeg"
 def get_path(folder, image):
@@ -51,9 +52,12 @@ def write_image(gray):
 
 def image_filter(path, apply, filename):
         try:
-                img = cv.imread(path)
-                img = apply(img)
-                cv.imwrite(filename, img)
+                if apply == filter_starry_night or apply == filter_candy or apply == filter_monet:
+                   apply(path,filename)
+                else:
+                        img = cv.imread(path)
+                        img = apply(img)
+                        cv.imwrite(filename, img)
         except:
                print("Something went wrong appling the filter")
 
@@ -64,4 +68,4 @@ def image_filter(path, apply, filename):
         
         
 
-image_filter("local_version/data/input/test.jpg", filter_bw, "local_version/data/output/test.jpg")
+
