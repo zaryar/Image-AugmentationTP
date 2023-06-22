@@ -92,20 +92,21 @@ app.post("/upload", upload.single('image'), (req, res) => {
             updateFilter = "none"
         }
 
-        if(parseInt(filterNumber) <= 13 ){
-            filterCategory = "NormalFilter"
-        }
-        else if(parseInt(filterNumber) == 14){
-            filterCategory = "StyleTransfer"
-        }
-        else {
-            filterCategory = "FaceRecognition"
-        }
+        // if(parseInt(filterNumber) <= 13 ){
+        //     filterCategory = "NormalFilter"
+        // }
+        // else if(parseInt(filterNumber) == 14){
+        //     filterCategory = "StyleTransfer"
+        // }
+        // else {
+        //     filterCategory = "FaceRecognition"
+        // }
     }
 
     const header = [updateData];
     var dataArrays = [
-        [filterCategory, updateFilter]
+        [updateFilter]
+        // [filterCategory, updateFilter]
     ];
 
     const csvFromArrayOfArrays = convertArrayToCSV(dataArrays, {
