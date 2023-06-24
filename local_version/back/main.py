@@ -38,7 +38,7 @@ def stream25(PATH, filter,FILENAME):
     while stream_active:
         path = PATH + "frame.png"
         if os.path.exists(LOCKIN): #is file ready?
-            if not os.path.exists(LOCKOUT): #did we allready displayed the last image?
+            if not os.path.exists(LOCKOUT): #did we already display the last image?
                 print(path, FILENAME, filter)         
 
 
