@@ -6,7 +6,6 @@ const { convertArrayToCSV } = require('convert-array-to-csv');
 const INPUTFRAME = 'public/images/input/frame.png';
 const OUTPUTFRAME = 'public/images/output/frame.png';
 const LOCKOUT = 'public/images/output/lockOut';
-const LOCKIN = 'public/images/input/lockIn';
 
 // create express server
 const express = require('express');
@@ -24,9 +23,6 @@ io.on('connection', (socket) => {
     setInterval(sendLatestFile, 40);
 });
 
-function Sleep(milliseconds) {
-    return new Promise(resolve => setTimeout(resolve, milliseconds));
-}
 
 
 
@@ -41,7 +37,7 @@ const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'public/images/input');
     },
-    filename: async (req, file, cb) => {
+    filename: (req, file, cb) => {
         if (path.extname(file.originalname).length > 0) {
             const extension = path.extname(file.originalname).substring(1).toLowerCase();
             if (['mp4', 'mov', 'avi', 'mkv'].includes(extension)) {
@@ -56,15 +52,7 @@ const storage = multer.diskStorage({
                 console.log(file)
 
                 cb(null, "frame.png")
-
-                //await Sleep(500);
-                console.log("frame ")
-
-                //lock in erstellen
-                fs.open(LOCKIN, 'w', function (err, file) {
-                    if (err) throw err;
-                    console.log('Saved!');
-                });
+                console.log("frame created success")
             }
             else {
                 console.log("frame allready there" + i)
@@ -88,7 +76,7 @@ var updateData = ""
 var updateFilter = ""
 var filterCategory = ""
 app.post("/upload", upload.single('image'), (req, res) => {
-    if (req.body.submit == "image" || req.body.submit == "video") {
+    if (req.body.submit == "normal_image" || req.body.submit == "stream" || req.body.submit == "video") {
         updateData = req.body.submit
         filterNumber = req.body.filter
 
