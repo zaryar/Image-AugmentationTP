@@ -1,6 +1,7 @@
 from filters import *
 from fast_neural_style.neural_style.neural_style import filter_candy, filter_monet, filter_starry_night
-from videomanipulation import filter_video
+from faceRec_MP.mediapipeFilter import filter_clown, filter_dog, filter_video_clown, filter_video_dog
+from videomanipulation import filter_video, apply_faceRec_video
 from basicpicturemanipulation import image_filter
 import time
 import csv
@@ -31,7 +32,8 @@ dict = {"filter1": filter_blurred , "filter2" : filter_flip, "filter3" : filter_
         "filter4": filter_gray , "filter5" : filter_bw, "filter6" : filter_invert,
         "filter7": filter_sketch , "filter8" : filter_sepia, "filter9" : filter_sharp,
         "filter10": filter_edge , "filter11" : filter_border, "filter12" : filter_reflect,
-        "filter13" : filter_wBorder, "filter14": filter_candy, "filter15": filter_starry_night, "filter16": filter_monet }
+        "filter13" : filter_wBorder, "filter14": filter_candy, "filter15": filter_starry_night, "filter16": filter_monet,
+        "filter17" : filter_clown, "filter18": filter_dog, "filter19": filter_video_clown, "filter20": filter_video_dog}
 
 def stream25(PATH, filter,FILENAME):
     stream_active = True
@@ -124,7 +126,7 @@ while True:
                 elif typ == "StyleTransfer":
                     filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
                 else:
-                    print("anders")
+                    apply_faceRec_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
 
             elif format == "image":
                 image_filter(PATH + IMAGE, dict[filter], OUTPUTPATH + IMAGE)

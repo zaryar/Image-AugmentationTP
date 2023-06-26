@@ -2,9 +2,8 @@ import mediapipe as mp
 import cv2
 import math
 import numpy as np
-import faceBlendCommon as fbc
+import faceRec_MP.faceBlendCommon as fbc
 import csv
-import time
 
 VISUALIZE_FACE_POINTS = False
 
@@ -19,21 +18,6 @@ filters_config = {
           'morph': False, 'animated': False, 'has_alpha': True},
          {'path': "local_version/back/faceRec_MP/filters/dog-nose.png",
           'anno_path': "local_version/back/faceRec_MP//filters/dog-nose_annotations.csv",
-          'morph': False, 'animated': False, 'has_alpha': True}],
-    'cat':
-        [{'path': "local_version/back/faceRec_MP/filters/cat-ears.png",
-          'anno_path': "local_version/back/faceRec_MP//filters/cat-ears_annotations.csv",
-          'morph': False, 'animated': False, 'has_alpha': True},
-         {'path': "local_version/back/faceRec_MP/filters/cat-nose.png",
-          'anno_path': "local_version/back/faceRec_MP//filters/cat-nose_annotations.csv",
-          'morph': False, 'animated': False, 'has_alpha': True}],
-    'gold-crown':
-        [{'path': "local_version/back/faceRec_MP/filters/gold-crown.png",
-          'anno_path': "local_version/back/faceRec_MP/filters/gold-crown_annotations.csv",
-          'morph': False, 'animated': False, 'has_alpha': True}],
-    'flower-crown':
-        [{'path': "local_version/back/faceRec_MP/filters/flower-crown.png",
-          'anno_path': "local_version/back/faceRec_MP/filters/flower-crown_annotations.csv",
           'morph': False, 'animated': False, 'has_alpha': True}],
 }
 
@@ -160,10 +144,20 @@ def load_filter(filter_name="dog"):
 
     return filters, multi_filter_runtime
 
-def filter_on_video (video, overlay) :
+CODEC = 'WMV1'
+
+def filter_on_video (video, overlay, filename) :
     # process input from webcam or video file
     #cap = cv2.VideoCapture(0) #webcam input
     cap = video
+
+    #setup video writer
+    WIDTH = int( cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    HEIGHT= int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps = cap.get(cv2.CAP_PROP_FPS)
+
+    fourcc = cv2.VideoWriter_fourcc(* CODEC )
+    output_vid = cv2.VideoWriter(filename, fourcc, fps, (WIDTH,  HEIGHT))
 
     # Some variables
     isFirstFrame = True
@@ -284,11 +278,7 @@ def filter_on_video (video, overlay) :
 
                 frame = output = np.uint8(output)
 
-            cv2.imshow("Face Filter", output)
-
-            keypressed = cv2.waitKey(1) & 0xFF
-            if keypressed == 27:
-                break
+            output_vid.write(output)
 
 def filter_on_image (frame, overlay) :
 
@@ -368,3 +358,11 @@ def filter_clown(img):
 def filter_dog(img):
     image = filter_on_image(img, "dog")
     return image
+
+def filter_video_clown(vid, filename):
+    video = filter_on_video(vid, "clown", filename)
+    return video
+
+def filter_video_dog(vid, filename):
+    video = filter_on_video(vid, "dog", filename)
+    return video
