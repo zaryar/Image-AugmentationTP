@@ -93,11 +93,16 @@ while True:
         with open(CONFIG, "r") as csvFile:
             csvReader = csv.reader(csvFile)
             for row in csvReader:
-                if(counter == 0 ):
+                if(counter == 0 ): #WARUM ?
                     format = row[0]
                     counter+=1
                     continue
-                filter = row[0]        
+                type = row[0]
+                filter = row[1]
+
+            print(filter)
+            print(type)
+            print(format)
 
         if any(char.isdigit() for char in filter) and ("stream" in format or "image" in format or "video" in format): 
             print (dict[filter])
@@ -118,7 +123,7 @@ while True:
         else:
             print("wrong filter or format in config file!!")
             time.sleep(1)
-        
+
         
         os.remove(CONFIG)
         time.sleep(1)
