@@ -374,3 +374,11 @@ def filter_clown(img):
 def filter_dog(img):
     image = filter_on_image(img, "dog")
     return image
+
+def filter_video_clown(vid, filename):
+    video = filter_on_video(vid, "clown", filename)
+    return video
+
+def filter_video_dog(vid, filename):
+    video = filter_on_video(vid, "dog", filename)
+    return video
