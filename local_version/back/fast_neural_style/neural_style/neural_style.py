@@ -255,3 +255,134 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+def stylize2(content_image,style,output_path): #this funtion is a copy of stylize() but it takes regular arguments and not parser arguments. We need this to use the function in the python script
+    
+
+    path_to_model = {
+        
+        "anime": "local_version/back/fast_neural_style/saved_models/anime.pth",
+        "candy": "local_version/back/fast_neural_style/saved_models/candy.pth",
+        "feininger":"local_version/back/fast_neural_style/saved_models/feini.pth",
+        "monet":"local_version/back/fast_neural_style/saved_models/monet.pth",
+        "mosaic": "local_version/back/fast_neural_style/saved_models/mosaic.pth",
+        "rain_princess":"local_version/back/fast_neural_style/saved_models/rain_princess.pth",
+        "starry_night": "local_version/back/fast_neural_style/saved_models/starry_night.pth",
+        "udnie": "local_version/back/fast_neural_style/saved_models/udnie.pth"
+    }
+    model_path = path_to_model[style]
+
+    device = torch.device( "cuda")
+    content_image = utils.load_image(content_image)
+    content_transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Lambda(lambda x: x.mul(255))
+    ])
+    content_image = content_transform(content_image)
+    content_image = content_image.unsqueeze(0).to(device)
+   
+    with torch.no_grad():
+            style_model = TransformerNet()
+            state_dict = torch.load(model_path)
+            # remove saved deprecated running_* keys in InstanceNorm from the checkpoint
+            for k in list(state_dict.keys()):
+                if re.search(r'in\d+\.running_(mean|var)$', k):
+                    del state_dict[k]
+            style_model.load_state_dict(state_dict)
+            style_model.to(device)
+            style_model.eval()
+            
+            output = style_model(content_image).cpu()
+    utils.save_image(output_path, output[0])
+
+
+def filter_candy(content_image,output_path): #this funtion is a copy of stylize() but it takes regular arguments and not parser arguments. We need this to use the function in the python script
+    
+
+    model_path = "local_version/back/fast_neural_style/saved_models/mosaic.pth"
+       
+
+    device = torch.device( "cuda")
+    content_image = utils.load_image(content_image)
+    content_transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Lambda(lambda x: x.mul(255))
+    ])
+    content_image = content_transform(content_image)
+    content_image = content_image.unsqueeze(0).to(device)
+   
+    with torch.no_grad():
+            style_model = TransformerNet()
+            state_dict = torch.load(model_path)
+            # remove saved deprecated running_* keys in InstanceNorm from the checkpoint
+            for k in list(state_dict.keys()):
+                if re.search(r'in\d+\.running_(mean|var)$', k):
+                    del state_dict[k]
+            style_model.load_state_dict(state_dict)
+            style_model.to(device)
+            style_model.eval()
+            
+            output = style_model(content_image).cpu()
+    utils.save_image(output_path, output[0])
+
+
+
+def filter_starry_night(content_image,output_path): #this funtion is a copy of stylize() but it takes regular arguments and not parser arguments. We need this to use the function in the python script
+    
+
+    model_path = "local_version/back/fast_neural_style/saved_models/starry_night.pth"
+       
+
+    device = torch.device( "cuda")
+    content_image = utils.load_image(content_image)
+    content_transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Lambda(lambda x: x.mul(255))
+    ])
+    content_image = content_transform(content_image)
+    content_image = content_image.unsqueeze(0).to(device)
+   
+    with torch.no_grad():
+            style_model = TransformerNet()
+            state_dict = torch.load(model_path)
+            # remove saved deprecated running_* keys in InstanceNorm from the checkpoint
+            for k in list(state_dict.keys()):
+                if re.search(r'in\d+\.running_(mean|var)$', k):
+                    del state_dict[k]
+            style_model.load_state_dict(state_dict)
+            style_model.to(device)
+            style_model.eval()
+            
+            output = style_model(content_image).cpu()
+    utils.save_image(output_path, output[0])
+
+
+def filter_monet(content_image,output_path): #this funtion is a copy of stylize() but it takes regular arguments and not parser arguments. We need this to use the function in the python script
+    
+
+    model_path = "local_version/back/fast_neural_style/saved_models/monet.pth"
+       
+
+    device = torch.device( "cuda")
+    content_image = utils.load_image(content_image)
+    content_transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Lambda(lambda x: x.mul(255))
+    ])
+    content_image = content_transform(content_image)
+    content_image = content_image.unsqueeze(0).to(device)
+   
+    with torch.no_grad():
+            style_model = TransformerNet()
+            state_dict = torch.load(model_path)
+            # remove saved deprecated running_* keys in InstanceNorm from the checkpoint
+            for k in list(state_dict.keys()):
+                if re.search(r'in\d+\.running_(mean|var)$', k):
+                    del state_dict[k]
+            style_model.load_state_dict(state_dict)
+            style_model.to(device)
+            style_model.eval()
+            
+            output = style_model(content_image).cpu()
+    utils.save_image(output_path, output[0])
