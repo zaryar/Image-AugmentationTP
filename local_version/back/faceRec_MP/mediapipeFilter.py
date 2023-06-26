@@ -160,10 +160,20 @@ def load_filter(filter_name="dog"):
 
     return filters, multi_filter_runtime
 
-def filter_on_video (video, overlay) :
+CODEC = 'WMV1'
+
+def filter_on_video (video, overlay, filename) :
     # process input from webcam or video file
     #cap = cv2.VideoCapture(0) #webcam input
     cap = video
+
+    #setup video writer
+    WIDTH = int( cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    HEIGHT= int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps = cap.get(cv2.CAP_PROP_FPS)
+
+    fourcc = cv2.VideoWriter_fourcc(* CODEC )
+    output_vid = cv2.VideoWriter(filename, fourcc, fps, (WIDTH,  HEIGHT))
 
     # Some variables
     isFirstFrame = True
@@ -284,11 +294,7 @@ def filter_on_video (video, overlay) :
 
                 frame = output = np.uint8(output)
 
-            cv2.imshow("Face Filter", output)
-
-            keypressed = cv2.waitKey(1) & 0xFF
-            if keypressed == 27:
-                break
+            output_vid.write(output)
 
 def filter_on_image (frame, overlay) :
 
