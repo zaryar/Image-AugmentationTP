@@ -79,62 +79,58 @@ def stream(PATH, filter, FILENAME):
             else:
                 frame_available = False
 
-            
+def read_config():
+    config = pd.read_csv(CONFIG)
+    config = config.to_string()
+    
+    counter = 0
+    with open(CONFIG, "r") as csvFile:
+        csvReader = csv.reader(csvFile)
+        for row in csvReader:
+            if(counter == 0 ): #WARUM ?
+                format = row[0]
+                counter+=1
+                continue
+            type = row[0]
+            filter = row[1]
+    return format, type, filter
 
-#print(os.path.exists(CONFIG))
-#print(os.path.exists('./front/public/config.csv'))
+def translate_config(format, type, filter):
+    if type == "NormalFilter":
+        #os.remove(CONFIG)
+        if format == "stream":
+            #print(PATH, dict[filter], FILENAME)
+            stream25(PATH, dict[filter], FILENAME)
 
-#READ CONFIG FILE
+        elif format == "video":
+            filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
+
+        elif format == "image":
+            image_filter(PATH + IMAGE, dict[filter], OUTPUTPATH + IMAGE)
+    #else: 
+        # stylize...
+        
+
+
+
 while True:
     time.sleep(1)
     print("Try to read: ", CONFIG)
     file_exists = os.path.exists(CONFIG)
     if file_exists:
-        config = pd.read_csv(CONFIG)
-        config = config.to_string()
-        
-        counter = 0
-        with open(CONFIG, "r") as csvFile:
-            csvReader = csv.reader(csvFile)
-            for row in csvReader:
-                if(counter == 0 ):
-                    format = row[0]
-                    counter+=1
-                    continue
-                if(counter == 1):
-                    filter = row[0]  
-                    counter+=1
-                    continue
-                if(counter == 2):
-                    typ = row[0]  
-                    counter+=1
-                    continue
+        format, type, filter = read_config()
 
         if any(char.isdigit() for char in filter) and ("stream" in format or "image" in format or "video" in format): 
-            print (dict[filter])
-            print(format)
+            #print (dict[filter])
+            #print(format)
             #print(type(format))
+            translate_config(format, type, filter)
 
-            #os.remove(CONFIG)
-            if format == "stream":
-                #print(PATH, dict[filter], FILENAME)
-                stream25(PATH, dict[filter], FILENAME)
-
-            elif format == "video":
-                if typ == "NormalFilter":
-                    filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
-                elif typ == "StyleTransfer":
-                    filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
-                else:
-                    apply_faceRec_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
-
-            elif format == "image":
-                image_filter(PATH + IMAGE, dict[filter], OUTPUTPATH + IMAGE)
 
         else:
             print("wrong filter or format in config file!!")
             time.sleep(1)
-        
+
         
         os.remove(CONFIG)
         time.sleep(1)
