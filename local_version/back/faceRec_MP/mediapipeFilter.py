@@ -2,7 +2,7 @@ import mediapipe as mp
 import cv2
 import math
 import numpy as np
-import faceBlendCommon as fbc
+import faceRec_MP.faceBlendCommon as fbc
 import csv
 import time
 
