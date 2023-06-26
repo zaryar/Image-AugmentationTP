@@ -4,7 +4,6 @@ import math
 import numpy as np
 import faceRec_MP.faceBlendCommon as fbc
 import csv
-import time
 
 VISUALIZE_FACE_POINTS = False
 
@@ -19,21 +18,6 @@ filters_config = {
           'morph': False, 'animated': False, 'has_alpha': True},
          {'path': "local_version/back/faceRec_MP/filters/dog-nose.png",
           'anno_path': "local_version/back/faceRec_MP//filters/dog-nose_annotations.csv",
-          'morph': False, 'animated': False, 'has_alpha': True}],
-    'cat':
-        [{'path': "local_version/back/faceRec_MP/filters/cat-ears.png",
-          'anno_path': "local_version/back/faceRec_MP//filters/cat-ears_annotations.csv",
-          'morph': False, 'animated': False, 'has_alpha': True},
-         {'path': "local_version/back/faceRec_MP/filters/cat-nose.png",
-          'anno_path': "local_version/back/faceRec_MP//filters/cat-nose_annotations.csv",
-          'morph': False, 'animated': False, 'has_alpha': True}],
-    'gold-crown':
-        [{'path': "local_version/back/faceRec_MP/filters/gold-crown.png",
-          'anno_path': "local_version/back/faceRec_MP/filters/gold-crown_annotations.csv",
-          'morph': False, 'animated': False, 'has_alpha': True}],
-    'flower-crown':
-        [{'path': "local_version/back/faceRec_MP/filters/flower-crown.png",
-          'anno_path': "local_version/back/faceRec_MP/filters/flower-crown_annotations.csv",
           'morph': False, 'animated': False, 'has_alpha': True}],
 }
 
