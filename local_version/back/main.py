@@ -91,8 +91,16 @@ def read_config():
                 format = row[0]
                 counter+=1
                 continue
+            if(counter == 1 ):
+                filter = row[0]
+                counter += 1
+                continue
             type = row[0]
-            filter = row[1]
+            
+            
+
+        print(type, filter, format)
+
     return format, type, filter
 
 def translate_config(format, type, filter):
