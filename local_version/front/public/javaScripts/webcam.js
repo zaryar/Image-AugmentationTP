@@ -92,6 +92,21 @@ function snapshot(name) {
     else if(document.getElementById("15").checked){
         filterValue = "15"
     }
+    else if(document.getElementById("16").checked){
+        filterValue = "16"
+    }
+    else if(document.getElementById("17").checked){
+        filterValue = "17"
+    }
+    else if(document.getElementById("18").checked){
+        filterValue = "18"
+    }
+    else if(document.getElementById("19").checked){
+        filterValue = "19"
+    }
+    else if(document.getElementById("20").checked){
+        filterValue = "20"
+    }
     formData.append('filter', filterValue);
     formData.append('submit', name); 
 

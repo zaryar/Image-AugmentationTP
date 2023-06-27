@@ -88,7 +88,7 @@ var updateData = ""
 var updateFilter = ""
 var filterCategory = ""
 app.post("/upload", upload.single('image'), (req, res) => {
-    if (req.body.submit == "image" || req.body.submit == "video") {
+    if (req.body.submit == "image" || req.body.submit == "video" || req.body.submit == "stream") {
         updateData = req.body.submit
         filterNumber = req.body.filter
 
@@ -101,7 +101,7 @@ app.post("/upload", upload.single('image'), (req, res) => {
         if (parseInt(filterNumber) <= 13) {
             filterCategory = "NormalFilter"
         }
-        else if (parseInt(filterNumber) == 14) {
+        else if (parseInt(filterNumber) <= 16) {
             filterCategory = "StyleTransfer"
         }
         else {
