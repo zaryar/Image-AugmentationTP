@@ -20,7 +20,8 @@ const io = new Server(server);
 // function to tell the socket what to do if a user connects 
 io.on('connection', (socket) => {
     console.log('a user connected');
-    setInterval(sendLatestFile, 40);
+    
+    //setInterval(sendLatestFile, 40);
 });
 
 
@@ -34,7 +35,9 @@ const { Console } = require('console');
 const { type } = require('os');
 var i = 0;
 const storage = multer.diskStorage({
+    
     destination: (req, file, cb) => {
+        
         cb(null, 'public/images/input');
     },
     filename: (req, file, cb) => {
@@ -48,6 +51,7 @@ const storage = multer.diskStorage({
                 console.log('Saved image');
             }
         } else {
+            sendLatestFile()
             if (!fs.existsSync(INPUTFRAME)) {
                 console.log(file)
 
@@ -60,6 +64,7 @@ const storage = multer.diskStorage({
                 cb(null, ".ignore")
 
             }
+            
         }
     }
 });
@@ -141,6 +146,7 @@ app.post("/upload", upload.single('image'), (req, res) => {
 
 
 //fs.watchFile(filePath, { interval: 70 }, sendLatestFile);
+
 
 
 function sendLatestFile() {

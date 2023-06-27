@@ -18,7 +18,7 @@ FILENAME = './local_version/front/public/images/output/frame.png'
 CONFIG = "./local_version/front/public/config.csv"
 STOPP = "./local_version/front/public/stopStream.txt"
 LOCKOUT = './local_version/front/public/images/output/lockOut'
-
+LOCKIN = './local_version/front/public/images/input/lockIn'
 
 
 FRAME = "frame.png"
@@ -39,14 +39,15 @@ def stream25(PATH, filter,FILENAME):
     stream_active = True
     while stream_active:
         path = PATH + "frame.png"
-        if os.path.exists(path) and cv.imread(path) is not None and cv.imread(path).shape[0] is not None: #is file there and a real image?
+        if os.path.exists(path) and not cv.imread(path) is None: #is file ready?
             if not os.path.exists(LOCKOUT): #did we already display the last image?
                 print(path, FILENAME, filter)         
+
+
                 image_filter(path, filter, FILENAME)
                 open(LOCKOUT, "x")
                 file = 'frame.png'
                 os.remove(os.path.join(PATH, file))
-                
             else:
                 print("lockOut already there | not worked with on canvis")
         else:
@@ -56,7 +57,7 @@ def stream25(PATH, filter,FILENAME):
             #os.remove(CONFIG)
             os.remove(STOPP)
             return
-        time.sleep(0.04)
+        time.sleep(0.3)
              
 
 def stream(PATH, filter, FILENAME):
@@ -135,14 +136,14 @@ while True:
 
         else:
             print("wrong filter or format in config file!!")
-            
+            time.sleep(1)
 
         
         os.remove(CONFIG)
-        
+        time.sleep(1)
     else:
         print("no config file")
-        
+        time.sleep(1)
 
         
         
