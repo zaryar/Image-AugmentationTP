@@ -272,7 +272,7 @@ def fast_evaluate(args, basedir, contents, idx = 0):
     if args.cuda:
         style_model.cuda()
     
-    style_loader = StyleLoader(args.style_folder, args.style_size, 
+    style_loader = utils.StyleLoader(args.style_folder, args.style_size, 
         cuda=args.cuda)
 
     for content_image in contents:
