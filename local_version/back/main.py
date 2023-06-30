@@ -31,6 +31,11 @@ FACE_RECOGNITION = "FaceRecognition"
 STYLE_TRANSFER = "StyleTransfer"
 NORMAL_FILTER = "NormalFilter"
 
+#Formats 
+STREAM = "stream"
+VID = "video"
+IMG = "stream"
+
 #Translation Test Dictionary
 
 dict = {"filter1": filter_blurred , "filter2" : filter_flip, "filter3" : filter_pixel,
@@ -40,18 +45,20 @@ dict = {"filter1": filter_blurred , "filter2" : filter_flip, "filter3" : filter_
         "filter13" : filter_wBorder, "filter14": filter_candy, "filter15": filter_starry_night, "filter16": filter_monet,
         "filter17" : filter_clown, "filter18": filter_dog, "filter19": filter_video_clown, "filter20": filter_video_dog}
 
-def stream25(PATH, filter,FILENAME):
+def stream25(PATH, filter,FILENAME, model):
     stream_active = True
     while stream_active:
-        path = PATH + "frame.png"
+        path = PATH + FRAME
         if os.path.exists(LOCKIN): #is file ready?
             if not os.path.exists(LOCKOUT): #did we already display the last image?
                 print(path, FILENAME, filter)         
-
-
-                image_filter(path, filter, FILENAME)
+                if model == NORMAL_FILTER:
+                    image_filter(path, filter, FILENAME)
+                else:
+                    #stylize_image(path, filter, FILENAME, model)
+                    return #@Valentin
                 open(LOCKOUT, "x")
-                file = 'frame.png'
+                file = FRAME
                 os.remove(os.path.join(PATH, file))
                 os.remove(LOCKIN) #remove the ability to work with file
             else:
@@ -64,25 +71,7 @@ def stream25(PATH, filter,FILENAME):
             os.remove(STOPP)
             return
         time.sleep(0.04)
-             
 
-def stream(PATH, filter, FILENAME):
-    frame_available = True
-    while frame_available:
-        path = PATH + FRAME
-        filename = FILENAME + IMAGE
-        print(path, filename)
-        if os.path.exists(path):            
-                image_filter(path, filter, filename)
-                time.sleep(1)
-                # os.remove(path)
-        else: 
-            time.sleep(4)
-            if os.path.exists(path):            
-                image_filter(path, filter, filename)
-                #os.remove(path)
-            else:
-                frame_available = False
 
 def read_config():
     config = pd.read_csv(CONFIG)
@@ -101,28 +90,39 @@ def read_config():
                 counter += 1
                 continue
             type = row[0]
-            
-            
-
         print(type, filter, format)
 
     return format, type, filter
 
 def translate_config(format, type, filter):
     if type == NORMAL_FILTER:
-        #os.remove(CONFIG)
-        if format == "stream":
-            #print(PATH, dict[filter], FILENAME)
-            stream25(PATH, dict[filter], FILENAME)
-
-        elif format == "video":
+        if format == STREAM:
+            stream25(PATH, dict[filter], FILENAME, NORMAL_FILTER)
+        elif format == VID:
             filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
-
-        elif format == "image":
+        elif format == IMG:
             image_filter(PATH + IMAGE, dict[filter], OUTPUTPATH + IMAGE)
+
     elif type == FACE_RECOGNITION:
-        if format == "stream":
+        if format == STREAM:
             stream_face_recognition(PATH, dict[filter], FILENAME)
+        elif format == VID:
+            filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
+        elif format == IMG:
+            image_filter(PATH + IMAGE, dict[filter], OUTPUTPATH + IMAGE)
+
+    elif type == STYLE_TRANSFER:
+
+        #models = load_models(filter)
+        models = dict[filter] # tauschen mit models @Valentin
+
+        if format == STREAM:
+            stream25(PATH, dict[filter], FILENAME, models)
+        elif format == VID:
+            filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
+        elif format == IMG:
+            image_filter(PATH + IMAGE, dict[filter], OUTPUTPATH + IMAGE)
+
 
 
         
@@ -136,7 +136,7 @@ while True:
     if file_exists:
         format, type, filter = read_config()
 
-        if any(char.isdigit() for char in filter) and ("stream" in format or "image" in format or "video" in format): 
+        if any(char.isdigit() for char in filter) and (STREAM in format or IMG in format or VID in format): 
             #print (dict[filter])
             #print(format)
             #print(type(format))
