@@ -366,3 +366,6 @@ def filter_video_clown(vid, filename):
 def filter_video_dog(vid, filename):
     video = filter_on_video(vid, "dog", filename)
     return video
+
+def stream_face_recognition(path, filter, output):
+    return
