@@ -1,6 +1,6 @@
 from filters import *
 from fast_neural_style.neural_style.neural_style import filter_candy, filter_monet, filter_starry_night
-from faceRec_MP.mediapipeFilter import filter_clown, filter_dog, filter_video_clown, filter_video_dog
+from faceRec_MP.mediapipeFilter import filter_clown, filter_dog, filter_video_clown, filter_video_dog, stream_face_recognition
 from videomanipulation import filter_video, apply_faceRec_video
 from basicpicturemanipulation import image_filter
 import time
@@ -25,6 +25,11 @@ FRAME = "frame.png"
 IMAGE = "image.png"
 VIDEO = "test_vid.mp4"
 
+
+#Types 
+FACE_RECOGNITION = "FaceRecognition"
+STYLE_TRANSFER = "StyleTransfer"
+NORMAL_FILTER = "NormalFilter"
 
 #Translation Test Dictionary
 
@@ -104,7 +109,7 @@ def read_config():
     return format, type, filter
 
 def translate_config(format, type, filter):
-    if type == "NormalFilter":
+    if type == NORMAL_FILTER:
         #os.remove(CONFIG)
         if format == "stream":
             #print(PATH, dict[filter], FILENAME)
@@ -115,8 +120,11 @@ def translate_config(format, type, filter):
 
         elif format == "image":
             image_filter(PATH + IMAGE, dict[filter], OUTPUTPATH + IMAGE)
-    #else: 
-        # stylize...
+    elif type == FACE_RECOGNITION:
+        if format == "stream":
+            stream_face_recognition(PATH, dict[filter], FILENAME)
+
+
         
 
 
