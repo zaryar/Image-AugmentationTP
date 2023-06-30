@@ -58,7 +58,7 @@ def stream25(PATH, filter,FILENAME):
             #os.remove(CONFIG)
             os.remove(STOPP)
             return
-        time.sleep(0.3)
+        time.sleep(0.04)
              
 
 def stream(PATH, filter, FILENAME):

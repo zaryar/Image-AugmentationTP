@@ -36,102 +36,111 @@ function snapshot(name) {
     canvas.style.display = "block"; // Show the canvas on the html site
 
     // Convert canvas contents (image) to a base64 string
-    base64Image = canvas.toDataURL('image/png')
+    base64Image = canvas.toDataURL({
+        format: 'jpeg',
+        quality: 1
+    });
+
+    console.log("base64: " + base64Image.length)
+
     // Convert base64 image to an image blob (image object)
-    var base64ImageContent = base64Image.replace(/^data:image\/(png|jpg);base64,/, "");
+    var base64ImageContent = base64Image.replace(/^data:image\/(png|jpeg);base64,/, "");
     var blob = base64ToBlob(base64ImageContent, 'image/png');
+
+    console.log("blob: " + blob.toString.length)
 
     // This is the form that is going to be received by the server
     var formData = new FormData();
     formData.append('image', blob); // Add the image to the form to send
 
-    
+
     filterValue = ""
-    if(document.getElementById("1").checked){
+    if (document.getElementById("1").checked) {
         filterValue = "1"
     }
-    else if(document.getElementById("2").checked){
+    else if (document.getElementById("2").checked) {
         filterValue = "2"
     }
-    else if(document.getElementById("3").checked){
+    else if (document.getElementById("3").checked) {
         filterValue = "3"
     }
-    else if(document.getElementById("4").checked){
+    else if (document.getElementById("4").checked) {
         filterValue = "4"
     }
-    else if(document.getElementById("5").checked){
+    else if (document.getElementById("5").checked) {
         filterValue = "5"
     }
-    else if(document.getElementById("6").checked){
+    else if (document.getElementById("6").checked) {
         filterValue = "6"
     }
-    else if(document.getElementById("7").checked){
+    else if (document.getElementById("7").checked) {
         filterValue = "7"
     }
-    else if(document.getElementById("8").checked){
+    else if (document.getElementById("8").checked) {
         filterValue = "8"
     }
-    else if(document.getElementById("9").checked){
+    else if (document.getElementById("9").checked) {
         filterValue = "9"
     }
-    else if(document.getElementById("10").checked){
+    else if (document.getElementById("10").checked) {
         filterValue = "10"
     }
-    else if(document.getElementById("11").checked){
+    else if (document.getElementById("11").checked) {
         filterValue = "11"
     }
-    else if(document.getElementById("12").checked){
+    else if (document.getElementById("12").checked) {
         filterValue = "12"
     }
-    else if(document.getElementById("13").checked){
+    else if (document.getElementById("13").checked) {
         filterValue = "13"
     }
-    else if(document.getElementById("14").checked){
+    else if (document.getElementById("14").checked) {
         filterValue = "14"
     }
-    else if(document.getElementById("15").checked){
+    else if (document.getElementById("15").checked) {
         filterValue = "15"
     }
-    else if(document.getElementById("16").checked){
+    else if (document.getElementById("16").checked) {
         filterValue = "16"
     }
-    else if(document.getElementById("17").checked){
+    else if (document.getElementById("17").checked) {
         filterValue = "17"
     }
-    else if(document.getElementById("18").checked){
+    else if (document.getElementById("18").checked) {
         filterValue = "18"
     }
-    else if(document.getElementById("19").checked){
+    else if (document.getElementById("19").checked) {
         filterValue = "19"
     }
-    else if(document.getElementById("20").checked){
+    else if (document.getElementById("20").checked) {
         filterValue = "20"
     }
     formData.append('filter', filterValue);
-    formData.append('submit', name); 
+    formData.append('submit', name);
 
     // Create a connection and then send the form to the server with the POST method
     var xhr = new XMLHttpRequest();
-    xhr.open('POST','/upload', false); //creates a conection to the URL
+    xhr.open('POST', '/upload', false); //creates a conection to the URL
+    //xhr.send("test");
     xhr.send(formData);
 }
 
 // fuction to start recording with the webcam
 var intervalId
-function record(){
-    intervalId = window.setInterval(function(){
-        snapshot("stream")
-      }, 40);
+function record() {
+    intervalId = window.setInterval(function () {
+         snapshot("stream")
+    }, 40);
 }
 
 // function to stop the video record
-function stop_record(){
+function stop_record() {
     clearInterval(intervalId)
     //the button was pushed -> send message to server 
     var formData = new FormData();
-    formData.append('submit', "stopStream"); 
+    formData.append('submit', "stopStream");
     var xhr = new XMLHttpRequest();
-    xhr.open('POST','/upload', false); //creates a conection to the URL
+    xhr.open('POST', '/upload', false); //creates a conection to the URL
     xhr.send(formData);
 }
 
@@ -142,8 +151,8 @@ window.navigator.mediaDevices.getUserMedia({ video: true, audio: true })
             video.play();
 
             //new
-            w = video.videoWidth;
-            h = video.videoHeight
+            w = 120;
+            h = 80
 
             canvas.width = w;
             canvas.height = h;

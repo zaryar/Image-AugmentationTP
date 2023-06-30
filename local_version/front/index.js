@@ -21,7 +21,7 @@ const io = new Server(server);
 // function to tell the socket what to do if a user connects 
 io.on('connection', (socket) => {
     console.log('a user connected');
-    setInterval(sendLatestFile, 40);
+    //setInterval(sendLatestFile, 40);
 });
 
 function Sleep(milliseconds) {
@@ -73,6 +73,7 @@ const storage = multer.diskStorage({
 
             }
         }
+        sendLatestFile()
     }
 });
 
