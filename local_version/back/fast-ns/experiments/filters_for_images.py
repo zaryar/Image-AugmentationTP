@@ -38,7 +38,7 @@ def load_models(model_string):
     style_model.setTarget(style_v)
 
     return style_model
-	
+
 	
          
          
@@ -61,10 +61,10 @@ def stylize_image(image_path,style_model,ouput_path):
     else:
           img = img.clamp(0, 255).data[0].numpy()
     cv.imwrite(ouput_path,img)
+print("hello")
 
 
-
-    def evaluate(content_path, style_path, output_path):
+def evaluate(content_path, style_path, output_path):
         cuda = True
         content_image = utils.tensor_load_rgbimage(content_path, size=512, keep_asp=True)
         content_image = content_image.unsqueeze(0)
@@ -94,7 +94,8 @@ def stylize_image(image_path,style_model,ouput_path):
         #output = utils.color_match(output, style_v)
         utils.tensor_save_bgrimage(output.data[0], output_path, cuda)
 
-    evaluate("local_version/back/fast-ns/experiments/images/content/flowers.jpg","local_version/back/fast-ns/experiments/images/9styles/candy.jpg","local_version/back/fast-ns/experiments/output.jpg")
-    print("hello")
+    
+evaluate("local_version/back/fast-ns/experiments/images/content/flowers.jpg","local_version/back/fast-ns/experiments/images/9styles/candy.jpg","local_version/back/fast-ns/experiments/output.jpg")
+    
 			
 	
