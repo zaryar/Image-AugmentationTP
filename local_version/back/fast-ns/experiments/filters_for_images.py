@@ -8,6 +8,7 @@ from net import Net
 from option import Options
 import utils
 from utils import StyleLoader
+import timeit
 
 
 def load_models(model_string):
@@ -100,7 +101,7 @@ def evaluate(content_path, style_path, output_path):
 #okay let's try it with 2 functions
 
 def do_model(style_path):
-
+    cuda = True
     style = utils.tensor_load_rgbimage(style_path, size=512)
     style = style.unsqueeze(0)    
     style = utils.preprocess_batch(style)
@@ -112,6 +113,13 @@ def do_model(style_path):
         if key.endswith(('running_mean', 'running_var')):
             del model_dict[key]
     style_model.load_state_dict(model_dict, False)
+
+
+    if cuda:
+            style_model.cuda()
+            style = style.cuda()
+    style_v = Variable(style)
+    style_model.setTarget(style_v)
     return style_model,style
 
 def evaluate_img(style_model,style, content_path,  output_path):
@@ -122,14 +130,14 @@ def evaluate_img(style_model,style, content_path,  output_path):
         
 
         if cuda:
-            style_model.cuda()
+            #style_model.cuda()
             content_image = content_image.cuda()
-            style = style.cuda()
+           # style = style.cuda()
 
-        style_v = Variable(style)
+        
 
         content_image = Variable(utils.preprocess_batch(content_image))
-        style_model.setTarget(style_v)
+        
 
         output = style_model(content_image)
         #output = utils.color_match(output, style_v)
@@ -137,4 +145,7 @@ def evaluate_img(style_model,style, content_path,  output_path):
 
 model, style = do_model("local_version/back/fast-ns/experiments/images/9styles/candy.jpg")
 
-evaluate_img(model,style,"local_version/back/fast-ns/experiments/images/content/flowers.jpg","local_version/back/fast-ns/experiments/output.jpg")
+#evaluate_img(model,style,"local_version/back/fast-ns/experiments/images/content/flowers.jpg","local_version/back/fast-ns/experiments/output.jpg")
+
+
+print(timeit.timeit(lambda: evaluate_img(model,style,"local_version/back/fast-ns/experiments/images/content/flowers.jpg","local_version/back/fast-ns/experiments/output.jpg"), number =1))
