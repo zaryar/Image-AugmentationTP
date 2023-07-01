@@ -95,5 +95,6 @@ def stylize_image(image_path,style_model,ouput_path):
         utils.tensor_save_bgrimage(output.data[0], output_path, cuda)
 
     evaluate("local_version/back/fast-ns/experiments/images/content/flowers.jpg","local_version/back/fast-ns/experiments/images/9styles/candy.jpg","local_version/back/fast-ns/experiments/output.jpg")
+    print("hello")
 			
 	
