@@ -54,8 +54,7 @@ def stream25(PATH, filter,FILENAME, model):
                 if model == NORMAL_FILTER:
                     image_filter(path, filter, FILENAME)
                 else:
-                    #stylize_image(path, filter, FILENAME, model)
-                    return #@Valentin
+                    valuate_img(model, filter, path, FILENAME)
                 open(LOCKOUT, "x")
                 file = FRAME
                 os.remove(os.path.join(PATH, file))
