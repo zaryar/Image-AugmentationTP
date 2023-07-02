@@ -1,5 +1,4 @@
 from filters import *
-from fast_neural_style.neural_style.neural_style import filter_candy, filter_monet, filter_starry_night
 from faceRec_MP.mediapipeFilter import filter_clown, filter_dog, filter_video_clown, filter_video_dog
 from videomanipulation import filter_video, apply_faceRec_video
 from basicpicturemanipulation import image_filter
@@ -7,8 +6,8 @@ import time
 import csv
 import os
 import pandas as pd
-
 import cv2
+
 
 
 
