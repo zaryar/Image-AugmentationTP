@@ -45,7 +45,7 @@ function snapshot(name) {
 
     // Convert base64 image to an image blob (image object)
     var base64ImageContent = base64Image.replace(/^data:image\/(png|jpeg);base64,/, "");
-    var blob = base64ToBlob(base64ImageContent, 'image/png');
+    var blob = base64ToBlob(base64ImageContent, 'image/jpeg');
 
     console.log("blob: " + blob.toString.length)
 
@@ -123,6 +123,12 @@ function snapshot(name) {
     xhr.open('POST', '/upload', false); //creates a conection to the URL
     //xhr.send("test");
     xhr.send(formData);
+    var sended = new Date();
+    var currentdate = new Date();
+    console.log("Client -> Server: "
+        + currentdate.getMinutes() + ":"
+        + currentdate.getSeconds() + ":"
+        + currentdate.getMilliseconds())
 }
 
 // fuction to start recording with the webcam

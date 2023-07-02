@@ -162,6 +162,11 @@ function sendLatestFile() {
             try {
                 let imgData = buf.toString('base64');
                 io.emit('update', { image: imgData });
+                var currentdate = new Date();
+                console.log("serverDisplayedOnCanvis: "
+                    + currentdate.getMinutes() + ":"
+                    + currentdate.getSeconds() + ":"
+                    + currentdate.getMilliseconds())
                 fs.unlinkSync(LOCKOUT);
             } catch (error) {
                 console.error(error);

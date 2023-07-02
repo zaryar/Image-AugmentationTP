@@ -51,15 +51,17 @@ def write_image(gray):
         cv.imwrite(get_path("output",test), gray)
 
 def image_filter(path, apply, filename):
-        try:
-                #if apply == filter_starry_night or apply == filter_candy or apply == filter_monet:
-                #   apply(path,filename)
+
+                # if apply == filter_starry_night or apply == filter_candy or apply == filter_monet:
+                #    apply(path,filename)
                 #else:
-                        img = cv.imread(path)
-                        img = apply(img)
-                        cv.imwrite(filename, img)
-        except:
-               print("Something went wrong appling the filter")
+                        try:
+                                img = cv.imread(path)
+                                img = apply(img)
+                                cv.imwrite(filename, img)
+                        except:
+                                print("Something went wrong appling the filter")
+
 
 
         
