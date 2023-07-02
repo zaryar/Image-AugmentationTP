@@ -52,9 +52,9 @@ def write_image(gray):
 
 def image_filter(path, apply, filename):
         try:
-                if apply == filter_starry_night or apply == filter_candy or apply == filter_monet:
-                   apply(path,filename)
-                else:
+                #if apply == filter_starry_night or apply == filter_candy or apply == filter_monet:
+                #   apply(path,filename)
+                #else:
                         img = cv.imread(path)
                         img = apply(img)
                         cv.imwrite(filename, img)

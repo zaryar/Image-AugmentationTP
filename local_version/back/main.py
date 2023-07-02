@@ -1,5 +1,5 @@
 from filters import *
-from faceRec_MP.mediapipeFilter import filter_clown, filter_dog, filter_video_clown, filter_video_dog
+from faceRec_MP.mediapipeFilter import filter_clown, filter_dog, filter_video_clown, filter_video_dog, stream_face_recognition
 from videomanipulation import filter_video, apply_faceRec_video
 from basicpicturemanipulation import image_filter
 import time
@@ -54,8 +54,7 @@ def stream25(PATH, filter,FILENAME, model):
                 if model == NORMAL_FILTER:
                     image_filter(path, filter, FILENAME)
                 else:
-                    #stylize_image(path, filter, FILENAME, model)
-                    return #@Valentin
+                    evaluate_img(model, filter, path, FILENAME)
                 open(LOCKOUT, "x")
                 file = FRAME
                 os.remove(os.path.join(PATH, file))
@@ -112,9 +111,7 @@ def translate_config(format, type, filter):
 
     elif type == STYLE_TRANSFER:
 
-        #models = load_models(filter)
-        models = dict[filter] # tauschen mit models @Valentin
-
+        models = do_model(filter) # Create models for StyleTransfer
         if format == STREAM:
             stream25(PATH, dict[filter], FILENAME, models)
         elif format == VID:
@@ -149,10 +146,10 @@ while True:
 
         
         os.remove(CONFIG)
-        time.sleep(1)
+        time.sleep(0.1)
     else:
         print("no config file")
-        time.sleep(1)
+        time.sleep(0.1)
 
         
         
