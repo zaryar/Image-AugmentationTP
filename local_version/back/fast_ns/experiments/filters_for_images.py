@@ -4,10 +4,10 @@ import numpy as np
 import torch
 from torch.autograd import Variable
 
-from net import Net
-from option import Options
-import utils
-from utils import StyleLoader
+from fast_ns.experiments.net import Net
+from fast_ns.experiments.option import Options
+import fast_ns.experiments.utils as utils
+from fast_ns.experiments.utils import StyleLoader
 import timeit
 
 
@@ -56,7 +56,7 @@ def do_model(style_path):
     style = utils.preprocess_batch(style)
 
     style_model = Net(ngf=128)
-    model_dict = torch.load("local_version/back/fast-ns/experiments/models/21styles.model")
+    model_dict = torch.load("local_version/back/fast_ns/experiments/models/21styles.model")
     model_dict_clone = model_dict.copy()
     for key, value in model_dict_clone.items():
         if key.endswith(('running_mean', 'running_var')):
@@ -92,10 +92,16 @@ def evaluate_img(style_model,style, content_path,  output_path):
         #output = utils.color_match(output, style_v)
         utils.tensor_save_bgrimage(output.data[0], output_path, cuda)
 
-model, style = do_model("local_version/back/fast-ns/experiments/images/9styles/candy.jpg")
+#model, style = do_model("local_version/back/fast-ns/experiments/images/9styles/candy.jpg")
 
 
 
 #Please leave this for testing 
 #evaluate_img(model,style,"local_version/back/fast-ns/experiments/images/content/flowers.jpg","local_version/back/fast-ns/experiments/output.jpg")
 #print(timeit.timeit(lambda: evaluate_img(model,style,"local_version/back/fast-ns/experiments/images/content/flowers.jpg","local_version/back/fast-ns/experiments/output.jpg"), number =1))
+
+
+
+#Example call for main : 
+ #model,style = do_model("local_version/back/fast_ns/experiments/images/9styles/candy.jpg")
+   # evaluate_img(model,style,"local_version/back/fast_ns/experiments/images/content/flowers.jpg","local_version/back/fast_ns/experiments/output.jpg")
