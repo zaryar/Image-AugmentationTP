@@ -4,7 +4,7 @@ import cv2 as cv
 import numpy as np
 import os 
 from filters import filter_bw
-from  fast_neural_style.neural_style.neural_style import filter_candy,filter_monet,filter_starry_night
+
 
 test = "Test.jpeg"
 def get_path(folder, image):
