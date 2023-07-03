@@ -79,9 +79,9 @@ def evaluate_img(style_model,style, content_path,  output_path):
         
 
         if cuda:
-            #style_model.cuda()
+          
             content_image = content_image.cuda()
-           # style = style.cuda()
+         
 
         
 
@@ -92,7 +92,7 @@ def evaluate_img(style_model,style, content_path,  output_path):
         #output = utils.color_match(output, style_v)
         utils.tensor_save_bgrimage(output.data[0], output_path, cuda)
 
-#model, style = do_model("local_version/back/fast-ns/experiments/images/9styles/candy.jpg")
+model, style = do_model("local_version/back/fast-ns/experiments/images/9styles/candy.jpg")
 
 
 
@@ -102,6 +102,6 @@ def evaluate_img(style_model,style, content_path,  output_path):
 
 
 
-#Example call for main : 
- #model,style = do_model("local_version/back/fast_ns/experiments/images/9styles/candy.jpg")
-   # evaluate_img(model,style,"local_version/back/fast_ns/experiments/images/content/flowers.jpg","local_version/back/fast_ns/experiments/output.jpg")
+
+model,style = do_model("local_version/back/fast_ns/experiments/images/9styles/candy.jpg")
+evaluate_img(model,style,"local_version/back/fast_ns/experiments/images/content/flowers.jpg","local_version/back/fast_ns/experiments/output.jpg")
