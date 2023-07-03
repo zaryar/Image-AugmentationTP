@@ -9,7 +9,7 @@ from option import Options
 import utils as utils
 from  utils import StyleLoader
 import timeit
-
+import time
 
 
 
@@ -72,6 +72,7 @@ def do_model(style_path):
     return style_model,style
 
 def evaluate_img(style_model,style, content_path,  output_path):
+        start_time = time.time()
         cuda = True
         content_image = utils.tensor_load_rgbimage(content_path, size=512, keep_asp=True)
         content_image = content_image.unsqueeze(0)
@@ -91,6 +92,7 @@ def evaluate_img(style_model,style, content_path,  output_path):
         output = style_model(content_image)
         #output = utils.color_match(output, style_v)
         utils.tensor_save_bgrimage(output.data[0], output_path, cuda)
+        print(time.time() - start_time)
 
 #model, style = do_model("local_version/back/fast-ns/experiments/images/9styles/candy.jpg")
 
