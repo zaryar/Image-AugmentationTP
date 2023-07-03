@@ -9,7 +9,7 @@
 ##+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 import os
-
+import time
 import numpy as np
 import torch
 from PIL import Image
@@ -35,6 +35,7 @@ def tensor_load_rgbimage(filename, size=None, scale=None, keep_asp=False):
 
 
 def tensor_save_rgbimage(tensor, filename, cuda=False):
+    start_time = time.time()
     if cuda:
         img = tensor.clone().cpu().clamp(0, 255).numpy()
     else:
