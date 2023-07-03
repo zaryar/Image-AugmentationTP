@@ -4,10 +4,10 @@ import numpy as np
 import torch
 from torch.autograd import Variable
 
-from fast_ns.experiments.net import Net
-from fast_ns.experiments.option import Options
-import fast_ns.experiments.utils as utils
-from fast_ns.experiments.utils import StyleLoader
+from net import Net
+from option import Options
+import utils as utils
+from  utils import StyleLoader
 import timeit
 
 
@@ -92,7 +92,7 @@ def evaluate_img(style_model,style, content_path,  output_path):
         #output = utils.color_match(output, style_v)
         utils.tensor_save_bgrimage(output.data[0], output_path, cuda)
 
-model, style = do_model("local_version/back/fast-ns/experiments/images/9styles/candy.jpg")
+#model, style = do_model("local_version/back/fast-ns/experiments/images/9styles/candy.jpg")
 
 
 
