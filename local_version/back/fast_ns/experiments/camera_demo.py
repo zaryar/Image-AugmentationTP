@@ -32,9 +32,9 @@ def run_demo(args, mirror=False):
 	if args.record:
 		fourcc = cv2.VideoWriter_fourcc('F','M','P','4')
 		out = cv2.VideoWriter('output.mp4', fourcc, 20.0, (2*width, height))
-	cam = cv2.VideoCapture(0)
-	cam.set(3, width)
-	cam.set(4, height)
+	#cam = cv2.VideoCapture(0)
+	#cam.set(3, width)
+	#cam.set(4, height)
 	key = 0
 	idx = 0
 	while True:
