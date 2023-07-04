@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import torch
 from torch.autograd import Variable
-
+import time
 from net import Net
 from option import Options
 import utils
@@ -39,6 +39,7 @@ def run_demo(args, mirror=False):
 	idx = 0
 	while True:
 		# read frame
+		start_time = time.time()
 		idx += 1
 		img = cv2.imread("images/content/shenyang.jpg",cv2.IMREAD_COLOR)
 		if mirror: 
@@ -47,7 +48,7 @@ def run_demo(args, mirror=False):
 		img = np.array(img).transpose(2, 0, 1)
 		# changing style 
 		if idx%20 == 1:
-			style_v = style_loader.get(int(idx/20))
+			style_v = style_loader.get(int(5))
 			style_v = Variable(style_v.data)
 			style_model.setTarget(style_v)
 
@@ -57,7 +58,9 @@ def run_demo(args, mirror=False):
 
 		img = Variable(img)
 		img = style_model(img)
-
+		process_timepoint = time.time()
+		picture_processing_time = process_timepoint - start_time
+		print('Time to process a image: %i'%picture_processing_time)
 		if args.cuda:
 			simg = style_v.cpu().data[0].numpy()
 			img = img.cpu().clamp(0, 255).data[0].numpy()
@@ -73,13 +76,15 @@ def run_demo(args, mirror=False):
 		cimg[0:sheight,0:swidth,:]=simg
 		#img = np.concatenate((cimg,img),axis=1)
 		cv2.imshow('MSG Demo', img)
-		#cv2.imwrite('stylized/%i.jpg'%idx,img)
+		cv2.imwrite('/outputs/demo_image/stylized/%i.jpg'%idx,img)
+		decode_time = time.time()-process_timepoint
+		print("time to decode image:%i"%decode_time)
 		key = cv2.waitKey(1)
 		if args.record:
 			out.write(img)
 		if key == 27: 
 			break
-	cam.release()
+	#cam.release()
 	if args.record:
 		out.release()
 	cv2.destroyAllWindows()
