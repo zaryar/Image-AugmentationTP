@@ -105,5 +105,5 @@ def evaluate_img(style_model,style, content_path,  output_path):
 
 
 
-model,style = do_model("local_version/back/fast_ns/experiments/images/9styles/candy.jpg")
-evaluate_img(model,style,"local_version/back/fast_ns/experiments/images/content/flowers.jpg","local_version/back/fast_ns/experiments/output.jpg")
+#model,style = do_model("local_version/back/fast_ns/experiments/images/9styles/candy.jpg")
+#evaluate_img(model,style,"local_version/back/fast_ns/experiments/images/content/flowers.jpg","local_version/back/fast_ns/experiments/output.jpg")
