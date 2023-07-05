@@ -38,7 +38,7 @@ function snapshot(name) {
     // Convert canvas contents (image) to a base64 string
     base64Image = canvas.toDataURL({
         format: 'jpeg',
-        quality: 1
+        quality: 0.01
     });
 
     console.log("base64: " + base64Image.length)
@@ -157,8 +157,8 @@ window.navigator.mediaDevices.getUserMedia({ video: true, audio: true })
             video.play();
 
             //new
-            w = 120;
-            h = 80
+            w = 700;
+            h = 500
 
             canvas.width = w;
             canvas.height = h;

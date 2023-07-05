@@ -3,8 +3,8 @@ const path = require('path');
 const fs = require("fs");
 const { convertArrayToCSV } = require('convert-array-to-csv');
 
-const INPUTFRAME = 'public/images/input/frame.png';
-const OUTPUTFRAME = 'public/images/output/frame.png';
+const INPUTFRAME = 'public/images/input/frame.jpg';
+const OUTPUTFRAME = 'public/images/output/frame.jpg';
 const LOCKOUT = 'public/images/output/lockOut';
 const LOCKIN = 'public/images/input/lockIn';
 
@@ -55,7 +55,7 @@ const storage = multer.diskStorage({
             if (!fs.existsSync(INPUTFRAME)) {
                 console.log(file)
 
-                cb(null, "frame.png")
+                cb(null, "frame.jpg")
 
                 //await Sleep(500);
                 console.log("frame ")

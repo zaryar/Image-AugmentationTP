@@ -13,15 +13,15 @@ from fast_ns.experiments.filters_for_images import do_model, evaluate_img
 
 PATH = "./local_version/front/public/images/input/"
 OUTPUTPATH = "./local_version/front/public/images/output/"
-FILENAME = './local_version/front/public/images/output/frame.png'
+FILENAME = './local_version/front/public/images/output/frame.jpg'
 CONFIG = "./local_version/front/public/config.csv"
 STOPP = "./local_version/front/public/stopStream.txt"
 LOCKOUT = './local_version/front/public/images/output/lockOut'
 LOCKIN = './local_version/front/public/images/input/lockIn'
 
 
-FRAME = "frame.png"
-IMAGE = "image.png"
+FRAME = "frame.jpg"
+IMAGE = "image.jpg"
 VIDEO = "test_vid.mp4"
 
 
