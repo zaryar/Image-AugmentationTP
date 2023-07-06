@@ -6,7 +6,6 @@ const { convertArrayToCSV } = require('convert-array-to-csv');
 const INPUTFRAME = 'public/images/input/frame.jpg';
 const OUTPUTFRAME = 'public/images/output/frame.jpg';
 const LOCKOUT = 'public/images/output/lockOut';
-const LOCKIN = 'public/images/input/lockIn';
 
 // create express server
 const express = require('express');
@@ -61,10 +60,6 @@ const storage = multer.diskStorage({
                 console.log("frame ")
 
                 //lock in erstellen
-                fs.open(LOCKIN, 'w', function (err, file) {
-                    if (err) throw err;
-                    console.log('Saved!');
-                });
             }
             else {
                 console.log("frame allready there" + i)
