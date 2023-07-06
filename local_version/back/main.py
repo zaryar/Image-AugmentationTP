@@ -9,6 +9,8 @@ import pandas as pd
 import cv2
 from fast_ns.experiments.filters_for_images import do_model, evaluate_img
 
+import datetime
+
 
 
 PATH = "./local_version/front/public/images/input/"
@@ -34,6 +36,7 @@ STREAM = "stream"
 VID = "video"
 IMG = "stream"
 
+
 #Translation Test Dictionary
 
 dict = {"filter1": filter_blurred , "filter2" : filter_flip, "filter3" : filter_pixel,
@@ -55,13 +58,16 @@ def stream25(PATH, filter,FILENAME, model):
                 else:
                     valuate_img(model, filter, path, FILENAME)
                 open(LOCKOUT, "x")
+                
+                dt = datetime.datetime.now()
+                print(dt)
                 file = FRAME
                 os.remove(os.path.join(PATH, file))
 
             else:
                 print("lockOut already there | not worked with on canvis")
         else:
-            print("input file cant be found")
+            x = 5#print("input file cant be found")
         stream_active = os.path.exists(STOPP) == False
         if os.path.exists(STOPP):
             #os.remove(CONFIG)

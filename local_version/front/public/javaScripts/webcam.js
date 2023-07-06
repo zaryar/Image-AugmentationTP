@@ -124,11 +124,6 @@ function snapshot(name) {
     //xhr.send("test");
     xhr.send(formData);
     var sended = new Date();
-    var currentdate = new Date();
-    console.log("Client -> Server: "
-        + currentdate.getMinutes() + ":"
-        + currentdate.getSeconds() + ":"
-        + currentdate.getMilliseconds())
 }
 
 // fuction to start recording with the webcam

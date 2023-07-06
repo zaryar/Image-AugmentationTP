@@ -27,7 +27,8 @@ function Sleep(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
 
-
+timingBool1 = true;
+timingBool2 = true;
 
 app.use(express.static('public'));  /* tells expressJS where to find css and js files */
 
@@ -51,12 +52,17 @@ const storage = multer.diskStorage({
                 console.log('Saved image');
             }
         } else {
-            if (!fs.existsSync(INPUTFRAME)) {
+            if (!fs.existsSync(INPUTFRAME) && timingBool1) {
                 console.log(file)
 
                 cb(null, "frame.jpg")
 
-                //await Sleep(500);
+                var currentdate = new Date();
+                console.log("Upload from client to server: "
+                    + currentdate.getMinutes() + ":"
+                    + currentdate.getSeconds() + ":"
+                    + currentdate.getMilliseconds());
+                timingBool1 = false;
                 console.log("frame ")
 
                 //lock in erstellen
@@ -65,6 +71,12 @@ const storage = multer.diskStorage({
                 console.log("frame allready there" + i)
                 i++
                 cb(null, ".ignore")
+
+                if(i > 100){
+                    i = 0 
+                    timingBool1 = true;
+                    timingBool2 = true;
+                }
 
             }
         }
@@ -153,7 +165,7 @@ app.post("/upload", upload.single('image'), (req, res) => {
 
 function sendLatestFile() {
     fs.readFile(OUTPUTFRAME, function (err, buf) {
-        if (fs.existsSync(LOCKOUT)) {
+        if (fs.existsSync(LOCKOUT) && timingBool2) {
             try {
                 let imgData = buf.toString('base64');
                 io.emit('update', { image: imgData });
@@ -161,7 +173,8 @@ function sendLatestFile() {
                 console.log("serverDisplayedOnCanvis: "
                     + currentdate.getMinutes() + ":"
                     + currentdate.getSeconds() + ":"
-                    + currentdate.getMilliseconds())
+                    + currentdate.getMilliseconds());
+                timingBool2 = false;
                 fs.unlinkSync(LOCKOUT);
             } catch (error) {
                 console.error(error);
