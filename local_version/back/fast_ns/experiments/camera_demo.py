@@ -75,7 +75,7 @@ def run_demo(args, mirror=False):
 		simg = cv2.resize(simg,(swidth, sheight), interpolation = cv2.INTER_CUBIC)
 		cimg[0:sheight,0:swidth,:]=simg
 		#img = np.concatenate((cimg,img),axis=1)
-		cv2.imshow('MSG Demo', img)
+		#cv2.imshow('MSG Demo', img)
 		cv2.imwrite('/outputs/demo_image/stylized/%i.jpg'%idx,img)
 		decode_time = time.time()-process_timepoint
 		print("time to decode image:%i"%decode_time)
