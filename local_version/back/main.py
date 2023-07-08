@@ -114,7 +114,10 @@ def translate_config(format, type, filter):
 
         model, style = do_model(model_dict[filter]) # Create models for StyleTransfer
         if format == STREAM:
-            stream25(PATH, model_dict[filter], FILENAME, model,style)
+            try:
+                stream25(PATH, model_dict[filter], FILENAME, model,style)
+            except:
+                print("The image was truncated - skipped one frame")
         elif format == VID:
             filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
         elif format == IMG:
