@@ -34,6 +34,9 @@ STREAM = "stream"
 VID = "video"
 IMG = "stream"
 
+#Models for Style-Transfer
+
+
 #Translation Test Dictionary
 
 dict = {"filter1": filter_blurred , "filter2" : filter_flip, "filter3" : filter_pixel,
@@ -57,7 +60,10 @@ def stream25(PATH, filter,FILENAME, model, style):
                 if model == NORMAL_FILTER:
                     image_filter(path, filter, FILENAME)
                 else:
-                    evaluate_img(model, style, path, FILENAME)
+                    try:
+                        evaluate_img(model, style, path, FILENAME)
+                    except:
+                        print("image was truncated")
                 open(LOCKOUT, "x")
                 file = FRAME
                 os.remove(os.path.join(PATH, file))
@@ -116,9 +122,8 @@ def translate_config(format, type, filter):
 
         model, style = do_model(model_dict[filter]) # Create models for StyleTransfer
         if format == STREAM:
-            try:
                 stream25(PATH, model_dict[filter], FILENAME, model,style)
-            except:
+           
                 print("The image was truncated - skipped one frame")
         elif format == VID:
             filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
