@@ -10,18 +10,18 @@ import cv2
 from fast_ns.experiments.filters_for_images import do_model, evaluate_img
 
 
-
+#Paths
 PATH = "./local_version/front/public/images/input/"
 OUTPUTPATH = "./local_version/front/public/images/output/"
-FILENAME = './local_version/front/public/images/output/frame.png'
+FILENAME = './local_version/front/public/images/output/frame.jpg'
 CONFIG = "./local_version/front/public/config.csv"
 STOPP = "./local_version/front/public/stopStream.txt"
 LOCKOUT = './local_version/front/public/images/output/lockOut'
 LOCKIN = './local_version/front/public/images/input/lockIn'
 
-
-FRAME = "frame.png"
-IMAGE = "image.png"
+#Files
+FRAME = "frame.jpg"
+IMAGE = "image.jpg"
 VIDEO = "test_vid.mp4"
 
 
@@ -35,8 +35,7 @@ STREAM = "stream"
 VID = "video"
 IMG = "stream"
 
-#Translation Test Dictionary
-
+#Translation Dictionary for the lokal and face reckognition filters
 dict = {"filter1": filter_blurred , "filter2" : filter_flip, "filter3" : filter_pixel,
         "filter4": filter_gray , "filter5" : filter_bw, "filter6" : filter_invert,
         "filter7": filter_sketch , "filter8" : filter_sepia, "filter9" : filter_sharp,
@@ -44,8 +43,12 @@ dict = {"filter1": filter_blurred , "filter2" : filter_flip, "filter3" : filter_
         "filter13" : filter_wBorder,  
         "filter17" : filter_clown, "filter18": filter_dog, "filter19": filter_video_clown, "filter20": filter_video_dog}
 
+#Translation Dictionary for the Style Transfer Models
 model_dict = {"filter14" : 'local_version/back/fast_ns/experiments/images/9styles/feathers.jpg', "filter15" : 'local_version/back/fast_ns/experiments/images/9styles/composition.jpg' , "filter16" : 'local_version/back/fast_ns/experiments/images/9styles/candy.jpg' }
 
+
+""" Streams Image with 25 fps 
+    Locks the image while it is processed """ 
 def stream25(PATH, filter,FILENAME, model, style):
     stream_active = True
     while stream_active:
@@ -54,9 +57,9 @@ def stream25(PATH, filter,FILENAME, model, style):
             if not os.path.exists(LOCKOUT): #did we already display the last image?
                 print(path, FILENAME, filter)         
                 if model == NORMAL_FILTER:
-                    image_filter(path, filter, FILENAME)
+                    image_filter(path, filter, FILENAME) #Image is augmented with local filter
                 else:
-                    evaluate_img(model, style, path, FILENAME)
+                    evaluate_img(model, style, path, FILENAME) #Image is augmented with StyleTransfer Filter
                 open(LOCKOUT, "x")
                 file = FRAME
                 os.remove(os.path.join(PATH, file))
@@ -67,7 +70,6 @@ def stream25(PATH, filter,FILENAME, model, style):
             print("input file cant be found")
         stream_active = os.path.exists(STOPP) == False
         if os.path.exists(STOPP):
-            #os.remove(CONFIG)
             os.remove(STOPP)
             return
         time.sleep(0.04)
@@ -76,12 +78,12 @@ def stream25(PATH, filter,FILENAME, model, style):
 def read_config():
     config = pd.read_csv(CONFIG)
     config = config.to_string()
-    
     counter = 0
     with open(CONFIG, "r") as csvFile:
+        #TODO change config to better readable csv format
         csvReader = csv.reader(csvFile)
         for row in csvReader:
-            if(counter == 0 ): #WARUM ?
+            if(counter == 0 ): 
                 format = row[0]
                 counter+=1
                 continue
@@ -93,6 +95,8 @@ def read_config():
         print(type, filter, format)
 
     return format, type, filter
+
+
 
 def translate_config(format, type, filter):
     if type == NORMAL_FILTER:
@@ -120,15 +124,11 @@ def translate_config(format, type, filter):
             filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
         elif format == IMG:
             image_filter(PATH + IMAGE, dict[filter], OUTPUTPATH + IMAGE)
+            
 
-
-
-        
-
-
-
+"""The main while loop for the python script"""
+"""Waits for Information from Node.js Server"""
 while True:
-   
     time.sleep(1)
     print("Try to read: ", CONFIG)
     file_exists = os.path.exists(CONFIG)
@@ -136,17 +136,10 @@ while True:
         format, type, filter = read_config()
 
         if any(char.isdigit() for char in filter) and (STREAM in format or IMG in format or VID in format): 
-            #print (dict[filter])
-            #print(format)
-            #print(type(format))
             translate_config(format, type, filter)
-
-
         else:
             print("wrong filter or format in config file!!")
             time.sleep(1)
-
-        
         os.remove(CONFIG)
         time.sleep(0.1)
     else:
