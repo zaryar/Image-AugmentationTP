@@ -43,7 +43,9 @@ dict = {"filter1": filter_blurred , "filter2" : filter_flip, "filter3" : filter_
         "filter13" : filter_wBorder,  
         "filter17" : filter_clown, "filter18": filter_dog, "filter19": filter_video_clown, "filter20": filter_video_dog}
 
-model_dict = {"filter14" : 'local_version/back/fast_ns/experiments/images/9styles/feathers.jpg', "filter15" : 'local_version/back/fast_ns/experiments/images/9styles/composition.jpg' , "filter16" : 'local_version/back/fast_ns/experiments/images/9styles/candy.jpg' }
+model_dict = {"filter14" : 'local_version/back/fast_ns/experiments/images/21styles/candy.jpg', 
+              "filter15" : 'local_version/back/fast_ns/experiments/images/21styles/starry_night.jpg' ,
+                "filter16" : 'local_version/back/fast_ns/experiments/images/21styles/pencil.jpg' }
 
 def stream25(PATH, filter,FILENAME, model, style):
     stream_active = True
