@@ -19,7 +19,11 @@ from torchfile import load as load_lua
 from fast_ns.experiments.net import Vgg16
 
 def tensor_load_rgbimage(filename, size=None, scale=None, keep_asp=False):
-    img = Image.open(filename).convert('RGB')
+    try:
+        img = Image.open(filename).convert('RGB')
+    except:
+        print("the image seems to be corrupted and style transfer cannot use it")
+        img = Image.open("local_version/back/fast_ns/experiments/images/content/flowers.jpg").convert('RGB')
     if size is not None:
         if keep_asp:
             size2 = int(size * 1.0 / img.size[0] * img.size[1])

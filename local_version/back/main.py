@@ -43,7 +43,9 @@ dict = {"filter1": filter_blurred , "filter2" : filter_flip, "filter3" : filter_
         "filter13" : filter_wBorder,  
         "filter17" : filter_clown, "filter18": filter_dog, "filter19": filter_video_clown, "filter20": filter_video_dog}
 
-def stream25(PATH, filter,FILENAME, model):
+model_dict = {"filter14" : 'local_version/back/fast_ns/experiments/images/9styles/feathers.jpg', "filter15" : 'local_version/back/fast_ns/experiments/images/9styles/composition.jpg' , "filter16" : 'local_version/back/fast_ns/experiments/images/9styles/candy.jpg' }
+
+def stream25(PATH, filter,FILENAME, model, style):
     stream_active = True
     while stream_active:
         path = PATH + FRAME
@@ -53,7 +55,7 @@ def stream25(PATH, filter,FILENAME, model):
                 if model == NORMAL_FILTER:
                     image_filter(path, filter, FILENAME)
                 else:
-                    valuate_img(model, filter, path, FILENAME)
+                    evaluate_img(model, style, path, FILENAME)
                 open(LOCKOUT, "x")
                 file = FRAME
                 os.remove(os.path.join(PATH, file))
@@ -94,7 +96,7 @@ def read_config():
 def translate_config(format, type, filter):
     if type == NORMAL_FILTER:
         if format == STREAM:
-            stream25(PATH, dict[filter], FILENAME, NORMAL_FILTER)
+            stream25(PATH, dict[filter], FILENAME, NORMAL_FILTER, NORMAL_FILTER)
         elif format == VID:
             filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
         elif format == IMG:
@@ -110,9 +112,9 @@ def translate_config(format, type, filter):
 
     elif type == STYLE_TRANSFER:
 
-        models = do_model(filter) # Create models for StyleTransfer
+        model, style = do_model(model_dict[filter]) # Create models for StyleTransfer
         if format == STREAM:
-            stream25(PATH, dict[filter], FILENAME, models)
+            stream25(PATH, model_dict[filter], FILENAME, model,style)
         elif format == VID:
             filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
         elif format == IMG:
