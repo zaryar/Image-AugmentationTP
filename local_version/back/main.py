@@ -124,7 +124,7 @@ def translate_config(format, type, filter):
         if format == STREAM:
                 stream25(PATH, model_dict[filter], FILENAME, model,style)
            
-                print("The image was truncated - skipped one frame")
+               
         elif format == VID:
             filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
         elif format == IMG:
