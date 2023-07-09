@@ -15,7 +15,7 @@ import torch
 from PIL import Image
 from torch.autograd import Variable
 from torchfile import load as load_lua
-
+import time
 from fast_ns.experiments.net import Vgg16
 
 def tensor_load_rgbimage(filename, size=None, scale=None, keep_asp=False):
@@ -37,13 +37,20 @@ def tensor_load_rgbimage(filename, size=None, scale=None, keep_asp=False):
 
 
 def tensor_save_rgbimage(tensor, filename, cuda=False):
+    start_time = time.time()
     if cuda:
         img = tensor.clone().cpu().clamp(0, 255).numpy()
     else:
         img = tensor.clone().clamp(0, 255).numpy()
+    transfer_time = time.time() -start_time
     img = img.transpose(1, 2, 0).astype('uint8')
     img = Image.fromarray(img)
+    transformation_time = time.time() -transfer_time
     img.save(filename)
+    save_time = time.time()- transformation_time
+    print("Transfertime: %i" %transfer_time)
+    print("Transformationtime : %i" % transformation_time)
+    print("Savingtime: %i" %save_time)
 
 
 def tensor_save_bgrimage(tensor, filename, cuda=False):
