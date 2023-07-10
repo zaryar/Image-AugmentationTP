@@ -15,11 +15,33 @@ filters_config = {
         [{'path': "local_version/back/faceRec_MP/filters/clown.png",
           'anno_path': "local_version/back/faceRec_MP/filters/landmarks80.csv",
           'morph': True, 'animated': False, 'has_alpha': True}],
+    'pandaFull':
+        [{'path': "local_version/back/faceRec_MP/filters/panda.png",
+          'anno_path': "local_version/back/faceRec_MP/filters/landmarks80.csv",
+          'morph': True, 'animated': False, 'has_alpha': True}],
+    'black':
+        [{'path': "local_version/back/faceRec_MP/filters/black.png",
+          'anno_path': "local_version/back/faceRec_MP/filters/landmarks80.csv",
+          'morph': True, 'animated': False, 'has_alpha': True}],
     'dog':
         [{'path': "local_version/back/faceRec_MP/filters/dog-ears.png",
           'anno_path': "local_version/back/faceRec_MP//filters/dog-ears_annotations.csv",
           'morph': False, 'animated': False, 'has_alpha': True},
          {'path': "local_version/back/faceRec_MP/filters/dog-nose.png",
+          'anno_path': "local_version/back/faceRec_MP//filters/dog-nose_annotations.csv",
+          'morph': False, 'animated': False, 'has_alpha': True}],
+    'cat':
+        [{'path': "local_version/back/faceRec_MP/filters/cat-ears.png",
+          'anno_path': "local_version/back/faceRec_MP//filters/dog-ears_annotations.csv",
+          'morph': False, 'animated': False, 'has_alpha': True},
+         {'path': "local_version/back/faceRec_MP/filters/cat-nose.png",
+          'anno_path': "local_version/back/faceRec_MP//filters/dog-nose_annotations.csv",
+          'morph': False, 'animated': False, 'has_alpha': True}],
+    'panda':
+        [{'path': "local_version/back/faceRec_MP/filters/panda-ears.png",
+          'anno_path': "local_version/back/faceRec_MP//filters/dog-ears_annotations.csv",
+          'morph': False, 'animated': False, 'has_alpha': True},
+         {'path': "local_version/back/faceRec_MP/filters/panda-nose.png",
           'anno_path': "local_version/back/faceRec_MP//filters/dog-nose_annotations.csv",
           'morph': False, 'animated': False, 'has_alpha': True}],
 }
