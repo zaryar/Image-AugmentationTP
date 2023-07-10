@@ -6,6 +6,8 @@ const video = document.querySelector('#myVidPlayer');
 var w, h;
 canvas.style.display = "none";
 
+// converts an base64 Image to a Blob 
+// input: base64Image, mime type, output: Blob, mime type
 function base64ToBlob(base64, mime) {
     mime = mime || '';
     var sliceSize = 1024;
@@ -28,7 +30,7 @@ function base64ToBlob(base64, mime) {
     return new Blob(byteArrays, { type: mime });
 }
 
-// GetÇs the current frame of the webcam and sends it together with the form data (filter) to the server
+// Gets the current frame of the webcam and sends it together with the form data (filter) to the server
 function snapshot(name) {
     // Canvas creation
     context.fillRect(0, 0, w, h); // Give a proper size to the canvas
@@ -149,6 +151,7 @@ function stop_record() {
     xhr.open('POST', '/upload', false); //creates a conection to the URL
     xhr.send(formData);
 }
+
 
 window.navigator.mediaDevices.getUserMedia({ video: true, audio: true })
     .then(stream => {
