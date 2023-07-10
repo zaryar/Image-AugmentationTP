@@ -69,9 +69,9 @@ def do_model(style_path):
             style = style.cuda()
     style_v = Variable(style)
     style_model.setTarget(style_v)
-    return style_model,style
+    return style_model
 
-def evaluate_img(style_model,style, content_path,  output_path):
+def evaluate_img(style_model,content_path,  output_path):
         cuda = True
         content_image = utils.tensor_load_rgbimage(content_path, size=512, keep_asp=True)
         content_image = content_image.unsqueeze(0)
