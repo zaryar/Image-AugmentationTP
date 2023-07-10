@@ -401,6 +401,10 @@ def stream_face_recognition(path, filter, outputImg):
                 start = time.time()
                 frame = cv2.imread(path)
 
+                if frame is None:
+                    print("frame is None-type")
+                    continue
+
                 points2 = getLandmarks(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
 
                 # if face is partially detected
