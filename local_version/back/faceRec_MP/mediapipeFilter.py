@@ -19,17 +19,6 @@ filters_config = {
         [{'path': "local_version/back/faceRec_MP/filters/panda.png",
           'anno_path': "local_version/back/faceRec_MP/filters/landmarks80.csv",
           'morph': True, 'animated': False, 'has_alpha': True}],
-    'black':
-        [{'path': "local_version/back/faceRec_MP/filters/black.png",
-          'anno_path': "local_version/back/faceRec_MP/filters/landmarks80.csv",
-          'morph': True, 'animated': False, 'has_alpha': True}],
-    'dog':
-        [{'path': "local_version/back/faceRec_MP/filters/dog-ears.png",
-          'anno_path': "local_version/back/faceRec_MP//filters/dog-ears_annotations.csv",
-          'morph': False, 'animated': False, 'has_alpha': True},
-         {'path': "local_version/back/faceRec_MP/filters/dog-nose.png",
-          'anno_path': "local_version/back/faceRec_MP//filters/dog-nose_annotations.csv",
-          'morph': False, 'animated': False, 'has_alpha': True}],
     'cat':
         [{'path': "local_version/back/faceRec_MP/filters/cat-ears.png",
           'anno_path': "local_version/back/faceRec_MP//filters/dog-ears_annotations.csv",
@@ -380,16 +369,8 @@ def filter_clown(img):
     image = filter_on_image(img, "clown")
     return image
 
-def filter_dog(img):
-    image = filter_on_image(img, "dog")
-    return image
-
 def filter_video_clown(vid, filename):
     video = filter_on_video(vid, "clown", filename)
-    return video
-
-def filter_video_dog(vid, filename):
-    video = filter_on_video(vid, "dog", filename)
     return video
 
 #variables for stream
@@ -405,8 +386,7 @@ def stream_face_recognition(path, filter, outputImg):
 
     if (filter == filter_clown):
         overlay = "clown"
-    elif (filter == filter_dog):
-        overlay = "dog"
+        
     # Some variables
     isFirstFrame = True
     sigma = 50
