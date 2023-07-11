@@ -42,12 +42,14 @@ def tensor_save_rgbimage(tensor, filename, cuda=False):
         img = tensor.clone().cpu().clamp(0, 255).numpy()
     else:
         img = tensor.clone().clamp(0, 255).numpy()
-    transfer_time = time.time() -start_time
+    transfer_time_point = time.time()
+    transfer_time = transfer_time_point -start_time
     img = img.transpose(1, 2, 0).astype('uint8')
     img = Image.fromarray(img)
-    transformation_time = time.time() -transfer_time
+    transform_time_point = time.time()
+    transformation_time = transform_time_point-transfer_time_point
     img.save(filename)
-    save_time = time.time()- transformation_time
+    save_time = time.time()- transform_time_point
     print("Transfertime: %i" %transfer_time)
     print("Transformationtime : %i" % transformation_time)
     print("Savingtime: %i" %save_time)
