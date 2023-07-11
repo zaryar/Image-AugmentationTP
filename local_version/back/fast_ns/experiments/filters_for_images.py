@@ -100,8 +100,8 @@ model = do_model("images/9styles/candy.jpg")
 
 
 #Please leave this for testing 
-evaluate_img(model,"images/content/flowers.jpg","output.jpg")
-print(timeit.timeit(lambda: evaluate_img(model,"images/content/flowers.jpg","output.jpg"), number =1))
+evaluate_img(model,"images/content/mainImage.jpg","output.jpg")
+#print(timeit.timeit(lambda: evaluate_img(model,"images/content/flowers.jpg","output.jpg"), number =1))
 
 
 
