@@ -261,8 +261,9 @@ def evaluate(args):
 
     output = style_model(content_image)
     #output = utils.color_match(output, style_v)
+    start= time.time()
     utils.tensor_save_bgrimage(output.data[0], args.output_image, args.cuda)
-
+    print(time.time()-start)
 
 def fast_evaluate(args, basedir, contents, idx = 0):
     # basedir to save the data

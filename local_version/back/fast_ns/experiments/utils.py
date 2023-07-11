@@ -16,7 +16,7 @@ from PIL import Image
 from torch.autograd import Variable
 from torchfile import load as load_lua
 import time
-from fast_ns.experiments.net import Vgg16
+from net import Vgg16
 
 def tensor_load_rgbimage(filename, size=None, scale=None, keep_asp=False):
     
@@ -50,10 +50,11 @@ def tensor_save_rgbimage(tensor, filename, cuda=False):
     transformation_time = transform_time_point-transfer_time_point
     img.save(filename)
     save_time = time.time()- transform_time_point
-    print("Transfertime: %i" %transfer_time)
-    print("Transformationtime : %i" % transformation_time)
-    print("Savingtime: %i" %save_time)
-
+    print("Transfertime: %f" %transfer_time)
+    print("Transformationtime : %f" % transformation_time)
+    print("Savingtime: %f" %save_time)
+    
+ 
 
 def tensor_save_bgrimage(tensor, filename, cuda=False):
     (b, g, r) = torch.chunk(tensor, 3)
