@@ -1,6 +1,6 @@
 from filters import *
-from faceRec_MP.mediapipeFilter import filter_clown, filter_dog, filter_video_clown, filter_video_dog, stream_face_recognition
-from videomanipulation import filter_video, apply_faceRec_video
+from faceRec_MP.mediapipeFilter import filter_clown, filter_pandaFull, filter_cat, filter_panda, stream_face_recognition, apply_faceRec_video
+from videomanipulation import filter_video
 from basicpicturemanipulation import image_filter
 import time
 import csv
@@ -22,6 +22,8 @@ LOCKOUT = './local_version/front/public/images/output/lockOut'
 FRAME = "frame.jpg"
 IMAGE = "image.jpg"
 VIDEO = "test_vid.mp4"
+VIDEO_INPUT = "video.mp4"
+VIDEO_OUTPUT = "video.avi"
 
 
 #Types 
@@ -45,7 +47,7 @@ dict = {"filter1": filter_blurred , "filter2" : filter_flip, "filter3" : filter_
         "filter7": filter_sketch , "filter8" : filter_sepia, "filter9" : filter_sharp,
         "filter10": filter_edge , "filter11" : filter_border, "filter12" : filter_reflect,
         "filter13" : filter_wBorder,  
-        "filter17" : filter_clown, "filter18": filter_dog, "filter19": filter_video_clown, "filter20": filter_video_dog}
+        "filter17" : filter_clown, "filter18": filter_pandaFull, "filter19": filter_cat, "filter20": filter_panda}
 
 model_dict = {"filter14" : CANDY, 
               "filter15" : STARRY ,
@@ -115,7 +117,7 @@ def translate_config(format, type, filter):
         if format == STREAM:
             stream_face_recognition(PATH, dict[filter], FILENAME)
         elif format == VID:
-            filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
+            apply_faceRec_video(PATH + VIDEO_INPUT, dict[filter], OUTPUTPATH + VIDEO_OUTPUT)
         elif format == IMG:
             image_filter(PATH + IMAGE, dict[filter], OUTPUTPATH + IMAGE)
 

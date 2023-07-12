@@ -65,8 +65,3 @@ def filter_video(video_path,apply, filename):
     source.release()
     output.release()
     cv.destroyAllWindows()
-
-# this function takes a path and a filter and applies filter to the video given
-def apply_faceRec_video(video_path, apply, filename):
-    video = cv.VideoCapture(video_path)
-    apply(video, filename)
