@@ -369,9 +369,17 @@ def filter_clown(img):
     image = filter_on_image(img, "clown")
     return image
 
-def filter_video_clown(vid, filename):
-    video = filter_on_video(vid, "clown", filename)
-    return video
+def filter_pandaFull(img):
+    image = filter_on_image(img, "pandaFull")
+    return image
+
+def filter_cat(img):
+    image = filter_on_image(img, "cat")
+    return image
+
+def filter_panda(img):
+    image = filter_on_image(img, "panda")
+    return image
 
 #variables for stream
 PATH = "./local_version/front/public/images/input/"
@@ -386,7 +394,13 @@ def stream_face_recognition(path, filter, outputImg):
 
     if (filter == filter_clown):
         overlay = "clown"
-        
+    elif (filter == filter_pandaFull):
+        overlay = "pandaFull"
+    elif (filter == filter_cat):
+        overlay = "cat"
+    elif (filter == filter_panda):
+        overlay = "panda"
+
     # Some variables
     isFirstFrame = True
     sigma = 50
