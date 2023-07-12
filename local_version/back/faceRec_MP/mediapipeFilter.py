@@ -291,7 +291,6 @@ def filter_on_video (video, overlay, filename) :
                     output = temp1 + temp2
 
                 frame = output = np.uint8(output)
-
             output_vid.write(output)
 
 def filter_on_image (frame, overlay) :
@@ -383,12 +382,11 @@ def filter_panda(img):
 
 #variables for stream
 PATH = "./local_version/front/public/images/input/"
-FILENAME = './local_version/front/public/images/output/frame.png'
+FILENAME = './local_version/front/public/images/output/frame.jpg'
 STOPP = "./local_version/front/public/stopStream.txt"
 LOCKOUT = './local_version/front/public/images/output/lockOut'
-LOCKIN = './local_version/front/public/images/input/lockIn'
 
-FRAME = "frame.png"
+FRAME = "frame.jpg"
 
 def stream_face_recognition(path, filter, outputImg):
 
@@ -408,13 +406,14 @@ def stream_face_recognition(path, filter, outputImg):
     filters, multi_filter_runtime = load_filter(overlay)
     stream_active = True
     
+    stream_active = True
     while stream_active:
         path = PATH + FRAME
-        if os.path.exists(LOCKIN): #is file ready?
+        if os.path.exists(path) and cv2.imread(path) is not None: #is file ready?
             if not os.path.exists(LOCKOUT): #did we already display the last image?
-                print(path, FILENAME, filter)   
+                print(path, FILENAME, filter)     
 
-                start = time.time()
+                #start = time.time() #for fps testing
                 frame = cv2.imread(path)
 
                 if frame is None:
@@ -526,15 +525,16 @@ def stream_face_recognition(path, filter, outputImg):
 
                 cv2.imwrite(outputImg, frame)
 
-                end = time.time()
-                timeTaken = end - start
-                fps = 1 / timeTaken
-                print("fps:", fps)
+                #for fps testing
+                #end = time.time()
+                #timeTaken = end - start
+                #fps = 1 / timeTaken
+                #print("fps:", fps)
 
                 open(LOCKOUT, "x")
                 file = FRAME
                 os.remove(os.path.join(PATH, file))
-                os.remove(LOCKIN) #remove the ability to work with file
+
             else:
                 print("lockOut already there | not worked with on canvis")
         else:
@@ -545,3 +545,19 @@ def stream_face_recognition(path, filter, outputImg):
             os.remove(STOPP)
             return
         time.sleep(0.04)
+
+# this function takes a path and a filter and applies filter to the video given
+def apply_faceRec_video(video_path, apply, filename):
+    video = cv2.VideoCapture(video_path)
+    if (apply == filter_clown):
+        overlay = "clown"
+    elif (apply == filter_pandaFull):
+        overlay = "pandaFull"
+    elif (apply == filter_cat):
+        overlay = "cat"
+    elif (apply == filter_panda):
+        overlay = "panda"
+
+    vid = filter_on_video(video, overlay, filename)
+
+    return vid
