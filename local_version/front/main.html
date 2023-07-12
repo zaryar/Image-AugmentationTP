@@ -17,7 +17,6 @@
     </header>
     <form method="POST" action="/upload" enctype="multipart/form-data">
 
-
         <div class="boxen">
             <label for="image_input" class="custom-upload-button">Upload Image</label>
             <input type="file" id="image_input" name="image" style="display: none;">
@@ -141,7 +140,6 @@
 
     <!-- new button stop and start the video recording -->
 
-    
     <button onclick="record()"> start video stream</button>
     <button onclick="stop_record()"> stop video stream</button>
 
@@ -154,11 +152,11 @@
     <!-- code for the webcam :) -->
     <video id="myVidPlayer" controls muted autoplay></video>
 
-    
+    <!-- canvas used for showing the webcam stream and for taking snapshots-->
     <div class="mycanvas">
         <canvas></canvas>
     </div>
-    
+
     <script src="/javaScripts/webcam.js"></script>
 
     <!-- code for socket.io and live images -->

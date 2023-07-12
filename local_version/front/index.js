@@ -51,15 +51,13 @@ const storage = multer.diskStorage({
                 console.log('Saved image');
             }
         } else {
+            // saves Frame if its not found in input (this happends when the python script is done using the image)
             if (!fs.existsSync(INPUTFRAME)) {
                 console.log(file)
 
                 cb(null, "frame.jpg")
-
-                //await Sleep(500);
                 console.log("frame ")
-
-                //lock in erstellen
+            // else it ignores the frame
             }
             else {
                 console.log("frame allready there" + i)
@@ -78,8 +76,7 @@ app.get("/upload", (req, res) => {
     res.sendFile(__dirname + '/main.html'); //function send the user to main.html when they open the webpage
 });
 
-// Gets called when a post request is send 
-
+// Gets called when a post request is send, fills the config.csv with information about the filter and the type of data
 var updateData = ""
 var updateFilter = ""
 var filterCategory = ""
@@ -109,7 +106,6 @@ app.post("/upload", upload.single('image'), (req, res) => {
     var dataArrays = [
         [updateFilter],
         [filterCategory]
-        // [filterCategory, updateFilter]
     ];
 
     const csvFromArrayOfArrays = convertArrayToCSV(dataArrays, {

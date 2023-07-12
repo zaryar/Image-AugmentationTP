@@ -1,3 +1,4 @@
+// Get the HTML element
 var canvas = document.querySelector("canvas");
 var context = canvas.getContext("2d");
 const video = document.querySelector('#myVidPlayer');
@@ -123,8 +124,8 @@ function snapshot(name) {
     // Create a connection and then send the form to the server with the POST method
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/upload', false); //creates a conection to the URL
-    //xhr.send("test");
     xhr.send(formData);
+    
     var sended = new Date();
     var currentdate = new Date();
     console.log("Client -> Server: "
@@ -136,6 +137,7 @@ function snapshot(name) {
 // fuction to start recording with the webcam
 var intervalId
 function record() {
+    // snapshot is called every 40 ms
     intervalId = window.setInterval(function () {
          snapshot("stream")
     }, 40);
@@ -152,7 +154,7 @@ function stop_record() {
     xhr.send(formData);
 }
 
-
+// shows the webcamstream on a video player
 window.navigator.mediaDevices.getUserMedia({ video: true, audio: true })
     .then(stream => {
         video.srcObject = stream;
