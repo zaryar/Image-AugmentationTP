@@ -3,7 +3,8 @@
 
 import numpy as py
 import cv2 as cv
-
+import torch.nn as nn
+from fast_ns.experiments.filters_for_images import video_preprocessing,video_reprocessing
 
 
 
@@ -14,7 +15,7 @@ FILENAME = './local_version/data/output/test_vid.avi'
 CODEC = 'WMV1'
 ASPECTPATH = "./local_version/data/input/aspect_test.mp4" #we can use that to show that the format thing works
 
-#this is a testing function for us if we are honest 
+ 
 
 
 
@@ -37,8 +38,13 @@ def filter_video(video_path,apply, filename):
         if not ret:
             print("Can't receive frame ( video has ended?). Exiting..")
             break
-  
-        frame = apply(frame)
+        
+        if isinstance(apply, nn.Module):
+            img = video_preprocessing(img)
+            apply(img)
+            img = video_reprocessing(img)
+        else:
+            frame = apply(frame)
 
         #actual writing
         output.write(frame)

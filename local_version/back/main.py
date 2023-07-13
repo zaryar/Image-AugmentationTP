@@ -8,7 +8,7 @@ import os
 import pandas as pd
 import cv2
 from fast_ns.experiments.filters_for_images import do_model, evaluate_img
-
+ 
 
 #Paths
 PATH = "./local_version/front/public/images/input/"
@@ -141,7 +141,7 @@ def translate_config(format, type, filter):
            
                
         elif format == VID:
-            filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
+            filter_video(PATH + VIDEO,model_dict[filter],  OUTPUTPATH + VIDEO)
         elif format == IMG:
             image_filter(PATH + IMAGE, dict[filter], OUTPUTPATH + IMAGE)
             
@@ -149,6 +149,7 @@ def translate_config(format, type, filter):
 """The main while loop for the python script"""
 """Waits for Information from Node.js Server"""
 while True:
+    
     time.sleep(1)
     print("Try to read: ", CONFIG)
     file_exists = os.path.exists(CONFIG)

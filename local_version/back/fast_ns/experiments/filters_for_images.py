@@ -92,9 +92,17 @@ def evaluate_img(style_model,content_path,  output_path):
         #output = utils.color_match(output, style_v)
         utils.tensor_save_bgrimage(output.data[0], output_path, cuda)
 
-#model, style = do_model("local_version/back/fast-ns/experiments/images/9styles/candy.jpg")
 
-
+def video_preprocessing(img):
+    img = np.array(img).transpose(2, 0, 1)
+    img=torch.from_numpy(img).unsqueeze(0).float()
+    img=img.cuda()
+    img = Variable(img)
+    return img
+def video_reprocessing(img):
+    img = img.cpu().clamp(0, 255).data[0].numpy()
+    img = img.transpose(1, 2, 0).astype('uint8')
+    return img
 
 #Please leave this for testing 
 #evaluate_img(model,style,"local_version/back/fast-ns/experiments/images/content/flowers.jpg","local_version/back/fast-ns/experiments/output.jpg")
