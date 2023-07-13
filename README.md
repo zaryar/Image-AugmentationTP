@@ -1,8 +1,8 @@
 # Image-AugmentationTP
 ## Requirements 
-###nodeJS
+1.nodeJS
 - only standart lib
-###python
+2.python
 - pandas
 - torchfile
 - Mediapipe
