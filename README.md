@@ -1,4 +1,14 @@
 # Image-AugmentationTP
+## Requirements 
+###nodeJS
+- only standart lib
+###python
+- pandas
+- torchfile
+- Mediapipe
+- numpy
+- opencv
+- pytorch(with cuda support)
 
 ## Projektbeschreibung in einem Satz
 Wir Fotos, Videos aber auch eine Webcam Live mit globalen Filtern und Facefiltern verzieren.
