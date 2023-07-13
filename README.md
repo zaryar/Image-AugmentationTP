@@ -1,8 +1,12 @@
 # Image-AugmentationTP
+
+## Project description in one sentence
+We decorate photos, videos but also a webcam live with global filters and face filters. ;)
+
 ## Requirements 
-1.nodeJS
+### nodeJS
 - only standart lib
-2.python
+### python
 - pandas
 - torchfile
 - Mediapipe
@@ -10,17 +14,14 @@
 - opencv
 - pytorch(with cuda support)
 
-## Projektbeschreibung in einem Satz
-Wir Fotos, Videos aber auch eine Webcam Live mit globalen Filtern und Facefiltern verzieren.
-
-## Konkrete Feature Zielliste
-- Bilder als Source für die Filter benutzen (~~1.5~~)
-- Videos als Source für die Filter benutzen (~~8.5~~)
-- Webcam als life Source für die Filter benutzen (~~22.5~~) Wird noch nicht auf der Webseite angezeigt
-- Unterseiten für die verschiedenen Features (Bilder Videos Webcam) (~~8.5~~)
-- Programm soll erkennen, welcher Filter wann benutzt werden soll (~~15.5~~)
-- Face-Recognition Filter (~~22.5~~)
-- gangealing ODER media pipe(5.06)
+## Concrete feature target list
+- Use images as source for the filters (~~1.5~~)
+- Use videos as source for the filters (~~8.5~~)
+- Use webcam as life source for the filters (~~22.5~~) Not yet shown on the website
+- Subpages for the different features (pictures videos webcam) (~~8.5~~)
+- Program should recognize which filter to use when (~~15.5~~)
+- face recognition filter (~~22.5~~)
+- gangealing OR media pipe(5.06)
 - ? style_transfer(5.06)
-- Serverbasierter Ansatz (1 Person gleichzeitig) / nicht öffentlich (5.06) 
-- Nutzer steuert das Programm mit Buttons und Dropdown Menü / nutzerfreundlich (19.06)
+- Server-based approach (1 person at a time) / non-public (5.06) 
+- user controls program with buttons and dropdown menu / user friendly (19.06)
