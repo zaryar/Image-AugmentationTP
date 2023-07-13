@@ -3,10 +3,9 @@ const path = require('path');
 const fs = require("fs");
 const { convertArrayToCSV } = require('convert-array-to-csv');
 
-const INPUTFRAME = 'public/images/input/frame.png';
-const OUTPUTFRAME = 'public/images/output/frame.png';
+const INPUTFRAME = 'public/images/input/frame.jpg';
+const OUTPUTFRAME = 'public/images/output/frame.jpg';
 const LOCKOUT = 'public/images/output/lockOut';
-const LOCKIN = 'public/images/input/lockIn';
 
 // create express server
 const express = require('express');
@@ -52,19 +51,13 @@ const storage = multer.diskStorage({
                 console.log('Saved image');
             }
         } else {
+            // saves Frame if its not found in input (this happends when the python script is done using the image)
             if (!fs.existsSync(INPUTFRAME)) {
                 console.log(file)
 
-                cb(null, "frame.png")
-
-                //await Sleep(500);
+                cb(null, "frame.jpg")
                 console.log("frame ")
-
-                //lock in erstellen
-                fs.open(LOCKIN, 'w', function (err, file) {
-                    if (err) throw err;
-                    console.log('Saved!');
-                });
+            // else it ignores the frame
             }
             else {
                 console.log("frame allready there" + i)
@@ -83,8 +76,7 @@ app.get("/upload", (req, res) => {
     res.sendFile(__dirname + '/main.html'); //function send the user to main.html when they open the webpage
 });
 
-// Gets called when a post request is send 
-
+// Gets called when a post request is send, fills the config.csv with information about the filter and the type of data
 var updateData = ""
 var updateFilter = ""
 var filterCategory = ""
@@ -114,7 +106,6 @@ app.post("/upload", upload.single('image'), (req, res) => {
     var dataArrays = [
         [updateFilter],
         [filterCategory]
-        // [filterCategory, updateFilter]
     ];
 
     const csvFromArrayOfArrays = convertArrayToCSV(dataArrays, {

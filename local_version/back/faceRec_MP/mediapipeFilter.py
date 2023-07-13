@@ -4,6 +4,9 @@ import math
 import numpy as np
 import faceRec_MP.faceBlendCommon as fbc
 import csv
+#imports for stream
+import os
+import time
 
 VISUALIZE_FACE_POINTS = False
 
@@ -12,11 +15,22 @@ filters_config = {
         [{'path': "local_version/back/faceRec_MP/filters/clown.png",
           'anno_path': "local_version/back/faceRec_MP/filters/landmarks80.csv",
           'morph': True, 'animated': False, 'has_alpha': True}],
-    'dog':
-        [{'path': "local_version/back/faceRec_MP/filters/dog-ears.png",
+    'pandaFull':
+        [{'path': "local_version/back/faceRec_MP/filters/panda.png",
+          'anno_path': "local_version/back/faceRec_MP/filters/landmarks80.csv",
+          'morph': True, 'animated': False, 'has_alpha': True}],
+    'cat':
+        [{'path': "local_version/back/faceRec_MP/filters/cat-ears.png",
           'anno_path': "local_version/back/faceRec_MP//filters/dog-ears_annotations.csv",
           'morph': False, 'animated': False, 'has_alpha': True},
-         {'path': "local_version/back/faceRec_MP/filters/dog-nose.png",
+         {'path': "local_version/back/faceRec_MP/filters/cat-nose.png",
+          'anno_path': "local_version/back/faceRec_MP//filters/dog-nose_annotations.csv",
+          'morph': False, 'animated': False, 'has_alpha': True}],
+    'panda':
+        [{'path': "local_version/back/faceRec_MP/filters/panda-ears.png",
+          'anno_path': "local_version/back/faceRec_MP//filters/dog-ears_annotations.csv",
+          'morph': False, 'animated': False, 'has_alpha': True},
+         {'path': "local_version/back/faceRec_MP/filters/panda-nose.png",
           'anno_path': "local_version/back/faceRec_MP//filters/dog-nose_annotations.csv",
           'morph': False, 'animated': False, 'has_alpha': True}],
 }
@@ -277,7 +291,6 @@ def filter_on_video (video, overlay, filename) :
                     output = temp1 + temp2
 
                 frame = output = np.uint8(output)
-
             output_vid.write(output)
 
 def filter_on_image (frame, overlay) :
@@ -355,17 +368,196 @@ def filter_clown(img):
     image = filter_on_image(img, "clown")
     return image
 
-def filter_dog(img):
-    image = filter_on_image(img, "dog")
+def filter_pandaFull(img):
+    image = filter_on_image(img, "pandaFull")
     return image
 
-def filter_video_clown(vid, filename):
-    video = filter_on_video(vid, "clown", filename)
-    return video
+def filter_cat(img):
+    image = filter_on_image(img, "cat")
+    return image
 
-def filter_video_dog(vid, filename):
-    video = filter_on_video(vid, "dog", filename)
-    return video
+def filter_panda(img):
+    image = filter_on_image(img, "panda")
+    return image
 
-def stream_face_recognition(path, filter, output):
-    return
+#variables for stream
+PATH = "./local_version/front/public/images/input/"
+FILENAME = './local_version/front/public/images/output/frame.jpg'
+STOPP = "./local_version/front/public/stopStream.txt"
+LOCKOUT = './local_version/front/public/images/output/lockOut'
+
+FRAME = "frame.jpg"
+
+def stream_face_recognition(path, filter, outputImg):
+
+    if (filter == filter_clown):
+        overlay = "clown"
+    elif (filter == filter_pandaFull):
+        overlay = "pandaFull"
+    elif (filter == filter_cat):
+        overlay = "cat"
+    elif (filter == filter_panda):
+        overlay = "panda"
+
+    # Some variables
+    isFirstFrame = True
+    sigma = 50
+
+    filters, multi_filter_runtime = load_filter(overlay)
+    stream_active = True
+    
+    stream_active = True
+    while stream_active:
+        path = PATH + FRAME
+        if os.path.exists(path) and cv2.imread(path) is not None: #is file ready?
+            if not os.path.exists(LOCKOUT): #did we already display the last image?
+                print(path, FILENAME, filter)     
+
+                #start = time.time() #for fps testing
+                frame = cv2.imread(path)
+
+                if frame is None:
+                    print("frame is None-type")
+                    continue
+
+                points2 = getLandmarks(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+
+                # if face is partially detected
+                if points2 and (len(points2) == 81):
+                    ################ Optical Flow and Stabilization Code #####################
+                    img2Gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+                    if isFirstFrame:
+                        points2Prev = np.array(points2, np.float32)
+                        img2GrayPrev = np.copy(img2Gray)
+                        isFirstFrame = False
+
+                    lk_params = dict(winSize=(101, 101), maxLevel=15,
+                                    criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 20, 0.001))
+                    points2Next, st, err = cv2.calcOpticalFlowPyrLK(img2GrayPrev, img2Gray, points2Prev,
+                                                                    np.array(points2, np.float32),
+                                                                    **lk_params)
+
+                    # Final landmark points are a weighted average of detected landmarks and tracked landmarks
+
+                    for k in range(0, len(points2)):
+                        d = cv2.norm(np.array(points2[k]) - points2Next[k])
+                        alpha = math.exp(-d * d / sigma)
+                        points2[k] = (1 - alpha) * np.array(points2[k]) + alpha * points2Next[k]
+                        points2[k] = fbc.constrainPoint(points2[k], frame.shape[1], frame.shape[0])
+                        points2[k] = (int(points2[k][0]), int(points2[k][1]))
+
+                    # Update variables for next pass
+                    points2Prev = np.array(points2, np.float32)
+                    img2GrayPrev = img2Gray
+                    ################ End of Optical Flow and Stabilization Code ###############
+
+                    if VISUALIZE_FACE_POINTS:
+                        for idx, point in enumerate(points2):
+                            cv2.circle(frame, point, 2, (255, 0, 0), -1)
+                            cv2.putText(frame, str(idx), point, cv2.FONT_HERSHEY_SIMPLEX, .3, (255, 255, 255), 1)
+                        cv2.imshow("landmarks", frame)
+
+                    for idx, filter in enumerate(filters) :
+                        filter_runtime = multi_filter_runtime[idx]
+                        img1 = filter_runtime['img']
+                        points1 = filter_runtime['points']
+                        img1_alpha = filter_runtime['img_a']
+
+                        if filter['morph']:
+
+                            hullIndex = filter_runtime['hullIndex']
+                            dt = filter_runtime['dt']
+                            hull1 = filter_runtime['hull']
+
+                            # create copy of frame
+                            warped_img = np.copy(frame)
+
+                            # Find convex hull
+                            hull2 = []
+                            for i in range(0, len(hullIndex)):
+                                hull2.append(points2[hullIndex[i][0]])
+
+                            mask1 = np.zeros((warped_img.shape[0], warped_img.shape[1]), dtype=np.float32)
+                            mask1 = cv2.merge((mask1, mask1, mask1))
+                            img1_alpha_mask = cv2.merge((img1_alpha, img1_alpha, img1_alpha))
+
+                            # Warp the triangles
+                            for i in range(0, len(dt)):
+                                t1 = []
+                                t2 = []
+
+                                for j in range(0, 3):
+                                    t1.append(hull1[dt[i][j]])
+                                    t2.append(hull2[dt[i][j]])
+
+                                fbc.warpTriangle(img1, warped_img, t1, t2)
+                                fbc.warpTriangle(img1_alpha_mask, mask1, t1, t2)
+
+                            # Blur the mask before blending
+                            mask1 = cv2.GaussianBlur(mask1, (3, 3), 10)
+
+                            mask2 = (255.0, 255.0, 255.0) - mask1
+
+                            # Perform alpha blending of the two images
+                            temp1 = np.multiply(warped_img, (mask1 * (1.0 / 255)))
+                            temp2 = np.multiply(frame, (mask2 * (1.0 / 255)))
+                            output = temp1 + temp2
+                        else:
+                            dst_points = [points2[int(list(points1.keys())[0])], points2[int(list(points1.keys())[1])]]
+                            tform = fbc.similarityTransform(list(points1.values()), dst_points)
+                            # Apply similarity transform to input image
+                            trans_img = cv2.warpAffine(img1, tform, (frame.shape[1], frame.shape[0]))
+                            trans_alpha = cv2.warpAffine(img1_alpha, tform, (frame.shape[1], frame.shape[0]))
+                            mask1 = cv2.merge((trans_alpha, trans_alpha, trans_alpha))
+
+                            # Blur the mask before blending
+                            mask1 = cv2.GaussianBlur(mask1, (3, 3), 10)
+
+                            mask2 = (255.0, 255.0, 255.0) - mask1
+
+                            # Perform alpha blending of the two images
+                            temp1 = np.multiply(trans_img, (mask1 * (1.0 / 255)))
+                            temp2 = np.multiply(frame, (mask2 * (1.0 / 255)))
+                            output = temp1 + temp2
+
+                        frame = output = np.uint8(output)      
+
+                cv2.imwrite(outputImg, frame)
+
+                #for fps testing
+                #end = time.time()
+                #timeTaken = end - start
+                #fps = 1 / timeTaken
+                #print("fps:", fps)
+
+                open(LOCKOUT, "x")
+                file = FRAME
+                os.remove(os.path.join(PATH, file))
+
+            else:
+                print("lockOut already there | not worked with on canvis")
+        else:
+            print("input file cant be found")
+        stream_active = os.path.exists(STOPP) == False
+        if os.path.exists(STOPP):
+            #os.remove(CONFIG)
+            os.remove(STOPP)
+            return
+        time.sleep(0.04)
+
+# this function takes a path and a filter and applies filter to the video given
+def apply_faceRec_video(video_path, apply, filename):
+    video = cv2.VideoCapture(video_path)
+    if (apply == filter_clown):
+        overlay = "clown"
+    elif (apply == filter_pandaFull):
+        overlay = "pandaFull"
+    elif (apply == filter_cat):
+        overlay = "cat"
+    elif (apply == filter_panda):
+        overlay = "panda"
+
+    vid = filter_on_video(video, overlay, filename)
+
+    return vid

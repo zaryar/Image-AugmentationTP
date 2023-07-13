@@ -1,3 +1,4 @@
+// Get the HTML element
 var canvas = document.querySelector("canvas");
 var context = canvas.getContext("2d");
 const video = document.querySelector('#myVidPlayer');
@@ -6,6 +7,8 @@ const video = document.querySelector('#myVidPlayer');
 var w, h;
 canvas.style.display = "none";
 
+// converts an base64 Image to a Blob 
+// input: base64Image, mime type, output: Blob, mime type
 function base64ToBlob(base64, mime) {
     mime = mime || '';
     var sliceSize = 1024;
@@ -28,7 +31,7 @@ function base64ToBlob(base64, mime) {
     return new Blob(byteArrays, { type: mime });
 }
 
-// GetÇs the current frame of the webcam and sends it together with the form data (filter) to the server
+// Gets the current frame of the webcam and sends it together with the form data (filter) to the server
 function snapshot(name) {
     // Canvas creation
     context.fillRect(0, 0, w, h); // Give a proper size to the canvas
@@ -38,7 +41,7 @@ function snapshot(name) {
     // Convert canvas contents (image) to a base64 string
     base64Image = canvas.toDataURL({
         format: 'jpeg',
-        quality: 1
+        quality: 0.01
     });
 
     console.log("base64: " + base64Image.length)
@@ -121,8 +124,8 @@ function snapshot(name) {
     // Create a connection and then send the form to the server with the POST method
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/upload', false); //creates a conection to the URL
-    //xhr.send("test");
     xhr.send(formData);
+    
     var sended = new Date();
     var currentdate = new Date();
     console.log("Client -> Server: "
@@ -134,6 +137,7 @@ function snapshot(name) {
 // fuction to start recording with the webcam
 var intervalId
 function record() {
+    // snapshot is called every 40 ms
     intervalId = window.setInterval(function () {
          snapshot("stream")
     }, 40);
@@ -150,6 +154,7 @@ function stop_record() {
     xhr.send(formData);
 }
 
+// shows the webcamstream on a video player
 window.navigator.mediaDevices.getUserMedia({ video: true, audio: true })
     .then(stream => {
         video.srcObject = stream;
@@ -157,8 +162,8 @@ window.navigator.mediaDevices.getUserMedia({ video: true, audio: true })
             video.play();
 
             //new
-            w = 120;
-            h = 80
+            w = 700;
+            h = 500
 
             canvas.width = w;
             canvas.height = h;
