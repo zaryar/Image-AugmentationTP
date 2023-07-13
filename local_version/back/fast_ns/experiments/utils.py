@@ -25,7 +25,7 @@ def tensor_load_rgbimage(filename, size=None, scale=None, keep_asp=False):
     if size is not None:
         if keep_asp:
             size2 = int(size * 1.0 / img.size[0] * img.size[1])
-            img = img.resize((576, 720), Image.ANTIALIAS)
+            img = img.resize((720, 576), Image.ANTIALIAS)
         else:
             img = img.resize((720, 576), Image.ANTIALIAS)
 
