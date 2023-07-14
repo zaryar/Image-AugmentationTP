@@ -7,7 +7,7 @@ import csv
 import os
 import pandas as pd
 import cv2
-from fast_ns.experiments.filters_for_images import do_model, evaluate_img
+from fast_ns.experiments.filters_for_images import do_model, evaluate_img,stylize_video
  
 
 #Paths
@@ -141,7 +141,8 @@ def translate_config(format, type, filter):
            
                
         elif format == VID:
-            filter_video(PATH + VIDEO_INPUT,model_dict[filter],  OUTPUTPATH + VIDEO_OUTPUT)
+            filter_video(PATH + VIDEO_INPUT,CANDY,  OUTPUTPATH + VIDEO_OUTPUT)
+            stylize_video(PATH+VIDEO, CANDY,OUTPUTPATH + VIDEO_OUTPUT)
         elif format == IMG:
             image_filter(PATH + IMAGE, dict[filter], OUTPUTPATH + IMAGE)
             

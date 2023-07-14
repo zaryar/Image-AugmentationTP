@@ -104,6 +104,25 @@ def video_reprocessing(img):
     img = img.transpose(1, 2, 0).astype('uint8')
     return img
 
+
+def stylize_video(video_path,model,filename):
+     source = cv.VideoCapture(video_path)
+
+     WIDTH = int(source.get(cv.CAP_PROP_FRAME_WIDTH))
+     HEIGHT = int(source.get(cv.CAP_PROP_FRAME_HEIGHT))
+     fourcc = cv.VideoWriter_fourcc(* 'WMV1')
+     output = cv.VideoWriter(filename, fourcc, 24.0, (WIDTH,  HEIGHT))
+     while source.isOpened():
+        frame=torch.from_numpy(frame).unsqueeze(0).float()
+        frame = frame.cuda
+        frame = Variable(frame)
+        frame = model(frame)
+        frame = frame.cpu().clamp(0, 255).data[0].numpy()
+        frame = frame.transpose(1, 2, 0).astype('uint8')
+        output.write(frame)
+     source.release()
+     output.release()
+     cv.destroyAllWindows()
 #Please leave this for testing 
 #evaluate_img(model,style,"local_version/back/fast-ns/experiments/images/content/flowers.jpg","local_version/back/fast-ns/experiments/output.jpg")
 #print(timeit.timeit(lambda: evaluate_img(model,style,"local_version/back/fast-ns/experiments/images/content/flowers.jpg","local_version/back/fast-ns/experiments/output.jpg"), number =1))
