@@ -20,8 +20,6 @@ LOCKOUT = './local_version/front/public/images/output/lockOut'
 
 
 #Files
-
-
 FRAME = "frame.jpg"
 IMAGE = "image.jpg"
 VIDEO = "test_vid.mp4"
@@ -62,7 +60,6 @@ model_dict = {"filter14" : CANDY,
 """ Streams Image with 25 fps 
     Locks the image while it is processed """
 def stream25(PATH, filter,FILENAME, model):
-
     stream_active = True
     while stream_active:
         path = PATH + FRAME
@@ -72,16 +69,14 @@ def stream25(PATH, filter,FILENAME, model):
                 if model == NORMAL_FILTER:
                     image_filter(path, filter, FILENAME) #Image is augmented with local filter
                 else:
-
                     try:
                         evaluate_img(model, path, FILENAME)
                     except:
                         print("image was truncated")
-
+                
                 open(LOCKOUT, "x")
                 file = FRAME
                 os.remove(os.path.join(PATH, file))
-
             else:
                 print("lockOut already there | not worked with on canvis")
         else:
@@ -138,8 +133,6 @@ def translate_config(format, type, filter):
         model = model_dict[filter] #choose the correct model
         if format == STREAM:
                 stream25(PATH, "NAN", FILENAME, model)
-           
-               
         elif format == VID:
             filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
         elif format == IMG:

@@ -18,16 +18,16 @@ from torchfile import load as load_lua
 
 from fast_ns.experiments.net import Vgg16
 
+WIDTH = 480
+HEIGHT = 270
+
 def tensor_load_rgbimage(filename, size=None, scale=None, keep_asp=False):
-    
     img = Image.open(filename).convert('RGB')
-    
     if size is not None:
         if keep_asp:
-            size2 = int(size * 1.0 / img.size[0] * img.size[1])
-            img = img.resize((720, 576), Image.ANTIALIAS)
+            img = img.resize((HEIGHT, WIDTH), Image.ANTIALIAS)
         else:
-            img = img.resize((720, 576), Image.ANTIALIAS)
+            img = img.resize((HEIGHT, WIDTH), Image.ANTIALIAS)
 
     elif scale is not None:
         img = img.resize((int(img.size[0] / scale), int(img.size[1] / scale)), Image.ANTIALIAS)
