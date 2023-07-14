@@ -14,9 +14,8 @@ body>header {
 }
 
 .streamImages {
-  width: 600px;
+  width: 640px;
   height: 480px;
-  border: 1px solid black;
 }
 
 /* style the Upload Button */
@@ -32,6 +31,7 @@ body>header {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
 		"Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
 		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  width: 40%;
 }
 
 .custom-upload-button:hover {
@@ -121,8 +121,12 @@ body>header {
   }
   
   .boxen{
-    width: 200px;
+    width: 250px;
    align-content: center;
+   display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-radius: 10px;
   }
 
  
@@ -136,7 +140,7 @@ body>header {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
 		"Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
 		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    margin-bottom: 0px;
+    margin: 0px;
   
 }
 
@@ -195,9 +199,9 @@ body>header {
 /* video download button  */
  /* Style buttons */
 .download {
-  background-color: DodgerBlue;
+  background-color:  #454857;
   border: none;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   padding: 6px 10px;
   cursor: pointer;
   font-size: 13px;
@@ -205,9 +209,49 @@ body>header {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
   "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
   "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  width: 60%;
 }
 
  /* Darker background on mouse-over */
 .download:hover {
-  background-color: RoyalBlue;
+  background-color:  #454857;
+}
+
+#myVidPlayer {
+  display: none;
+}
+
+h1{
+  text-align: center;
+  font-size: 1.5em;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+  "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  color: #454857;
+  margin: 5px;
+}
+
+header>h1{
+  font-size: 2em;
+}
+
+#submitImage,#submitVideo{
+  display: none;
+}
+body > form > div:nth-child(2) > input:nth-child(7) {
+  display: none;
+}
+
+.recordButtonGroup{
+  display: flex;
+  gap: 5px;
+}
+
+.recordButtonGroup>.custom-upload-button{
+  width: 100%;
+}
+
+.displays{
+  display: flex;
+  align-items: center;
 }

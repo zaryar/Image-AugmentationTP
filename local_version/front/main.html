@@ -15,10 +15,72 @@
             Image Augmentation
         </h1>
     </header>
+
     <form method="POST" action="/upload" enctype="multipart/form-data">
+        <div class="boxen">
+            <h1>Streaming</h1>
+            <div class="dropdown">
+                <p class="dropbtn">∇ Choose filter</p>
+                <div class="dropdown-content">
+                    <label><strong>     normal filter</strong></label><br>
+                    <input type="radio" id="1" name="filter" value="1" checked>
+                    <label for="filter1">filter_blurred</label><br>
+                    <input type="radio" id="2" name="filter" value="2">
+                    <label for="filter2">filter_flip</label><br>
+                    <input type="radio" id="3" name="filter" value="3">
+                    <label for="filter3">filter_pixel</label><br>
+                    <input type="radio" id="4" name="filter" value="4">
+                    <label for="filter4">filter_gray</label><br>
+                    <input type="radio" id="5" name="filter" value="5">
+                    <label for="filter5">filter_bw</label><br>
+                    <input type="radio" id="6" name="filter" value="6">
+                    <label for="filter6">filter_invert</label><br>
+                    <input type="radio" id="7" name="filter" value="7">
+                    <label for="filter7">filter_sketch</label><br>
+                    <input type="radio" id="8" name="filter" value="8">
+                    <label for="filter8">filter_sepia</label><br>
+                    <input type="radio" id="9" name="filter" value="9">
+                    <label for="filter9">filter_sharp</label><br>
+                    <input type="radio" id="10" name="filter" value="10">
+                    <label for="filter10">filter_edge</label><br>
+                    <input type="radio" id="11" name="filter" value="11">
+                    <label for="filter11">filter_border</label><br>
+                    <input type="radio" id="12" name="filter" value="12">
+                    <label for="filter12">filter_reflect</label><br>
+                    <input type="radio" id="13" name="filter" value="13">
+                    <label for="filter13">filter_wBorder</label><br>
+
+                    <label><strong>Style transfer</strong></label><br>
+                    <input type="radio" id="14" name="filter" value="14">
+                    <label for="filter14">filter_candy</label><br>
+                    <input type="radio" id="15" name="filter" value="15">
+                    <label for="filter15">filter_starry_night</label><br>
+                    <input type="radio" id="16" name="filter" value="16">
+                    <label for="filter16">filter_pencil</label><br>
+
+                    <label><strong>Face recognition</strong></label><br>
+                    <input type="radio" id="17" name="filter" value="17">
+                    <label for="filter17">filter_clown</label><br>
+                    <input type="radio" id="18" name="filter" value="18">
+                    <label for="filter18">filter_pandaFull</label><br>
+                    <input type="radio" id="19" name="filter" value="19">
+                    <label for="filter19">filter_cat</label><br>
+                    <input type="radio" id="20" name="filter" value="20">
+                    <label for="filter20">filter_panda</label><br>
+
+                </div>
+            </div>
+                <!-- button stop and start the video recording -->
+            <div class="recordButtonGroup">
+                <button onclick="record()" type="button" class="custom-upload-button"> start video stream</button>
+                <button onclick="stop_record()" type="button" class="custom-upload-button"> stop video stream</button>
+            </div>
+
+        </div>
 
         <div class="boxen">
-            <label for="image_input" class="custom-upload-button">Upload Image</label>
+            <h1>Images</h1>
+            <label for="image_input" class="custom-upload-button">Select Image</label>
             <input type="file" id="image_input" name="image" style="display: none;">
             <div class="dropdown">
                 <p class="dropbtn">∇ Choose filter</p>
@@ -71,11 +133,12 @@
                     
                 </div>
             </div>
-
-            <input type="submit" name = "submit" value="image">
+            <label for="submitImage" class="custom-upload-button">Upload image</label>
+            <input type="submit" id="submitImage" name = "submit" value="image"><input/>
         </div>
         <div class="boxen">
-            <label for="image_input" class="custom-upload-button">Upload Video</label>
+            <h1>Videos</h1>
+            <label for="image_input" class="custom-upload-button">Select Video</label>
             <input type="file" id="video_input" name="video" style="display: none;">
             <div class="dropdown">
                 <p class="dropbtn">∇ Choose filter</p>
@@ -128,41 +191,37 @@
 
                 </div>
             </div>
-            
-            <input type="submit" name = "submit" value="video">
+            <label for="submitVideo" class="custom-upload-button">Upload image</label>
+            <input type="submit" id="submitVideo" name = "submit" value="video">
+
+            <!-- button to download the output video, the Video has to have the Name video.avi -->
+            <a class="download" href="/images/output/video.avi" download="FilterVideo.avi">Download the video</a>
         </div>
 
     </form>
     
-    <!-- button to download the output video, the Video has to have the Name video.avi -->
+    <div class="displays">
 
-    <a class="download" href="/images/output/video.avi" download="FilterVideo.avi">Download the video</a>
+        <div id= "display_image" style="display: none;"></div>
+        <img src="/images/output/image.png" width="300" alt="">
 
-    <!-- new button stop and start the video recording -->
+        <script src="/javaScripts/script.js"></script>
 
-    <button onclick="record()"> start video stream</button>
-    <button onclick="stop_record()"> stop video stream</button>
+        <!-- code for the webcam :) -->
+        <video id="myVidPlayer" controls muted autoplay></video>
 
-
-    <div id= "display_image"></div>
-    <img src="/images/output/image.png" width="300" alt="">
-
-    <script src="/javaScripts/script.js"></script>
-
-    <!-- code for the webcam :) -->
-    <video id="myVidPlayer" controls muted autoplay></video>
-
-    <!-- canvas used for showing the webcam stream and for taking snapshots-->
-    <div class="mycanvas">
-        <canvas></canvas>
+        <!-- canvas used for showing the webcam stream and for taking snapshots-->
+        <div class="mycanvas">
+            <canvas></canvas>
+        </div>
+        
+        <script src="/javaScripts/webcam.js"></script>
+        
+        <!-- code for socket.io and live images -->
+        <script src="/socket.io/socket.io.js"></script>
+        
+        <div id="streamImages" class="streamImages"></div>
     </div>
-
-    <script src="/javaScripts/webcam.js"></script>
-
-    <!-- code for socket.io and live images -->
-    <script src="/socket.io/socket.io.js"></script>
-
-    <div id="streamImages" class="streamImages"></div>
     
     <script>
         var socket = io();
