@@ -121,7 +121,7 @@ def translate_config(format, type, filter):
         if format == STREAM:
             stream25(PATH, dict[filter], FILENAME, NORMAL_FILTER)
         elif format == VID:
-            filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
+            filter_video(PATH + VIDEO_INPUT, dict[filter], OUTPUTPATH + VIDEO_OUTPUT)
         elif format == IMG:
             image_filter(PATH + IMAGE, dict[filter], OUTPUTPATH + IMAGE)
 
@@ -141,7 +141,7 @@ def translate_config(format, type, filter):
            
                
         elif format == VID:
-            filter_video(PATH + VIDEO,model_dict[filter],  OUTPUTPATH + VIDEO)
+            filter_video(PATH + VIDEO_INPUT,model_dict[filter],  OUTPUTPATH + VIDEO_OUTPUT)
         elif format == IMG:
             image_filter(PATH + IMAGE, dict[filter], OUTPUTPATH + IMAGE)
             

@@ -40,9 +40,9 @@ def filter_video(video_path,apply, filename):
             break
         
         if isinstance(apply, nn.Module):
-            img = video_preprocessing(img)
-            apply(img)
-            img = video_reprocessing(img)
+            frame = video_preprocessing(frame)
+            apply(frame)
+            frame = video_reprocessing(frame)
         else:
             frame = apply(frame)
 
