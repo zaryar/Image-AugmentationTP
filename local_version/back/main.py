@@ -137,7 +137,10 @@ def translate_config(format, type, filter):
         elif format == VID:
             filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
         elif format == IMG:
-            image_filter(PATH + IMAGE, dict[filter], OUTPUTPATH + IMAGE)
+            try:
+                evaluate_img(model, PATH + IMAGE, OUTPUTPATH + IMAGE)
+            except:
+                print("image was truncated")
             
 
 """The main while loop for the python script"""
