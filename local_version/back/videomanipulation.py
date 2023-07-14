@@ -49,7 +49,7 @@ def filter_video(video_path,apply, filename):
         #actual writing
         output.write(frame)
 
-        cv.imshow('frame',frame)
+        #cv.imshow('frame',frame)
         if cv.waitKey(1)== ord("d"):
             break
     source.release()
