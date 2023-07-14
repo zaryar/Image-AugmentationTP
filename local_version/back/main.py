@@ -7,6 +7,7 @@ import csv
 import os
 import pandas as pd
 import cv2
+from PIL import Image
 from fast_ns.experiments.filters_for_images import do_model, evaluate_img
 
 
@@ -21,7 +22,7 @@ LOCKOUT = './local_version/front/public/images/output/lockOut'
 
 #Files
 FRAME = "frame.jpg"
-IMAGE = "image.jpg"
+IMAGE = "image.png"
 VIDEO = "test_vid.mp4"
 VIDEO_INPUT = "video.mp4"
 VIDEO_OUTPUT = "video.avi"
@@ -35,7 +36,7 @@ NORMAL_FILTER = "NormalFilter"
 #Formats 
 STREAM = "stream"
 VID = "video"
-IMG = "stream"
+IMG = "image"
 
 
 #Models for Style-Transfer
