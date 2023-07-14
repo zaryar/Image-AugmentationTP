@@ -4,7 +4,7 @@
 import numpy as py
 import cv2 as cv
 import torch.nn as nn
-from fast_ns.experiments.filters_for_images import video_preprocessing,video_reprocessing
+from fast_ns.experiments.filters_for_images import video_preprocessing,video_reprocessing,evaluate_img
 
 
 
@@ -40,9 +40,10 @@ def filter_video(video_path,apply, filename):
             break
         
         if isinstance(apply, nn.Module):
-            frame = video_preprocessing(frame)
-            apply(frame)
-            frame = video_reprocessing(frame)
+            cv.imwrite("local_version/data/input/video_frame.jpg",frame)
+            evaluate_img(apply,"local_version/data/input/video_frame.jpg","local_version/data/output/video_frame.jpg")
+            frame = cv.imread("local_version/data/output/video_frame.jpg")
+            frame = cv.resize(frame,(WIDTH,HEIGHT))
         else:
             frame = apply(frame)
 
