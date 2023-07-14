@@ -164,8 +164,8 @@ window.navigator.mediaDevices.getUserMedia({ video: true, audio: true })
             video.play();
 
             //new
-            w = 480;
-            h = 270
+            w = 640;
+            h = 480
 
             canvas.width = w;
             canvas.height = h;

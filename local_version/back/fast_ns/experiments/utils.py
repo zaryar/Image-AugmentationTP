@@ -18,8 +18,8 @@ from torchfile import load as load_lua
 
 from fast_ns.experiments.net import Vgg16
 
-WIDTH = 480
-HEIGHT = 270
+WIDTH = 640
+HEIGHT = 480
 
 def tensor_load_rgbimage(filename, size=None, scale=None, keep_asp=False):
     img = Image.open(filename).convert('RGB')
