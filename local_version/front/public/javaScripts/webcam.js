@@ -5,6 +5,8 @@ const video = document.querySelector('#myVidPlayer');
 
 //w-width,h-height
 var w, h;
+
+
 canvas.style.display = "none";
 
 // converts an base64 Image to a Blob 
@@ -41,7 +43,7 @@ function snapshot(name) {
     // Convert canvas contents (image) to a base64 string
     base64Image = canvas.toDataURL({
         format: 'jpeg',
-        quality: 0.01
+        quality: 0.1
     });
 
     console.log("base64: " + base64Image.length)
@@ -162,8 +164,8 @@ window.navigator.mediaDevices.getUserMedia({ video: true, audio: true })
             video.play();
 
             //new
-            w = 700;
-            h = 500
+            w = 640;
+            h = 480
 
             canvas.width = w;
             canvas.height = h;

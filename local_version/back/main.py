@@ -7,6 +7,7 @@ import csv
 import os
 import pandas as pd
 import cv2
+from PIL import Image
 from fast_ns.experiments.filters_for_images import do_model, evaluate_img
  
 
@@ -20,10 +21,8 @@ LOCKOUT = './local_version/front/public/images/output/lockOut'
 
 
 #Files
-
-
 FRAME = "frame.jpg"
-IMAGE = "image.jpg"
+IMAGE = "image.png"
 VIDEO = "test_vid.mp4"
 VIDEO_INPUT = "video.mp4"
 VIDEO_OUTPUT = "video.avi"
@@ -37,7 +36,7 @@ NORMAL_FILTER = "NormalFilter"
 #Formats 
 STREAM = "stream"
 VID = "video"
-IMG = "stream"
+IMG = "image"
 
 
 #Models for Style-Transfer
@@ -62,7 +61,6 @@ model_dict = {"filter14" : CANDY,
 """ Streams Image with 25 fps 
     Locks the image while it is processed """
 def stream25(PATH, filter,FILENAME, model):
-
     stream_active = True
     while stream_active:
         path = PATH + FRAME
@@ -72,16 +70,14 @@ def stream25(PATH, filter,FILENAME, model):
                 if model == NORMAL_FILTER:
                     image_filter(path, filter, FILENAME) #Image is augmented with local filter
                 else:
-
                     try:
                         evaluate_img(model, path, FILENAME)
                     except:
                         print("image was truncated")
-
+                
                 open(LOCKOUT, "x")
                 file = FRAME
                 os.remove(os.path.join(PATH, file))
-
             else:
                 print("lockOut already there | not worked with on canvis")
         else:
@@ -138,13 +134,16 @@ def translate_config(format, type, filter):
         model = model_dict[filter] #choose the correct model
         if format == STREAM:
                 stream25(PATH, "NAN", FILENAME, model)
-           
-               
         elif format == VID:
             filter_video(PATH + VIDEO_INPUT,model,  OUTPUTPATH + VIDEO_OUTPUT)
             
         elif format == IMG:
-            image_filter(PATH + IMAGE, model, OUTPUTPATH + IMAGE)
+
+            try:
+                evaluate_img(model, PATH + IMAGE, OUTPUTPATH + IMAGE)
+            except:
+                print("image was truncated")
+
             
 
 """The main while loop for the python script"""
