@@ -10,7 +10,7 @@ import fast_ns.experiments.utils as utils
 from fast_ns.experiments.utils import StyleLoader
 import timeit
 
-
+#this is our custom function that we wrote
 
 
 #copy of the original evaluate function that works without using parsed arguments
@@ -73,6 +73,7 @@ def do_model(style_path):
     style_model.setTarget(style_v)
     return style_model
 
+#this function takes an image , a ready to use model and writes the stylized image jpg to the output_path 
 def evaluate_img(style_model,content_path,  output_path):
         cuda = True
         content_image = utils.tensor_load_rgbimage(content_path, size=512, keep_asp=True) #transfer the picture to a tensor

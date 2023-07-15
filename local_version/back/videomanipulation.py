@@ -39,7 +39,7 @@ def filter_video(video_path,apply, filename):
             #print("Can't receive frame ( video has ended?). Exiting..") #please also leave this in for testing
             break
         
-        if isinstance(apply, nn.Module): #check if the apply parameter is a model and therefore we use style transferr
+        if isinstance(apply, nn.Module): #check if the apply parameter is a model and therefore we use style transfer
             cv.imwrite("local_version/data/input/video_frame.jpg",frame)
             evaluate_img(apply,"local_version/data/input/video_frame.jpg","local_version/data/output/video_frame.jpg")
             frame = cv.imread("local_version/data/output/video_frame.jpg")
