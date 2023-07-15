@@ -141,10 +141,10 @@ def translate_config(format, type, filter):
            
                
         elif format == VID:
-            filter_video(PATH + VIDEO_INPUT,CANDY,  OUTPUTPATH + VIDEO_OUTPUT)
-            #stylize_video(PATH+VIDEO, CANDY,OUTPUTPATH + VIDEO_OUTPUT)
+            filter_video(PATH + VIDEO_INPUT,model,  OUTPUTPATH + VIDEO_OUTPUT)
+            
         elif format == IMG:
-            image_filter(PATH + IMAGE, dict[filter], OUTPUTPATH + IMAGE)
+            image_filter(PATH + IMAGE, model, OUTPUTPATH + IMAGE)
             
 
 """The main while loop for the python script"""
