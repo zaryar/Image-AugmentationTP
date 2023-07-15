@@ -7,7 +7,7 @@ import csv
 import os
 import pandas as pd
 import cv2
-from fast_ns.experiments.filters_for_images import do_model, evaluate_img,stylize_video
+from fast_ns.experiments.filters_for_images import do_model, evaluate_img
  
 
 #Paths
