@@ -17,8 +17,8 @@ We decorate photos, videos but also a webcam live with global filters and face f
 ## How to Use
 - Install node.js and python
 - Install all Requirements
-- Start main.py out of Image-AugmentationTP ($python3 local_version/back/main.py)
-- Start index.js out of Image-AugmentationTP/local_version/front ($node index.js)
+- Start main.py from Image-AugmentationTP ($python3 local_version/back/main.py)
+- Start index.js from Image-AugmentationTP/local_version/front ($node index.js)
 - connect your client with the server (through the webbrowser)
 - chose your favorite filter and click start stream :)
 
