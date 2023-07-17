@@ -30,6 +30,6 @@ We decorate photos, videos but also a webcam live with global filters and face f
 - Program should recognize which filter to use when (~~15.5~~)
 - face recognition filter (~~22.5~~)
 - gangealing OR media pipe(~~5.06~~)
-- ? style_transfer(~~5.06~~)
+- style_transfer(~~5.06~~)
 - Server-based approach (1 person at a time) / non-public (~~5.06~~) 
 - user controls program with buttons and dropdown menu / user friendly (~~19.06~~)
