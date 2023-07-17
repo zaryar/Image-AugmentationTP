@@ -10,6 +10,7 @@ const video_input = document.querySelector("#video_input");
             document.querySelector("#display_image").style.backgroundImage = `url(${uploaded_image})`;
         });
         reader.readAsDataURL(this.files[0]);
+        document.querySelector("#display_image").style.display="block"
     })
     video_input.addEventListener("change", function(){
       const reader = new FileReader();
