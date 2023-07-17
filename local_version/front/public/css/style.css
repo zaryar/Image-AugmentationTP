@@ -251,7 +251,7 @@ body > form > div:nth-child(2) > input:nth-child(7) {
   width: 100%;
 }
 
-.displays{
+.displays > div{
   display: flex;
   align-items: center;
 }
