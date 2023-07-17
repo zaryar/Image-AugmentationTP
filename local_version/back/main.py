@@ -22,7 +22,7 @@ LOCKOUT = './local_version/front/public/images/output/lockOut'
 
 #Files
 FRAME = "frame.jpg"
-IMAGE = "image.png"
+IMAGE = "image.jpg"
 VIDEO = "test_vid.mp4"
 VIDEO_INPUT = "video.mp4"
 VIDEO_OUTPUT = "video.avi"
