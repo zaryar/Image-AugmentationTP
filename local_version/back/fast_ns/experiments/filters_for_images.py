@@ -10,10 +10,10 @@ import fast_ns.experiments.utils as utils
 from fast_ns.experiments.utils import StyleLoader
 import timeit
 
+#this is our custom function that we wrote
 
 
-
-
+#copy of the original evaluate function that works without using parsed arguments
 def evaluate(content_path, style_path, output_path):
         cuda = True
         content_image = utils.tensor_load_rgbimage(content_path, size=512, keep_asp=True)
@@ -49,11 +49,13 @@ def evaluate(content_path, style_path, output_path):
     
 #okay let's try it with 2 functions
 
+
+#this function takes one of the pretrained style images and loads the correct style transfer model for it
 def do_model(style_path):
     cuda = True
     style = utils.tensor_load_rgbimage(style_path, size=512)
     style = style.unsqueeze(0)    
-    style = utils.preprocess_batch(style)
+    style = utils.preprocess_batch(style) #preprocessing for the style image
 
     style_model = Net(ngf=128)
     model_dict = torch.load("local_version/back/fast_ns/experiments/models/21styles.model")
@@ -71,9 +73,10 @@ def do_model(style_path):
     style_model.setTarget(style_v)
     return style_model
 
+#this function takes an image , a ready to use model and writes the stylized image jpg to the output_path 
 def evaluate_img(style_model,content_path,  output_path):
         cuda = True
-        content_image = utils.tensor_load_rgbimage(content_path, size=512, keep_asp=True)
+        content_image = utils.tensor_load_rgbimage(content_path, size=512, keep_asp=True) #transfer the picture to a tensor
         content_image = content_image.unsqueeze(0)
         
         
@@ -88,11 +91,9 @@ def evaluate_img(style_model,content_path,  output_path):
         content_image = Variable(utils.preprocess_batch(content_image))
         
 
-        output = style_model(content_image)
-        #output = utils.color_match(output, style_v)
+        output = style_model(content_image) #actual style transfer
+        
         utils.tensor_save_bgrimage(output.data[0], output_path, cuda)
-
-#model, style = do_model("local_version/back/fast-ns/experiments/images/9styles/candy.jpg")
 
 
 
@@ -104,4 +105,4 @@ def evaluate_img(style_model,content_path,  output_path):
 
 #Example call for main : 
  #model,style = do_model("local_version/back/fast_ns/experiments/images/9styles/candy.jpg")
-   # evaluate_img(model,style,"local_version/back/fast_ns/experiments/images/content/flowers.jpg","local_version/back/fast_ns/experiments/output.jpg")
+    # evaluate_img(model,style,"local_version/back/fast_ns/experiments/images/content/flowers.jpg","local_version/back/fast_ns/experiments/output.jpg")

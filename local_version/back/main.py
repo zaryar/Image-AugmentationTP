@@ -9,7 +9,7 @@ import pandas as pd
 import cv2
 from PIL import Image
 from fast_ns.experiments.filters_for_images import do_model, evaluate_img
-
+ 
 
 #Paths
 PATH = "./local_version/front/public/images/input/"
@@ -22,7 +22,7 @@ LOCKOUT = './local_version/front/public/images/output/lockOut'
 
 #Files
 FRAME = "frame.jpg"
-IMAGE = "image.png"
+IMAGE = "image.jpg"
 VIDEO = "test_vid.mp4"
 VIDEO_INPUT = "video.mp4"
 VIDEO_OUTPUT = "video.avi"
@@ -117,7 +117,7 @@ def translate_config(format, type, filter):
         if format == STREAM:
             stream25(PATH, dict[filter], FILENAME, NORMAL_FILTER)
         elif format == VID:
-            filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
+            filter_video(PATH + VIDEO_INPUT, dict[filter], OUTPUTPATH + VIDEO_OUTPUT)
         elif format == IMG:
             image_filter(PATH + IMAGE, dict[filter], OUTPUTPATH + IMAGE)
 
@@ -135,17 +135,21 @@ def translate_config(format, type, filter):
         if format == STREAM:
                 stream25(PATH, "NAN", FILENAME, model)
         elif format == VID:
-            filter_video(PATH + VIDEO, dict[filter], OUTPUTPATH + VIDEO)
+            filter_video(PATH + VIDEO_INPUT,model,  OUTPUTPATH + VIDEO_OUTPUT)
+            
         elif format == IMG:
+
             try:
                 evaluate_img(model, PATH + IMAGE, OUTPUTPATH + IMAGE)
             except:
                 print("image was truncated")
+
             
 
 """The main while loop for the python script"""
 """Waits for Information from Node.js Server"""
 while True:
+    
     time.sleep(1)
     print("Try to read: ", CONFIG)
     file_exists = os.path.exists(CONFIG)
