@@ -23,6 +23,7 @@ LOCKOUT = './local_version/front/public/images/output/lockOut'
 #Files
 FRAME = "frame.jpg"
 IMAGE = "image.jpg"
+PNGIMAGE = "image.png"
 VIDEO = "test_vid.mp4"
 VIDEO_INPUT = "video.mp4"
 VIDEO_OUTPUT = "video.avi"
@@ -119,7 +120,7 @@ def translate_config(format, type, filter):
         elif format == VID:
             filter_video(PATH + VIDEO_INPUT, dict[filter], OUTPUTPATH + VIDEO_OUTPUT)
         elif format == IMG:
-            image_filter(PATH + IMAGE, dict[filter], OUTPUTPATH + IMAGE)
+            image_filter(PATH + PNGIMAGE, dict[filter], OUTPUTPATH + IMAGE)
 
     elif type == FACE_RECOGNITION:
         if format == STREAM:
@@ -127,7 +128,7 @@ def translate_config(format, type, filter):
         elif format == VID:
             apply_faceRec_video(PATH + VIDEO_INPUT, dict[filter], OUTPUTPATH + VIDEO_OUTPUT)
         elif format == IMG:
-            image_filter(PATH + IMAGE, dict[filter], OUTPUTPATH + IMAGE)
+            image_filter(PATH + PNGIMAGE, dict[filter], OUTPUTPATH + IMAGE)
 
     elif type == STYLE_TRANSFER:
 
@@ -140,7 +141,7 @@ def translate_config(format, type, filter):
         elif format == IMG:
 
             try:
-                evaluate_img(model, PATH + IMAGE, OUTPUTPATH + IMAGE)
+                evaluate_img(model, PATH + PNGIMAGE, OUTPUTPATH + IMAGE)
             except:
                 print("image was truncated")
 
