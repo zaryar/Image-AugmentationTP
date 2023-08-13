@@ -1,7 +1,7 @@
 ### in this file functions for the manipulation of non- live videos will be defined
 
 
-import numpy as py
+import numpy as np
 import cv2 as cv
 import torch.nn as nn
 from fast_ns.experiments.filters_for_images import evaluate_img
@@ -10,10 +10,9 @@ from fast_ns.experiments.filters_for_images import evaluate_img
 
 
 
-PATH = "./local_version/data/input/test_vid.mp4"
-FILENAME = './local_version/data/output/test_vid.avi'
+
 CODEC = 'WMV1' #the codec is dependant on the machine you are using. You might have to try different CODECs on MacOS 
-ASPECTPATH = "./local_version/data/input/aspect_test.mp4" #we can use that to show that the format thing works
+
 
  
 
@@ -41,7 +40,7 @@ def filter_video(video_path,apply, filename):
         
         if isinstance(apply, nn.Module): #check if the apply parameter is a model and therefore we use style transfer
             cv.imwrite("local_version/data/input/video_frame.jpg",frame)
-            evaluate_img(apply,"local_version/data/input/video_frame.jpg","local_version/data/output/video_frame.jpg")
+            evaluate_img(apply,"local_version/data/input/video_frame.jpg","local_version/data/output/video_frame.jpg")#our model only works with saved jpg, even when using the demo
             frame = cv.imread("local_version/data/output/video_frame.jpg")
             frame = cv.resize(frame,(WIDTH,HEIGHT)) #resizing is done since evalutate_img resizes images to the canvas size and changing this would lead to problems in streaming
         else:

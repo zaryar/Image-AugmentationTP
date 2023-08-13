@@ -40,9 +40,9 @@ def evaluate_img(style_model,content_path,  output_path):
         
 
         if cuda:
-            #style_model.cuda()
+           
             content_image = content_image.cuda()
-           # style = style.cuda()
+          
 
         
 
