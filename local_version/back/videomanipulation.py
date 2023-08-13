@@ -47,7 +47,7 @@ def filter_video(video_path,apply, filename):
         else:
             frame = apply(frame)
 
-        #actual writing
+        #actual writing into the video
         output.write(frame)
 
         #cv.imshow('frame',frame), this is left in for testing
