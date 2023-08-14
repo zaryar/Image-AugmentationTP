@@ -8,6 +8,13 @@ import csv
 import os
 import time
 
+#variables for stream
+PATH = "./local_version/front/public/images/input/"
+FILENAME = './local_version/front/public/images/output/frame.jpg'
+STOPP = "./local_version/front/public/stopStream.txt"
+LOCKOUT = './local_version/front/public/images/output/lockOut'
+FRAME = "frame.jpg"
+
 VISUALIZE_FACE_POINTS = False
 
 filters_config = {
@@ -379,14 +386,6 @@ def filter_cat(img):
 def filter_panda(img):
     image = filter_on_image(img, "panda")
     return image
-
-#variables for stream
-PATH = "./local_version/front/public/images/input/"
-FILENAME = './local_version/front/public/images/output/frame.jpg'
-STOPP = "./local_version/front/public/stopStream.txt"
-LOCKOUT = './local_version/front/public/images/output/lockOut'
-
-FRAME = "frame.jpg"
 
 def stream_face_recognition(path, filter, outputImg):
 
