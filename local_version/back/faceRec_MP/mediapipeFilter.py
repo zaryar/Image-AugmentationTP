@@ -8,8 +8,19 @@ import csv
 import os
 import time
 
+#variables for stream
+PATH = "./local_version/front/public/images/input/"
+FILENAME = './local_version/front/public/images/output/frame.jpg'
+STOPP = "./local_version/front/public/stopStream.txt"
+LOCKOUT = './local_version/front/public/images/output/lockOut'
+FRAME = "frame.jpg"
+
+CODEC = 'WMV1' #the codec is dependant on the machine you are using. You might have to try different CODECs on MacOS 
+
+#if True landmarks are marked
 VISUALIZE_FACE_POINTS = False
 
+#dictionary for filter information
 filters_config = {
     'clown':
         [{'path': "local_version/back/faceRec_MP/filters/clown.png",
@@ -21,21 +32,22 @@ filters_config = {
           'morph': True, 'animated': False, 'has_alpha': True}],
     'cat':
         [{'path': "local_version/back/faceRec_MP/filters/cat-ears.png",
-          'anno_path': "local_version/back/faceRec_MP//filters/dog-ears_annotations.csv",
+          'anno_path': "local_version/back/faceRec_MP//filters/ears_annotations.csv",
           'morph': False, 'animated': False, 'has_alpha': True},
          {'path': "local_version/back/faceRec_MP/filters/cat-nose.png",
-          'anno_path': "local_version/back/faceRec_MP//filters/dog-nose_annotations.csv",
+          'anno_path': "local_version/back/faceRec_MP//filters/nose_annotations.csv",
           'morph': False, 'animated': False, 'has_alpha': True}],
     'panda':
         [{'path': "local_version/back/faceRec_MP/filters/panda-ears.png",
-          'anno_path': "local_version/back/faceRec_MP//filters/dog-ears_annotations.csv",
+          'anno_path': "local_version/back/faceRec_MP//filters/ears_annotations.csv",
           'morph': False, 'animated': False, 'has_alpha': True},
          {'path': "local_version/back/faceRec_MP/filters/panda-nose.png",
-          'anno_path': "local_version/back/faceRec_MP//filters/dog-nose_annotations.csv",
+          'anno_path': "local_version/back/faceRec_MP//filters/nose_annotations.csv",
           'morph': False, 'animated': False, 'has_alpha': True}],
 }
 
 # detect facial landmarks in image
+# returns 81 relevant landmarks if face found, else prints "face not detectd!!!"
 def getLandmarks(img):
     mp_face_mesh = mp.solutions.face_mesh
     selected_keypoint_indices = [127, 93, 58, 136, 150, 149, 176, 148, 152, 377, 400, 378, 379, 365, 288, 323, 356, 70, 63, 105, 66, 55,
@@ -73,6 +85,7 @@ def getLandmarks(img):
             return relevant_keypnts
     return 0
 
+# returns image with its alpha
 def load_filter_img(img_path, has_alpha):
     # Read the image
     img = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)
@@ -84,6 +97,7 @@ def load_filter_img(img_path, has_alpha):
 
     return img, alpha
 
+# read annotaton file and return landmarks with corresponding filter annotations
 def load_landmarks(annotation_file):
     with open(annotation_file) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=",")
@@ -116,7 +130,8 @@ def find_convex_hull(points):
 
     return hull, hullIndex
 
-def load_filter(filter_name="dog"):
+# prepares filters to be used
+def load_filter(filter_name):
 
     filters = filters_config[filter_name]
 
@@ -158,11 +173,10 @@ def load_filter(filter_name="dog"):
 
     return filters, multi_filter_runtime
 
-CODEC = 'WMV1'
-
+# base function for using face-recognition on videos
+# takes video_path, filter and output_path and writes video with filter applied
 def filter_on_video (video, overlay, filename) :
-    # process input from webcam or video file
-    #cap = cv2.VideoCapture(0) #webcam input
+    # process input from video file
     cap = video
 
     #setup video writer
@@ -293,6 +307,8 @@ def filter_on_video (video, overlay, filename) :
                 frame = output = np.uint8(output)
             output_vid.write(output)
 
+# base function for using face-recognition on images
+# takes image, filter and saves processed image
 def filter_on_image (frame, overlay) :
 
     filters, multi_filter_runtime = load_filter(overlay)
@@ -364,30 +380,28 @@ def filter_on_image (frame, overlay) :
         frame = output = np.uint8(output)
     return output
 
+# takes image and applies clown filter
 def filter_clown(img):
     image = filter_on_image(img, "clown")
     return image
 
+# takes image and applies pandaFull filter
 def filter_pandaFull(img):
     image = filter_on_image(img, "pandaFull")
     return image
 
+# takes image and applies cat filter
 def filter_cat(img):
     image = filter_on_image(img, "cat")
     return image
 
+# takes image and applies panda filter
 def filter_panda(img):
     image = filter_on_image(img, "panda")
     return image
 
-#variables for stream
-PATH = "./local_version/front/public/images/input/"
-FILENAME = './local_version/front/public/images/output/frame.jpg'
-STOPP = "./local_version/front/public/stopStream.txt"
-LOCKOUT = './local_version/front/public/images/output/lockOut'
-
-FRAME = "frame.jpg"
-
+# base function for using face-recognition on streams
+# takes frame_path, filter and output_path and saves frames
 def stream_face_recognition(path, filter, outputImg):
 
     if (filter == filter_clown):
@@ -404,16 +418,15 @@ def stream_face_recognition(path, filter, outputImg):
     sigma = 50
 
     filters, multi_filter_runtime = load_filter(overlay)
-    stream_active = True
     
     stream_active = True
+
     while stream_active:
         path = PATH + FRAME
         if os.path.exists(path) and cv2.imread(path) is not None: #is file ready?
             if not os.path.exists(LOCKOUT): #did we already display the last image?
                 print(path, FILENAME, filter)     
 
-                #start = time.time() #for fps testing
                 frame = cv2.imread(path)
 
                 if frame is None:
@@ -524,13 +537,6 @@ def stream_face_recognition(path, filter, outputImg):
                         frame = output = np.uint8(output)      
 
                 cv2.imwrite(outputImg, frame)
-
-                #for fps testing
-                #end = time.time()
-                #timeTaken = end - start
-                #fps = 1 / timeTaken
-                #print("fps:", fps)
-
                 open(LOCKOUT, "x")
                 file = FRAME
                 os.remove(os.path.join(PATH, file))
@@ -541,12 +547,11 @@ def stream_face_recognition(path, filter, outputImg):
             print("input file cant be found")
         stream_active = os.path.exists(STOPP) == False
         if os.path.exists(STOPP):
-            #os.remove(CONFIG)
             os.remove(STOPP)
             return
         time.sleep(0.04)
 
-# this function takes a path and a filter and applies filter to the video given
+# this function takes a path, a filter and output_path and applies filter to the video given
 def apply_faceRec_video(video_path, apply, filename):
     video = cv2.VideoCapture(video_path)
     if (apply == filter_clown):
