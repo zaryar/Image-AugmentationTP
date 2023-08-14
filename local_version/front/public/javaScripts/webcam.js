@@ -43,7 +43,7 @@ function snapshot(name) {
     // Convert canvas contents (image) to a base64 string
     base64Image = canvas.toDataURL({
         format: 'jpeg',
-        quality: 0.1
+        quality: 0.5
     });
 
     console.log("base64: " + base64Image.length)
