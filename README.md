@@ -16,7 +16,7 @@ We decorate photos, videos but also a webcam live with global filters and face f
 
 ## How to Use
 - Install node.js and python
-- Install all Requirements (you can use the environment.yml, to install are requirements with our testet versions)
+- Install all Requirements (you can use the environment.yml, to install all requirements with our testet versions)
 - Start main.py from Image-AugmentationTP ($python3 local_version/back/main.py)
 - Start index.js from Image-AugmentationTP/local_version/front ($node index.js)
 - (trust your server if you dont have https chrome://flags/#unsafely-treat-insecure-origin-as-secure)
