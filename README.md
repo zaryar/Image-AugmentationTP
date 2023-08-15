@@ -4,6 +4,7 @@
 We decorate photos, videos but also a webcam live with global filters and face filters. ;)
 
 ## Requirements 
+you can use the conda environment file we provide in this repo
 ### nodeJS
 - only standart lib
 ### python
