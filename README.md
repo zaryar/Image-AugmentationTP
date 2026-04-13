@@ -1,4 +1,4 @@
-# Image-AugmentationTP
+# Image-AugmentationTP - Summersemester 2023 - University of Tübingen
 
 ## Project description in one sentence
 We decorate photos, videos but also a webcam live with global filters and face filters. ;)
